@@ -1,0 +1,124 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-size: 20px;
+  font-family: "Montserrat", sans-serif;
+  background: #03396c;
+}
+
+h3 {
+  color: #011f4b;
+  text-align: center;
+  padding: 20px 0;
+}
+
+ul {
+  width: 90%;
+  margin: 0 auto;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.container {
+  padding-top: 50px;
+  background: #6497b1;
+  width: 400px;
+  margin: 0 auto;
+}
+
+/* ----- ADD ----- */
+
+.add {
+  width: 90%;
+  height: 70px;
+  margin: 0 auto;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input--add {
+  font-size: 18px;
+  width: 80%;
+  height: 100%;
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+.btn--add {
+  width: 20%;
+  height: 100%;
+  text-transform: uppercase;
+  background: #ff3b3f;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* ----- TO-D0 / COMPLETEDv----- */
+
+.list--li,
+.completed--li {
+  margin: 10px 0;
+  background: #b3cde0;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.check {
+  margin-left: 5px;
+  width: 5%;
+  cursor: pointer;
+}
+
+.span--to-do,
+.span--completed {
+  color: #011f4b;
+  width: 75%;
+  height: 100%;
+  padding: 0 10px;
+  font-size: 18px;
+}
+
+.btn--confirm,
+.delete {
+  color: #b3cde0;
+  width: 20%;
+  height: 21px;
+  font-size: 12px;
+  text-transform: uppercase;
+  background: #03396c;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.span--completed {
+  width: 80%;
+  text-decoration: line-through;
+}
+
+/* ----- RESPONSIVE ----- */
+
+@media screen and (max-width: 600px) {
+  .container {
+    max-width: 90%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .btn--confirm,
+  .delete {
+    font-size: 10px;
+    height: 21px;
+  }
+}
