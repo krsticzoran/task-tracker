@@ -10,7 +10,7 @@ let input = [],
   inputOne = [];
 
 /////////////////////////////////////////////////////////////////////
-// ----- DATE ----
+// ----- DISPLAY THE CURRENT DATE ----
 
 const locale = navigator.language;
 let today = new Date();
@@ -23,6 +23,18 @@ const options = {
 const displayDate = today.toLocaleDateString(locale, options);
 inputDate.innerHTML = `<p>${displayDate}</p>`;
 
+/////////////////////////////////////////////////////////////////////
+// TASK TIMER in progress
+
+let taskDate = new Date(1659695780048);
+
+const timeInProgress = (today, taskDate) => {
+  let time = today.getTime() - taskDate.getTime();
+  time = Math.trunc(time / (1000 * 24));
+  return time;
+};
+console.log(today.getTime());
+console.log(timeInProgress(today, taskDate));
 ////////////////////////////////////////////////////////////////////////
 //---- LOCALSTORAGE --
 
@@ -33,7 +45,7 @@ if (JSON.parse(localStorage.getItem("todo"))) {
 
   for (i = 0; i < input.length; i++) {
     list.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span class="span--to-do">${input[i]}</span
-    ><button class="btn--confirm">Confirm</button> <p></li>`;
+    ><button class="btn--confirm">Confirm</button></li>`;
   }
 }
 

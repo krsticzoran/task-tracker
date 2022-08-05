@@ -10,4 +10,5 @@ Features:<br /><br />
 
 Features to be added:<br />
 
--- User Country Location
+-- User Country Location<br />
+-- Tasks Timer
