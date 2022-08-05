@@ -3,7 +3,7 @@
 # My First App
 
 [DEMO](https://todolist-z81.netlify.app)<br /><br />
-Features:<br />
+Features:<br /><br />
 -- Display the Current Date <br />
 -- Local Storage Supported <br />
 -- Responsive <br />
