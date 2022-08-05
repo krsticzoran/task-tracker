@@ -13,7 +13,7 @@ body {
 h3 {
   color: #011f4b;
   text-align: center;
-  padding: 20px 0;
+  padding: 10px;
 }
 
 ul {
@@ -24,10 +24,18 @@ ul {
 }
 
 .container {
-  padding-top: 50px;
+  padding-top: 40px;
   background: #6497b1;
   width: 400px;
   margin: 0 auto;
+  padding-bottom: 40px;
+}
+/* ----- DATE ----- */
+
+.date {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 20px 10px;
 }
 
 /* ----- ADD ----- */
@@ -42,6 +50,7 @@ ul {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 40px;
 }
 
 .input--add {
@@ -62,7 +71,7 @@ ul {
   font-weight: 600;
 }
 
-/* ----- TO-D0 / COMPLETEDv----- */
+/* ----- TO-D0 / COMPLETED ----- */
 
 .list--li,
 .completed--li {

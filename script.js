@@ -5,8 +5,23 @@ const btnAdd = document.querySelector(".btn--add");
 const addInput = document.querySelector(".input--add");
 const list = document.querySelector(".list");
 const completed = document.querySelector(".completed--list");
+const inputDate = document.querySelector(".date");
 let input = [],
   inputOne = [];
+
+/////////////////////////////////////////////////////////////////////
+// ----- DATE ----
+
+const locale = navigator.language;
+let today = new Date();
+const options = {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+};
+
+const displayDate = today.toLocaleDateString(locale, options);
+inputDate.innerHTML = `<p>${displayDate}</p>`;
 
 ////////////////////////////////////////////////////////////////////////
 //---- LOCALSTORAGE --
@@ -18,7 +33,7 @@ if (JSON.parse(localStorage.getItem("todo"))) {
 
   for (i = 0; i < input.length; i++) {
     list.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span class="span--to-do">${input[i]}</span
-    ><button class="btn--confirm">Confirm</button></li>`;
+    ><button class="btn--confirm">Confirm</button> <p></li>`;
   }
 }
 
@@ -97,7 +112,3 @@ completed.addEventListener("click", function (e) {
     localStorage.setItem("todo1", JSON.stringify(inputOne));
   }
 });
-
-console.log("welcome");
-
-console.log("welcome");
