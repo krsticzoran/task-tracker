@@ -1,11 +1,14 @@
-# TO-DO-LIST
+# To-Do-List
 
-Features:
+# My First App
 
--- Local Storage Supported --
--- Responsive --
+[DEMO](https://todolist-z81.netlify.app)<br /><br />
+Features:<br />
 
-Goal:
+-- Local Storage Supported <br />
+-- Responsive <br />
 
--- Displays task start date --
--- Displays number of date working on task --
+Features to be added::<br />
+
+-- Displays task start date <br />
+-- Displays task end date && number of days working on task <br />
