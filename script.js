@@ -31,7 +31,6 @@ inputDate.innerHTML = `<p>${displayDate}</p>`;
 
 /////////////////////////////////////////////////////////////////////
 
-
 // ----- CLOCK -----
 
 const clock = () => {
@@ -69,7 +68,7 @@ const vreme = function () {
   setInterval(timeInProgress, 60000);
 };
 vreme();*/
->>>>>>> new-feature
+
 ////////////////////////////////////////////////////////////////////////
 //---- LOCALSTORAGE --
 
