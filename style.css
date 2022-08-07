@@ -30,9 +30,10 @@ ul {
   margin: 0 auto;
   padding-bottom: 40px;
 }
-/* ----- DATE ----- */
+/* ----- DATE && CLOCK ----- */
 
-.date {
+.date,
+.clock {
   display: flex;
   justify-content: flex-end;
   margin: 0 20px 10px;
@@ -50,6 +51,7 @@ ul {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 50px;
   margin-bottom: 40px;
 }
 
@@ -97,7 +99,15 @@ ul {
   padding: 0 10px;
   font-size: 18px;
 }
-
+/*
+.task--date {
+  padding-left: 10px;
+  width: 15%;
+  font-size: 10px;
+  font-weight: 300;
+  text-align: start;
+}
+*/
 .btn--confirm,
 .delete {
   color: #b3cde0;
