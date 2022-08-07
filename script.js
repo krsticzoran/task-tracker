@@ -6,6 +6,7 @@ const addInput = document.querySelector(".input--add");
 const list = document.querySelector(".list");
 const completed = document.querySelector(".completed--list");
 const inputDate = document.querySelector(".date");
+const displayclock = document.querySelector(".clock");
 let input = [],
   inputOne = [];
 
@@ -13,16 +14,59 @@ let input = [],
 // ----- DATE ----
 
 const locale = navigator.language;
-let today = new Date();
+let currentDate = new Date();
 const options = {
   day: "numeric",
   month: "long",
   year: "numeric",
 };
+/*const taskOptions = {
+  day: "numeric",
+  month: "long",
+};
+const taskDate = currentDate.toLocaleDateString(locale, taskOptions);*/
 
-const displayDate = today.toLocaleDateString(locale, options);
+const displayDate = currentDate.toLocaleDateString(locale, options);
 inputDate.innerHTML = `<p>${displayDate}</p>`;
 
+/////////////////////////////////////////////////////////////////////
+// ----- CLOCK -----
+
+const clock = () => {
+  const currentTime = new Date();
+  let hour =
+    currentTime.getHours() < 10
+      ? "0" + currentTime.getHours()
+      : currentTime.getHours();
+  let minutes =
+    currentTime.getMinutes() < 10
+      ? "0" + currentTime.getMinutes()
+      : currentTime.getMinutes();
+  let seconds =
+    currentTime.getSeconds() < 10
+      ? "0" + currentTime.getSeconds()
+      : currentTime.getSeconds();
+
+  displayclock.innerHTML = ` <p>${hour}:${minutes}:${seconds}</p>`;
+  setTimeout(clock, 1000);
+};
+
+clock();
+/////////////////////////////////////////////////////////////////////
+// TASK TIMER in progress
+/*let time;
+let taskDate = new Date();
+const vreme = function () {
+  time = Math.trunc((today.getTime() - taskDate.getTime()) / (1000 * 24));
+
+  const timeInProgress = () => {
+    time += 1;
+    console.log(time);
+  };
+
+  setInterval(timeInProgress, 60000);
+};
+vreme();*/
 ////////////////////////////////////////////////////////////////////////
 //---- LOCALSTORAGE --
 
@@ -33,7 +77,7 @@ if (JSON.parse(localStorage.getItem("todo"))) {
 
   for (i = 0; i < input.length; i++) {
     list.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span class="span--to-do">${input[i]}</span
-    ><button class="btn--confirm">Confirm</button> <p></li>`;
+    ><button class="btn--confirm">Confirm</button></li>`;
   }
 }
 
@@ -54,6 +98,7 @@ const add = function () {
     list.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span class="span--to-do">${addInput.value}</span
     ><button class="btn--confirm">Confirm</button></li>`;
 
+    //span class=<'task--date'>${taskDate}</span>
     input.push(addInput.value);
 
     localStorage.setItem("todo", JSON.stringify(input));
@@ -112,3 +157,4 @@ completed.addEventListener("click", function (e) {
     localStorage.setItem("todo1", JSON.stringify(inputOne));
   }
 });
+//localStorage.clear();
