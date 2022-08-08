@@ -43,16 +43,15 @@ ul {
 
 .add {
   width: 90%;
-  height: 70px;
+  height: 40px;
   margin: 0 auto;
-  padding-top: 15px;
-  padding-bottom: 15px;
+
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 50px;
-  margin-bottom: 40px;
+  margin-bottom: 5px;
 }
 
 .input--add {
@@ -73,6 +72,20 @@ ul {
   font-weight: 600;
 }
 
+.counterContainer {
+  width: 75%;
+  margin-bottom: 40px;
+}
+.characterCounter,
+.zeroCharacterLeft {
+  font-size: 12px;
+  font-weight: 200;
+  text-align: end;
+}
+
+.zeroCharacterLeft {
+  color: red;
+}
 /* ----- TO-D0 / COMPLETED ----- */
 
 .list--li,
@@ -98,6 +111,10 @@ ul {
   height: 100%;
   padding: 0 10px;
   font-size: 18px;
+}
+
+.span--to-do {
+  cursor: pointer;
 }
 /*
 .task--date {
