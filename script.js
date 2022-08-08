@@ -7,6 +7,7 @@ const list = document.querySelector(".list");
 const completed = document.querySelector(".completed--list");
 const inputDate = document.querySelector(".date");
 const displayclock = document.querySelector(".clock");
+const characterCounter = document.querySelector(".characterCounter");
 let input = [],
   inputOne = [];
 
@@ -52,6 +53,20 @@ const clock = () => {
 };
 
 clock();
+
+///////////////////////////////////////////////////////////////////
+addInput.addEventListener("input", updateValue);
+
+function updateValue() {
+  let x = this.value.length;
+  if (x === 20) characterCounter.classList.add("zeroCharacterLeft");
+  if (x < 20) characterCounter.classList.remove("zeroCharacterLeft");
+  if (x == 0) {
+    characterCounter.textContent = "20/20";
+  } else {
+    characterCounter.textContent = `${20 - x}/20`;
+  }
+}
 /////////////////////////////////////////////////////////////////////
 // TASK TIMER in progress
 /*let time;
@@ -104,6 +119,8 @@ const add = function () {
     localStorage.setItem("todo", JSON.stringify(input));
 
     addInput.value = "";
+    characterCounter.textContent = "20/20";
+    characterCounter.classList.remove("zeroCharacterLeft");
   }
 };
 
@@ -138,6 +155,18 @@ list.addEventListener("click", function (e) {
     completed.innerHTML += `<li class='completed--li'><span class="span--completed">${e.target.previousElementSibling.textContent}</span><button class='delete'>Delete</button></li>`;
 
     e.target.parentElement.remove();
+  }
+});
+
+// CHECKBOX
+
+list.addEventListener("click", function (e) {
+  if (e.target.classList.contains("span--to-do")) {
+    if (e.target.previousElementSibling.checked == true) {
+      e.target.previousElementSibling.checked = false;
+    } else {
+      e.target.previousElementSibling.checked = true;
+    }
   }
 });
 
