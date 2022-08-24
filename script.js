@@ -17,7 +17,7 @@ let input = [],
 ///////
 //var value = e.value;
 /////////////////////////////////////////////////////////////////////
-// ----- DATE ----
+// ----- DISPLAY THE CURRENT DATE ----
 
 const locale = navigator.language;
 let currentDate = new Date();
@@ -36,6 +36,7 @@ const displayDate = currentDate.toLocaleDateString(locale, options);
 inputDate.innerHTML = `<p>${displayDate}</p>`;
 
 /////////////////////////////////////////////////////////////////////
+
 // ----- CLOCK -----
 
 const clock = () => {

@@ -13,10 +13,3 @@ Features:<br /><br />
 Features to be added:<br />
 
 -- User Country Location<br />
--- Weather<br />
--- Inspirational Quotes<br />
-
-// log in and sign up/ stay login
-// fun job important
-// today tommorow other
-// redesign
