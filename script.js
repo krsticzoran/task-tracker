@@ -8,9 +8,14 @@ const completed = document.querySelector(".completed--list");
 const inputDate = document.querySelector(".date");
 const displayclock = document.querySelector(".clock");
 const characterCounter = document.querySelector(".characterCounter");
-let input = [],
-  inputOne = [];
+const dayInWeek = document.querySelector("#taskDay");
 
+let input = [],
+  inputOne = [],
+  dayOfWeek = [];
+//localStorage.clear();
+///////
+//var value = e.value;
 /////////////////////////////////////////////////////////////////////
 // ----- DATE ----
 
@@ -82,16 +87,33 @@ const vreme = function () {
   setInterval(timeInProgress, 60000);
 };
 vreme();*/
+
 ////////////////////////////////////////////////////////////////////////
 //---- LOCALSTORAGE --
 
 //localStorage.clear();
 
-if (JSON.parse(localStorage.getItem("todo"))) {
-  input = JSON.parse(localStorage.getItem("todo"));
+input = JSON.parse(localStorage.getItem("todo"));
 
+/*dayOfWeek = JSON.parse(localStorage.getItem("todoDay"));
+
+// if task add before more then 7 days we delete it because this is planner for 7 days
+for (i = 0; i < dayOfWeek.length; i++) {
+  let x = (currentDate.getTime() - dayOfWeek[i][1]) / (3600000 * 24);
+  console.log(x);
+  if (x >= 7) {
+    console.log(i);
+    input.splice(i, 1);
+    dayOfWeek.splice(i, 1);
+    localStorage.setItem("todoDay", JSON.stringify(dayOfWeek));
+
+    localStorage.setItem("todo", JSON.stringify(input));
+    i--;
+  }
+}*/
+if (JSON.parse(localStorage.getItem("todo"))) {
   for (i = 0; i < input.length; i++) {
-    list.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span class="span--to-do">${input[i]}</span
+    list.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span><span class="span--to-do">${input[i]}</span
     ><button class="btn--confirm">Confirm</button></li>`;
   }
 }
@@ -113,12 +135,15 @@ const add = function () {
     list.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span class="span--to-do">${addInput.value}</span
     ><button class="btn--confirm">Confirm</button></li>`;
 
-    //span class=<'task--date'>${taskDate}</span>
+    let taskDate = new Date();
     input.push(addInput.value);
+    // dayOfWeek.push([dayInWeek.value, taskDate.getTime()]);
 
     localStorage.setItem("todo", JSON.stringify(input));
+    //localStorage.setItem("todoDay", JSON.stringify(dayOfWeek));
 
     addInput.value = "";
+    //dayInWeek.value = "Monday";
     characterCounter.textContent = "20/20";
     characterCounter.classList.remove("zeroCharacterLeft");
   }
@@ -144,7 +169,9 @@ list.addEventListener("click", function (e) {
 
     if (index !== -1) {
       input.splice(index, 1);
+      dayOfWeek.splice(index, 1);
     }
+    localStorage.setItem("todoDay", JSON.stringify(dayOfWeek));
 
     localStorage.setItem("todo", JSON.stringify(input));
 
@@ -187,3 +214,83 @@ completed.addEventListener("click", function (e) {
   }
 });
 //localStorage.clear();
+
+/////////////////////////////////////////////////////////////////////////////////////
+// GEOLOCATION
+/*
+const displayCountry = document.querySelector(".geolocation");
+const renderCountry = function (flag, name, population) {
+  console.log(flag, name, population);
+  const html = `
+  <img  src="${flag}" />
+  <p>${name}</p>
+   <p>${population}M</p>`;
+  displayCountry.insertAdjacentHTML("beforebegin", html);
+};
+//  GET NAME OF COUNTRY / GET INFORMATION ABOUT COUNTRY
+const country = function (lat, lng) {
+  fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
+    .then((response) => {
+      if (!response.ok) throw new Error(`Country not found ${response.status}`);
+      return response.json();
+    })
+    .then((data) => {
+      const nameCountry = data.country.toLowerCase();
+      // calling covid function
+      covid(nameCountry);
+      return fetch(`https://restcountries.com/v3.1/name/${nameCountry}`);
+    })
+    .then((rep) => rep.json())
+    .then((data) => {
+      renderCountry(
+        data[0].flags.png,
+        data[0].name.common,
+        (+data[0].population / 1000000).toFixed(1)
+      );
+    });
+};
+
+// GET POSITION LAT & LNG
+navigator.geolocation.getCurrentPosition(
+  function (position) {
+    const { latitude: lat, longitude: lng } = position.coords;
+    console.log(`https://www.google.com/maps/@${lat},${lng}`);
+    country(lat, lng);
+  },
+  function () {
+    alert("Could not get your position");
+  }
+);
+
+//////////////////////////////////\
+
+const covid = function (country) {
+  fetch("https://api.covid19api.com/summary")
+    .then((response) => response.json())
+    .then((data) => {
+      for (i = 0; i < data.Countries.length; i++) {
+        if (Object.values(data.Countries[i]).includes(country)) {
+          console.log(
+            data,
+            data.Countries[i].Country,
+            data.Countries[i].TotalConfirmed,
+            data.Countries[i].TotalDeaths,
+            data.Countries[i].Slug
+          );
+          renderCovid(
+            (+data.Countries[i].TotalConfirmed / 1000000).toFixed(1),
+            data.Countries[i].TotalDeaths
+          );
+        }
+      }
+    });
+};
+
+const renderCovid = function (confirmed, deaths) {
+  const html = `
+  <p>Covid</p>
+  <p>Confirmed: ${confirmed} M</p>
+   <p>Deaths: ${deaths}</p>`;
+  displayCountry.insertAdjacentHTML("afterend", html);
+};
+*/
