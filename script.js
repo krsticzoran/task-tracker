@@ -3,17 +3,17 @@
 
 const btnAdd = document.querySelector(".btn--add");
 const addInput = document.querySelector(".input--add");
+const inputDate = document.querySelector(".input--date");
 const list = document.querySelector(".list");
 const completed = document.querySelector(".completed--list");
-const inputDate = document.querySelector(".date");
+const displayDate = document.querySelector(".date");
 const displayclock = document.querySelector(".clock");
 const characterCounter = document.querySelector(".characterCounter");
-const dayInWeek = document.querySelector("#taskDay");
 
 let input = [],
-  inputOne = [],
-  dayOfWeek = [];
-//localStorage.clear();
+  inputOne = [];
+
+localStorage.clear();
 ///////
 //var value = e.value;
 /////////////////////////////////////////////////////////////////////
@@ -26,14 +26,9 @@ const options = {
   month: "long",
   year: "numeric",
 };
-/*const taskOptions = {
-  day: "numeric",
-  month: "long",
-};
-const taskDate = currentDate.toLocaleDateString(locale, taskOptions);*/
 
-const displayDate = currentDate.toLocaleDateString(locale, options);
-inputDate.innerHTML = `<p>${displayDate}</p>`;
+currentDate = currentDate.toLocaleDateString(locale, options);
+displayDate.innerHTML = `<p>${currentDate}</p>`;
 
 /////////////////////////////////////////////////////////////////////
 
@@ -73,45 +68,13 @@ function updateValue() {
     characterCounter.textContent = `${20 - x}/20`;
   }
 }
-/////////////////////////////////////////////////////////////////////
-// TASK TIMER in progress
-/*let time;
-let taskDate = new Date();
-const vreme = function () {
-  time = Math.trunc((today.getTime() - taskDate.getTime()) / (1000 * 24));
 
-  const timeInProgress = () => {
-    time += 1;
-    console.log(time);
-  };
-
-  setInterval(timeInProgress, 60000);
-};
-vreme();*/
-
-////////////////////////////////////////////////////////////////////////
 //---- LOCALSTORAGE --
 
 //localStorage.clear();
 
 input = JSON.parse(localStorage.getItem("todo"));
 
-/*dayOfWeek = JSON.parse(localStorage.getItem("todoDay"));
-
-// if task add before more then 7 days we delete it because this is planner for 7 days
-for (i = 0; i < dayOfWeek.length; i++) {
-  let x = (currentDate.getTime() - dayOfWeek[i][1]) / (3600000 * 24);
-  console.log(x);
-  if (x >= 7) {
-    console.log(i);
-    input.splice(i, 1);
-    dayOfWeek.splice(i, 1);
-    localStorage.setItem("todoDay", JSON.stringify(dayOfWeek));
-
-    localStorage.setItem("todo", JSON.stringify(input));
-    i--;
-  }
-}*/
 if (JSON.parse(localStorage.getItem("todo"))) {
   for (i = 0; i < input.length; i++) {
     list.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span><span class="span--to-do">${input[i]}</span
@@ -136,15 +99,12 @@ const add = function () {
     list.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span class="span--to-do">${addInput.value}</span
     ><button class="btn--confirm">Confirm</button></li>`;
 
-    let taskDate = new Date();
     input.push(addInput.value);
-    // dayOfWeek.push([dayInWeek.value, taskDate.getTime()]);
 
     localStorage.setItem("todo", JSON.stringify(input));
-    //localStorage.setItem("todoDay", JSON.stringify(dayOfWeek));
 
     addInput.value = "";
-    //dayInWeek.value = "Monday";
+
     characterCounter.textContent = "20/20";
     characterCounter.classList.remove("zeroCharacterLeft");
   }
