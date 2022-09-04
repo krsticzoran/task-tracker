@@ -9,38 +9,35 @@
     <script defer src="script.js"></script>
   </head>
   <body>
-    <div class="flex">
-      <div class="container">
-        <div class="date"></div>
-        <div class="clock"></div>
-        <div class="add">
-          <!--
-          <select form="days" id="taskDay" autofocus>
-            <option value="Monday">Mon</option>
-            <option value="Tuesday">Tue</option>
-            <option value="Wednesday">Wed</option>
-            <option value="Thursday">Thu</option>
-            <option value="Friday">Fri</option>
-            <option value="Saturday">Sat</option>
-            <option value="Sunday">Sun</option>
-          </select>
-        -->
-          <input type="date" class="input--date" />
-          <input
-            type="text"
-            class="input--add"
-            maxlength="20"
-            placeholder="to do - task  "
-          />
-          <button class="btn--add">Add</button>
-        </div>
-        <div class="counterContainer">
-          <p class="characterCounter">20/20</p>
-        </div>
-        <div class="to--do">
-          <h3>To do List</h3>
-          <ul class="list">
-            <!---
+    <div>
+      <button class="btn--all">All</button>
+      <button class="btn--today">Today</button>
+      <button class="btn--tomorrow">Tomorrow</button>
+      <button class="btn--completed">Completed</button>
+      <button class="btn--failed">Failed</button>
+    </div>
+    <div class="container">
+      <div class="date"></div>
+      <div class="clock"></div>
+
+      <div class="add">
+        <input type="date" class="input--date" />
+        <input
+          type="text"
+          class="input--add"
+          maxlength="20"
+          placeholder="to do - task  "
+        />
+        <button class="btn--add">Add</button>
+      </div>
+      <div class="counterContainer">
+        <p class="characterCounter">20/20</p>
+      </div>
+
+      <div class="to--do">
+        <h3>To do List</h3>
+        <ul class="list">
+          <!---
           <li class="list--li">
            
             <input type="checkbox" class="check" /><span class="span--to-do">
@@ -53,22 +50,34 @@
               >Shopping</span
             ><button class="btn--confirm">Confirm</button>
           </li>
-        -->
-          </ul>
-        </div>
+        --></ul>
+      </div>
+      <div class="today--task">
+        <h3>Today</h3>
+        <ul class="today--list"></ul>
+      </div>
 
-        <div>
-          <h3>Completed</h3>
-          <ul class="completed--list">
-            <li class="completed--li">
-              <!--
+      <div class="tomorrow--task">
+        <h3>Tomorrow</h3>
+        <ul class="tomorrow--list"></ul>
+      </div>
+
+      <div class="failed--task">
+        <h3>Failed</h3>
+        <ul class="failed--list"></ul>
+      </div>
+
+      <div class="completed">
+        <h3>Completed</h3>
+        <ul class="completed--list">
+          <li class="completed--li">
+            <!--
             <span class="span--completed">Sports</span
             ><button class="delete">Delete</button>
-            --></li>
-          </ul>
-        </div>
+            -->
+          </li>
+        </ul>
       </div>
-      <div class="geolocation"></div>
     </div>
   </body>
 </html>

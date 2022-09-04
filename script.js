@@ -3,19 +3,29 @@
 
 const btnAdd = document.querySelector(".btn--add");
 const addInput = document.querySelector(".input--add");
+const inputDate = document.querySelector(".input--date");
 const list = document.querySelector(".list");
 const completed = document.querySelector(".completed--list");
-const inputDate = document.querySelector(".date");
-const displayclock = document.querySelector(".clock");
+const displayDate = document.querySelector(".date");
+const displayClock = document.querySelector(".clock");
 const characterCounter = document.querySelector(".characterCounter");
-const dayInWeek = document.querySelector("#taskDay");
+
+const taskTime = function (time) {
+  const str = new Date(time);
+  const timestamp = str.getTime();
+  return timestamp;
+};
+let today = new Date()
+  .toLocaleString()
+  .slice(0, 10)
+  .split("/")
+  .reverse()
+  .join("-");
 
 let input = [],
   inputOne = [],
-  dayOfWeek = [];
-//localStorage.clear();
-///////
-//var value = e.value;
+  failed = [];
+
 /////////////////////////////////////////////////////////////////////
 // ----- DISPLAY THE CURRENT DATE ----
 
@@ -32,8 +42,8 @@ const options = {
 };
 const taskDate = currentDate.toLocaleDateString(locale, taskOptions);*/
 
-const displayDate = currentDate.toLocaleDateString(locale, options);
-inputDate.innerHTML = `<p>${displayDate}</p>`;
+currentDate = currentDate.toLocaleDateString(locale, options);
+displayDate.innerHTML = `<p>${currentDate}</p>`;
 
 /////////////////////////////////////////////////////////////////////
 
@@ -54,7 +64,7 @@ const clock = () => {
       ? "0" + currentTime.getSeconds()
       : currentTime.getSeconds();
 
-  displayclock.innerHTML = ` <p>${hour}:${minutes}:${seconds}</p>`;
+  displayClock.innerHTML = ` <p>${hour}:${minutes}:${seconds}</p>`;
   setTimeout(clock, 1000);
 };
 
@@ -74,77 +84,62 @@ function updateValue() {
   }
 }
 /////////////////////////////////////////////////////////////////////
-// TASK TIMER in progress
-/*let time;
-let taskDate = new Date();
-const vreme = function () {
-  time = Math.trunc((today.getTime() - taskDate.getTime()) / (1000 * 24));
-
-  const timeInProgress = () => {
-    time += 1;
-    console.log(time);
-  };
-
-  setInterval(timeInProgress, 60000);
-};
-vreme();*/
 
 ////////////////////////////////////////////////////////////////////////
 //---- LOCALSTORAGE --
 
 //localStorage.clear();
+const allView = function () {
+  if (JSON.parse(localStorage.getItem("todo"))) {
+    input = JSON.parse(localStorage.getItem("todo"));
 
-input = JSON.parse(localStorage.getItem("todo"));
+    for (i = 0; i < input.length; i++) {
+      if (today !== input[i][1] && Date.now() > taskTime(input[i][1])) {
+        failed.push(input[i]);
+        localStorage.setItem("todo2", JSON.stringify(failed));
+        input.splice(i, 1);
+        localStorage.setItem("todo", JSON.stringify(input));
 
-/*dayOfWeek = JSON.parse(localStorage.getItem("todoDay"));
-
-// if task add before more then 7 days we delete it because this is planner for 7 days
-for (i = 0; i < dayOfWeek.length; i++) {
-  let x = (currentDate.getTime() - dayOfWeek[i][1]) / (3600000 * 24);
-  console.log(x);
-  if (x >= 7) {
-    console.log(i);
-    input.splice(i, 1);
-    dayOfWeek.splice(i, 1);
-    localStorage.setItem("todoDay", JSON.stringify(dayOfWeek));
-
-    localStorage.setItem("todo", JSON.stringify(input));
-    i--;
+        i--;
+      }
+    }
+    for (i = 0; i < input.length; i++) {
+      list.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span class="span--to-do">${input[i][0]}</span
+    ><span>${input[i][1]}</span><button class="btn--confirm">Confirm</button></li>`;
+    }
   }
-}*/
-if (JSON.parse(localStorage.getItem("todo"))) {
-  for (i = 0; i < input.length; i++) {
-    list.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span><span class="span--to-do">${input[i]}</span
-    ><button class="btn--confirm">Confirm</button></li>`;
-  }
-}
+};
+allView();
 
-if (JSON.parse(localStorage.getItem("todo1"))) {
-  inputOne = JSON.parse(localStorage.getItem("todo1"));
-  for (i = 0; i < inputOne.length; i++) {
-    completed.innerHTML += `<li class='completed--li'><span class="span--completed">${inputOne[i]}</span><button class='delete'>Delete</button></li>`;
+const completedView = function () {
+  if (JSON.parse(localStorage.getItem("todo1"))) {
+    inputOne = JSON.parse(localStorage.getItem("todo1"));
+
+    for (i = 0; i < inputOne.length; i++) {
+      completed.innerHTML += `<li class='completed--li'><span class="span--completed">${inputOne[i][0]}</span>${inputOne[i][1]}</span><button class='delete'>Delete</button></li>`;
+    }
   }
-}
+};
 
 /////////////////////////////////////////////////////////////////////
 // ----- ADD TASKS -----
 
 const add = function () {
-  if (addInput.value.length == 0) {
-    alert("Please input a task");
+  if (
+    addInput.value.length == 0 ||
+    inputDate.value == 0 ||
+    (today !== inputDate.value && Date.now() > taskTime(inputDate.value))
+  ) {
+    alert("Please input a task and valid date");
   } else {
     list.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span class="span--to-do">${addInput.value}</span
-    ><button class="btn--confirm">Confirm</button></li>`;
+    ><span>${inputDate.value}</span><button class="btn--confirm">Confirm</button></li>`;
 
-    let taskDate = new Date();
-    input.push(addInput.value);
-    // dayOfWeek.push([dayInWeek.value, taskDate.getTime()]);
+    input.push([addInput.value, inputDate.value]);
 
     localStorage.setItem("todo", JSON.stringify(input));
-    //localStorage.setItem("todoDay", JSON.stringify(dayOfWeek));
-
+    inputDate.value = "";
     addInput.value = "";
-    //dayInWeek.value = "Monday";
     characterCounter.textContent = "20/20";
     characterCounter.classList.remove("zeroCharacterLeft");
   }
@@ -160,31 +155,46 @@ addInput.addEventListener("keypress", function (e) {
 
 ////////////////////////////////////////////////////////////////////////////
 // ----- CONFIRM / TO DO LIST -----
-
-list.addEventListener("click", function (e) {
+const confirmToDo = function (e) {
   if (
     e.target.classList.contains("btn--confirm") &&
     e.target.parentElement.firstElementChild.checked
   ) {
-    const index = input.indexOf(e.target.previousElementSibling.textContent);
+    const element = [
+      e.target.parentElement.querySelector(".span--to-do").textContent,
+      e.target.previousElementSibling.textContent,
+    ];
+    let index = -1;
+    const indexFunction = function () {
+      for (i = 0; i < input.length; i++) {
+        if (input[i][0][1] == element[0][1]) {
+          index = i;
+        }
+      }
+    };
+    indexFunction();
 
     if (index !== -1) {
       input.splice(index, 1);
-      dayOfWeek.splice(index, 1);
     }
-    localStorage.setItem("todoDay", JSON.stringify(dayOfWeek));
 
-    localStorage.setItem("todo", JSON.stringify(input));
+    inputOne.push([
+      e.target.parentElement.querySelector(".span--to-do").textContent,
+      e.target.previousElementSibling.textContent,
+    ]);
 
-    inputOne.push(e.target.previousElementSibling.textContent);
-
-    localStorage.setItem("todo1", JSON.stringify(inputOne));
-
-    completed.innerHTML += `<li class='completed--li'><span class="span--completed">${e.target.previousElementSibling.textContent}</span><button class='delete'>Delete</button></li>`;
+    completed.innerHTML += `<li class='completed--li'><span class="span--completed">${
+      e.target.parentElement.querySelector(".span--to-do").textContent
+    }</span><span>${
+      e.target.previousElementSibling.textContent
+    }</span><button class='delete'>Delete</button></li>`;
 
     e.target.parentElement.remove();
+    localStorage.setItem("todo", JSON.stringify(input));
+    localStorage.setItem("todo1", JSON.stringify(inputOne));
   }
-});
+};
+list.addEventListener("click", confirmToDo);
 
 // CHECKBOX
 
@@ -205,93 +215,173 @@ completed.addEventListener("click", function (e) {
   if (e.target.classList.contains("delete")) {
     e.target.parentElement.remove();
 
-    const index = inputOne.indexOf(e.target.previousElementSibling.textContent);
+    const element = [
+      e.target.parentElement.querySelector(".span--completed").textContent,
+      e.target.previousElementSibling.textContent,
+    ];
+    let index = -1;
+    const indexFunction = function () {
+      for (i = 0; i < inputOne.length; i++) {
+        if (inputOne[i][0][1] == element[0][1]) {
+          index = i;
+        }
+      }
+    };
+    indexFunction();
 
     if (index !== -1) {
       inputOne.splice(index, 1);
     }
-
+    console.log(index);
     localStorage.setItem("todo1", JSON.stringify(inputOne));
   }
 });
 //localStorage.clear();
+///////////////////////////////////////////////////////
+// button completed
+const btnCompleted = document.querySelector(".btn--completed");
+////////////////////////
 
-/////////////////////////////////////////////////////////////////////////////////////
-// GEOLOCATION
-/*
-const displayCountry = document.querySelector(".geolocation");
-const renderCountry = function (flag, name, population) {
-  console.log(flag, name, population);
-  const html = `
-  <img  src="${flag}" />
-  <p>${name}</p>
-   <p>${population}M</p>`;
-  displayCountry.insertAdjacentHTML("beforebegin", html);
-};
-//  GET NAME OF COUNTRY / GET INFORMATION ABOUT COUNTRY
-const country = function (lat, lng) {
-  fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
-    .then((response) => {
-      if (!response.ok) throw new Error(`Country not found ${response.status}`);
-      return response.json();
-    })
-    .then((data) => {
-      const nameCountry = data.country.toLowerCase();
-      // calling covid function
-      covid(nameCountry);
-      return fetch(`https://restcountries.com/v3.1/name/${nameCountry}`);
-    })
-    .then((rep) => rep.json())
-    .then((data) => {
-      renderCountry(
-        data[0].flags.png,
-        data[0].name.common,
-        (+data[0].population / 1000000).toFixed(1)
-      );
-    });
-};
+btnCompleted.addEventListener("click", function () {
+  completed.innerHTML = "";
+  completedView();
+  document.querySelector(".today--task").style.display = "none";
+  document.querySelector(".add").style.display = "none";
+  document.querySelector(".to--do").style.display = "none";
+  document.querySelector(".completed").style.display = "block";
+  document.querySelector(".tomorrow--task").style.display = "none";
+  document.querySelector(".counterContainer").style.display = "none";
+  document.querySelector(".failed--task").style.display = "none";
+});
 
-// GET POSITION LAT & LNG
-navigator.geolocation.getCurrentPosition(
-  function (position) {
-    const { latitude: lat, longitude: lng } = position.coords;
-    console.log(`https://www.google.com/maps/@${lat},${lng}`);
-    country(lat, lng);
-  },
-  function () {
-    alert("Could not get your position");
+// button all
+const btnAll = document.querySelector(".btn--all");
+
+btnAll.addEventListener("click", function () {
+  list.innerHTML = "";
+  allView();
+  document.querySelector(".add").style.display = "flex";
+  document.querySelector(".to--do").style.display = "block";
+  document.querySelector(".completed").style.display = "none";
+  document.querySelector(".today--task").style.display = "none";
+  document.querySelector(".tomorrow--task").style.display = "none";
+  document.querySelector(".counterContainer").style.display = "block";
+  document.querySelector(".failed--task").style.display = "none";
+});
+// button today
+const btnToday = document.querySelector(".btn--today");
+
+/////
+///////////////////
+const listToday = document.querySelector(".today--list");
+
+btnToday.addEventListener("click", function () {
+  listToday.innerHTML = "";
+  for (i = 0; i < input.length; i++) {
+    if (today == input[i][1]) {
+      listToday.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span class="span--to-do">${input[i][0]}</span
+    ><span>${input[i][1]}</span><button class="btn--confirm">Confirm</button></li>`;
+    }
   }
-);
+  document.querySelector(".add").style.display = "none";
+  document.querySelector(".to--do").style.display = "none";
+  document.querySelector(".today--task").style.display = "block";
+  document.querySelector(".completed").style.display = "none";
+  document.querySelector(".tomorrow--task").style.display = "none";
+  document.querySelector(".counterContainer").style.display = "none";
+  document.querySelector(".failed--task").style.display = "none";
+});
+listToday.addEventListener("click", confirmToDo);
 
-//////////////////////////////////\
+/////////////////////////
+//tomorrow
+//const today = new Date()
+let tomorrow = new Date();
+tomorrow.setDate(tomorrow.getDate() + 1);
+tomorrow = new Date(tomorrow)
+  .toISOString()
+  .slice(0, 10)
+  .split("/")
+  .reverse()
+  .join("-");
+console.log(tomorrow);
 
-const covid = function (country) {
-  fetch("https://api.covid19api.com/summary")
-    .then((response) => response.json())
-    .then((data) => {
-      for (i = 0; i < data.Countries.length; i++) {
-        if (Object.values(data.Countries[i]).includes(country)) {
-          console.log(
-            data,
-            data.Countries[i].Country,
-            data.Countries[i].TotalConfirmed,
-            data.Countries[i].TotalDeaths,
-            data.Countries[i].Slug
-          );
-          renderCovid(
-            (+data.Countries[i].TotalConfirmed / 1000000).toFixed(1),
-            data.Countries[i].TotalDeaths
-          );
+const btnTomorrow = document.querySelector(".btn--tomorrow");
+const listTomorrow = document.querySelector(".tomorrow--list");
+
+btnTomorrow.addEventListener("click", function () {
+  listTomorrow.innerHTML = "";
+  for (i = 0; i < input.length; i++) {
+    if (tomorrow == input[i][1]) {
+      listTomorrow.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span class="span--to-do">${input[i][0]}</span
+    ><span>${input[i][1]}</span><button class="btn--confirm">Confirm</button></li>`;
+    }
+  }
+  document.querySelector(".add").style.display = "none";
+  document.querySelector(".to--do").style.display = "none";
+  document.querySelector(".today--task").style.display = "none";
+  document.querySelector(".completed").style.display = "none";
+  document.querySelector(".tomorrow--task").style.display = "block";
+  document.querySelector(".counterContainer").style.display = "none";
+  document.querySelector(".failed--task").style.display = "none";
+});
+listTomorrow.addEventListener("click", confirmToDo);
+
+/////////
+//failed
+
+const btnFailed = document.querySelector(".btn--failed");
+const listFailed = document.querySelector(".failed--list");
+
+btnFailed.addEventListener("click", function () {
+  if (JSON.parse(localStorage.getItem("todo2"))) {
+    failed = JSON.parse(localStorage.getItem("todo2"));
+  }
+  listFailed.innerHTML = "";
+  for (i = 0; i < failed.length; i++) {
+    listFailed.innerHTML += `<li class='completed--li'><span class="span--completed">${failed[i][0]}</span><span>${failed[i][1]}</span><button class='delete'>Delete</button></li>`;
+  }
+
+  document.querySelector(".add").style.display = "none";
+  document.querySelector(".to--do").style.display = "none";
+  document.querySelector(".today--task").style.display = "none";
+  document.querySelector(".completed").style.display = "none";
+  document.querySelector(".tomorrow--task").style.display = "none";
+  document.querySelector(".counterContainer").style.display = "none";
+  document.querySelector(".failed--task").style.display = "block";
+});
+
+//listFailed.addEventListener("click", confirmToDo); ??
+// faild odraditi delete i vratiti da ne moze da se unese prosli datum
+
+//srediti js code jer se ponavlja na mnogo mesta
+// search
+// api poruku neku
+//
+//paganation
+listFailed.addEventListener("click", function (e) {
+  if (e.target.classList.contains("delete")) {
+    e.target.parentElement.remove();
+
+    const element = [
+      e.target.parentElement.querySelector(".span--completed").textContent,
+      e.target.previousElementSibling.textContent,
+    ];
+    console.log(element);
+    let index = -1;
+    const indexFunction = function () {
+      for (i = 0; i < failed.length; i++) {
+        if (failed[i][0][1] == element[0][1]) {
+          index = i;
         }
       }
-    });
-};
+    };
+    indexFunction();
 
-const renderCovid = function (confirmed, deaths) {
-  const html = `
-  <p>Covid</p>
-  <p>Confirmed: ${confirmed} M</p>
-   <p>Deaths: ${deaths}</p>`;
-  displayCountry.insertAdjacentHTML("afterend", html);
-};
-*/
+    if (index !== -1) {
+      failed.splice(index, 1);
+    }
+    console.log(index);
+    localStorage.setItem("todo2", JSON.stringify(failed));
+  }
+});

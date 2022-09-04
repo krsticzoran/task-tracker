@@ -158,3 +158,17 @@ ul {
     height: 21px;
   }
 }
+
+.completed {
+  display: none;
+}
+.today--task {
+  display: none;
+}
+
+.tomorrow--task {
+  display: none;
+}
+.failed--task {
+  display: none;
+}
