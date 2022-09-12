@@ -6,38 +6,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>To Do List</title>
     <link rel="stylesheet" href="style.css" type="text/css" />
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+      integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+      crossorigin=""
+    />
+    <script
+      defer
+      src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+      integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+      crossorigin=""
+    ></script>
     <script defer src="script.js"></script>
   </head>
   <body>
-    <div>
-      <button class="btn--all">All</button>
-      <button class="btn--today">Today</button>
-      <button class="btn--tomorrow">Tomorrow</button>
-      <button class="btn--completed">Completed</button>
-      <button class="btn--failed">Failed</button>
-    </div>
-    <div class="container">
-      <div class="date"></div>
-      <div class="clock"></div>
-
-      <div class="add">
-        <input type="date" class="input--date" />
-        <input
-          type="text"
-          class="input--add"
-          maxlength="20"
-          placeholder="to do - task  "
-        />
-        <button class="btn--add">Add</button>
-      </div>
-      <div class="counterContainer">
-        <p class="characterCounter">20/20</p>
+    <nav class="navbar">
+      <div class="search">
+        <input type="search" class="input--search" />
+        <button class="btn--search">Search</button>
       </div>
 
-      <div class="to--do">
-        <h3>To do List</h3>
-        <ul class="list">
-          <!---
+      <div class="sort">
+        <div class="sort--value">
+          <p class="value--up">up</p>
+          <p class="value--down">down</p>
+        </div>
+      </div>
+      <div class="add--modal">
+        <p class="add-modal-btn">add</p>
+      </div>
+    </nav>
+    <div class="container--global">
+      <div class="modal modal--close">
+        <p class="close--modal">x</p>
+
+        <div class="add">
+          <input type="date" class="input--date" />
+          <input
+            type="text"
+            class="input--add"
+            maxlength="20"
+            placeholder="to do - task  "
+          />
+          <button class="btn--add">Add</button>
+        </div>
+        <div class="counterContainer">
+          <p class="characterCounter">20/20</p>
+        </div>
+      </div>
+      <div class="buttons--all">
+        <button class="btn--all">All</button>
+        <button class="btn--today">Today</button>
+        <button class="btn--tomorrow">Tomorrow</button>
+        <button class="btn--completed">Completed</button>
+        <button class="btn--failed">Failed</button>
+      </div>
+      <div class="container">
+        <div class="to--do">
+          <h3>To do List</h3>
+          <ul class="list">
+            <!---
           <li class="list--li">
            
             <input type="checkbox" class="check" /><span class="span--to-do">
@@ -50,33 +80,57 @@
               >Shopping</span
             ><button class="btn--confirm">Confirm</button>
           </li>
-        --></ul>
-      </div>
-      <div class="today--task">
-        <h3>Today</h3>
-        <ul class="today--list"></ul>
-      </div>
+        -->
+          </ul>
+        </div>
+        <div class="today--task">
+          <h3>Today</h3>
+          <ul class="today--list"></ul>
+        </div>
 
-      <div class="tomorrow--task">
-        <h3>Tomorrow</h3>
-        <ul class="tomorrow--list"></ul>
-      </div>
+        <div class="tomorrow--task">
+          <h3>Tomorrow</h3>
+          <ul class="tomorrow--list"></ul>
+        </div>
 
-      <div class="failed--task">
-        <h3>Failed</h3>
-        <ul class="failed--list"></ul>
-      </div>
+        <div class="serach--task">
+          <h3>Search Results</h3>
+          <p class="no--search">No Search Results</p>
 
-      <div class="completed">
-        <h3>Completed</h3>
-        <ul class="completed--list">
-          <li class="completed--li">
-            <!--
+          <ul class="search--list"></ul>
+        </div>
+
+        <div class="failed--task">
+          <h3>Failed</h3>
+          <p class="delete-all-failed">Delete All</p>
+
+          <ul class="failed--list"></ul>
+          <li class="no--search">No Search Results</li>
+        </div>
+
+        <div class="completed">
+          <h3>Completed</h3>
+
+          <p class="delete-all-completed">Delete All</p>
+          <ul class="completed--list">
+            <li class="completed--li">
+              <!--
             <span class="span--completed">Sports</span
             ><button class="delete">Delete</button>
-            -->
-          </li>
-        </ul>
+            --></li>
+          </ul>
+        </div>
+        <div class="paganation">
+          <p class="left"><</p>
+          <p class="page"></p>
+          <p class="right">></p>
+        </div>
+      </div>
+      <div class="right--layout">
+        <div class="date"></div>
+        <div class="clock"></div>
+
+        <div id="map"></div>
       </div>
     </div>
   </body>

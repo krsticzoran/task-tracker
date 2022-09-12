@@ -10,6 +10,17 @@ const displayDate = document.querySelector(".date");
 const displayClock = document.querySelector(".clock");
 const characterCounter = document.querySelector(".characterCounter");
 
+const page = document.querySelector(".page");
+let pageNumber = 0;
+const pageLoadTask = function () {
+  list.innerHTML = "";
+  for (i = pageNumber * 10; i <= pageNumber * 10 + 9; i++) {
+    if (input[i] !== undefined)
+      list.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span class="span--to-do">${input[i][0]}</span
+><span>${input[i][1]}</span><button class="btn--confirm">Confirm</button></li>`;
+  }
+};
+
 const taskTime = function (time) {
   const str = new Date(time);
   const timestamp = str.getTime();
@@ -24,7 +35,8 @@ let today = new Date()
 
 let input = [],
   inputOne = [],
-  failed = [];
+  failed = [],
+  temporary = [];
 
 /////////////////////////////////////////////////////////////////////
 // ----- DISPLAY THE CURRENT DATE ----
@@ -98,15 +110,20 @@ const allView = function () {
         failed.push(input[i]);
         localStorage.setItem("todo2", JSON.stringify(failed));
         input.splice(i, 1);
-        localStorage.setItem("todo", JSON.stringify(input));
 
+        localStorage.setItem("todo", JSON.stringify(input));
         i--;
       }
     }
-    for (i = 0; i < input.length; i++) {
-      list.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span class="span--to-do">${input[i][0]}</span
-    ><span>${input[i][1]}</span><button class="btn--confirm">Confirm</button></li>`;
+    //////////////////////////
+    //
+
+    page.textContent = `${pageNumber + 1} / ${Math.ceil(input.length / 10)}`;
+    if (input.length === 0) {
+      page.textContent = "";
     }
+
+    pageLoadTask();
   }
 };
 allView();
@@ -116,32 +133,82 @@ const completedView = function () {
     inputOne = JSON.parse(localStorage.getItem("todo1"));
 
     for (i = 0; i < inputOne.length; i++) {
-      completed.innerHTML += `<li class='completed--li'><span class="span--completed">${inputOne[i][0]}</span>${inputOne[i][1]}</span><button class='delete'>Delete</button></li>`;
+      completed.innerHTML += `<li class='completed--li'><span class="span--completed">${inputOne[i][0]}</span><span class='date-for-delete'>${inputOne[i][1]}</span><button class='delete'>Delete</button></li>`;
     }
   }
 };
 
 /////////////////////////////////////////////////////////////////////
 // ----- ADD TASKS -----
+let marker;
+let storageInput = [];
+
+const storage = function () {
+  storageInput = [];
+  for (i = 0; i < input.length; i++) {
+    storageInput.push([input[i][0], input[i][1], input[i][2], input[i][3]]);
+  }
+};
 
 const add = function () {
-  if (
-    addInput.value.length == 0 ||
+  if (mapEvent === undefined || mapEvent === "") {
+    alert("add location");
+  } else if (addInput.value.length == 0) {
+    alert("input a task");
+  } else if (
     inputDate.value == 0 ||
     (today !== inputDate.value && Date.now() > taskTime(inputDate.value))
   ) {
-    alert("Please input a task and valid date");
+    alert("Please input a valid date");
   } else {
     list.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span class="span--to-do">${addInput.value}</span
     ><span>${inputDate.value}</span><button class="btn--confirm">Confirm</button></li>`;
+    console.log(mapEvent);
+    const { lat } = mapEvent.latlng;
+    const { lng } = mapEvent.latlng;
 
-    input.push([addInput.value, inputDate.value]);
+    marker = L.marker([lat, lng])
+      .addTo(map)
+      .bindPopup(
+        L.popup({
+          maxWidth: 250,
+          minWidth: 100,
+          autoClose: false,
+          closeOnClick: false,
+          className: "",
+          //class name odrediti da bi lakse stilizovali popup
+          //mozda i menjali za failed i confirm
+        })
+      )
+      .setPopupContent(addInput.value)
+      .openPopup();
 
-    localStorage.setItem("todo", JSON.stringify(input));
-    inputDate.value = "";
-    addInput.value = "";
+    map.flyTo([lat, lng], 14);
+    input.push([addInput.value, inputDate.value, lat, lng, marker]);
+
+    storage();
+    localStorage.setItem("todo", JSON.stringify(storageInput));
+
     characterCounter.textContent = "20/20";
     characterCounter.classList.remove("zeroCharacterLeft");
+
+    listToday.innerHTML = "";
+    dayView(today, listToday);
+
+    listTomorrow.innerHTML = "";
+    dayView(tomorrow, listTomorrow);
+
+    page.textContent = `${pageNumber + 1} / ${Math.ceil(input.length / 10)}`;
+    pageLoadTask();
+
+    window.scrollTo(0, 0);
+
+    document.querySelector(".modal").classList.remove("modal--open");
+    document.querySelector(".modal").classList.add("modal--close");
+
+    inputDate.value = "";
+    addInput.value = "";
+    mapEvent = "";
   }
 };
 
@@ -154,88 +221,130 @@ addInput.addEventListener("keypress", function (e) {
 });
 
 ////////////////////////////////////////////////////////////////////////////
+//map center on click
+
+const markerFly = function (e) {
+  const element = [
+    e.target.parentElement.querySelector(".span--to-do").textContent,
+    e.target.parentElement.querySelector(".span--to-do").nextSibling
+      .textContent,
+  ];
+
+  for (i = 0; i < input.length; i++) {
+    if (input[i][0] === element[0] && input[i][1] === element[1]) {
+      map.flyTo([input[i][2], input[i][3]], 14);
+    }
+  }
+};
+list.addEventListener("click", markerFly);
+//////////////////////////////////
 // ----- CONFIRM / TO DO LIST -----
+
 const confirmToDo = function (e) {
+  const element = [
+    e.target.parentElement.querySelector(".span--to-do").textContent,
+    e.target.previousElementSibling.textContent,
+  ];
+
   if (
     e.target.classList.contains("btn--confirm") &&
     e.target.parentElement.firstElementChild.checked
   ) {
-    const element = [
-      e.target.parentElement.querySelector(".span--to-do").textContent,
-      e.target.previousElementSibling.textContent,
-    ];
-    let index = -1;
-    const indexFunction = function () {
-      for (i = 0; i < input.length; i++) {
-        if (input[i][0][1] == element[0][1]) {
-          index = i;
-        }
+    for (i = 0; i < input.length; i++) {
+      if (input[i][0] === element[0] && input[i][1] === element[1]) {
+        marker = input[i][4];
+
+        input.splice(i, 1);
       }
-    };
-    indexFunction();
-
-    if (index !== -1) {
-      input.splice(index, 1);
     }
+    map.removeLayer(marker);
+    inputOne.push(element);
 
-    inputOne.push([
-      e.target.parentElement.querySelector(".span--to-do").textContent,
-      e.target.previousElementSibling.textContent,
-    ]);
-
-    completed.innerHTML += `<li class='completed--li'><span class="span--completed">${
+    /*completed.innerHTML += `<li class='completed--li'><span class="span--completed">${
       e.target.parentElement.querySelector(".span--to-do").textContent
     }</span><span>${
       e.target.previousElementSibling.textContent
-    }</span><button class='delete'>Delete</button></li>`;
-
+    }</span><button class='delete'>Delete</button></li>`;*/
+    storage();
     e.target.parentElement.remove();
-    localStorage.setItem("todo", JSON.stringify(input));
+    localStorage.setItem("todo", JSON.stringify(storageInput));
     localStorage.setItem("todo1", JSON.stringify(inputOne));
+    page.textContent = `${pageNumber + 1} / ${Math.ceil(input.length / 10)}`;
+    pageLoadTask();
+    if (input.length == 0) {
+      page.textContent = "";
+    }
   }
 };
 list.addEventListener("click", confirmToDo);
 
 // CHECKBOX
 
-list.addEventListener("click", function (e) {
-  if (e.target.classList.contains("span--to-do")) {
-    if (e.target.previousElementSibling.checked == true) {
-      e.target.previousElementSibling.checked = false;
+const checkboxFunction = function (e) {
+  if (
+    e.target.classList.contains("span--to-do") ||
+    e.target.previousElementSibling.classList.contains("span--to-do")
+  ) {
+    if (e.target.parentElement.firstElementChild.checked == true) {
+      e.target.parentElement.firstElementChild.checked = false;
     } else {
-      e.target.previousElementSibling.checked = true;
+      e.target.parentElement.firstElementChild.checked = true;
     }
   }
-});
+};
 
+document
+  .querySelector(".today--task")
+  .addEventListener("click", checkboxFunction);
+list.addEventListener("click", checkboxFunction);
+document
+  .querySelector(".tomorrow--task")
+  .addEventListener("click", checkboxFunction);
+document
+  .querySelector(".serach--task")
+  .addEventListener("click", checkboxFunction);
 //////////////////////////////////////////////////////////////////////////////
 // ----- DELETE -----
 
 completed.addEventListener("click", function (e) {
   if (e.target.classList.contains("delete")) {
-    e.target.parentElement.remove();
-
     const element = [
       e.target.parentElement.querySelector(".span--completed").textContent,
-      e.target.previousElementSibling.textContent,
+      e.target.parentElement.querySelector(".date-for-delete").textContent,
     ];
-    let index = -1;
-    const indexFunction = function () {
-      for (i = 0; i < inputOne.length; i++) {
-        if (inputOne[i][0][1] == element[0][1]) {
-          index = i;
-        }
-      }
-    };
-    indexFunction();
 
-    if (index !== -1) {
-      inputOne.splice(index, 1);
+    for (i = 0; i < inputOne.length; i++) {
+      if (inputOne[i][0] === element[0] && inputOne[i][1] === element[1]) {
+        console.log(i);
+        inputOne.splice(i, 1);
+      }
     }
-    console.log(index);
+    e.target.parentElement.remove();
     localStorage.setItem("todo1", JSON.stringify(inputOne));
   }
 });
+
+//delete all completed
+document
+  .querySelector(".delete-all-completed")
+  .addEventListener("click", function () {
+    inputOne = [];
+    console.log(inputOne);
+    localStorage.setItem("todo1", JSON.stringify(inputOne));
+    completed.innerHTML = "";
+    //completedView();
+  });
+//delete all falied
+
+document
+  .querySelector(".delete-all-failed")
+  .addEventListener("click", function () {
+    failed = [];
+
+    localStorage.setItem("todo2", JSON.stringify(failed));
+    listFailed.innerHTML = "";
+    console.log(failed);
+  });
 //localStorage.clear();
 ///////////////////////////////////////////////////////
 // button completed
@@ -246,12 +355,15 @@ btnCompleted.addEventListener("click", function () {
   completed.innerHTML = "";
   completedView();
   document.querySelector(".today--task").style.display = "none";
-  document.querySelector(".add").style.display = "none";
+
   document.querySelector(".to--do").style.display = "none";
   document.querySelector(".completed").style.display = "block";
   document.querySelector(".tomorrow--task").style.display = "none";
-  document.querySelector(".counterContainer").style.display = "none";
+
   document.querySelector(".failed--task").style.display = "none";
+  document.querySelector(".serach--task").style.display = "none";
+  inputSearch.value = "";
+  document.querySelector(".paganation").style.display = "none";
 });
 
 // button all
@@ -259,14 +371,28 @@ const btnAll = document.querySelector(".btn--all");
 
 btnAll.addEventListener("click", function () {
   list.innerHTML = "";
+
+  for (i = 0; i < input.length; i++) {
+    marker = input[i][4];
+
+    map.removeLayer(marker);
+  }
+
   allView();
-  document.querySelector(".add").style.display = "flex";
+  addMarker();
+
   document.querySelector(".to--do").style.display = "block";
   document.querySelector(".completed").style.display = "none";
   document.querySelector(".today--task").style.display = "none";
   document.querySelector(".tomorrow--task").style.display = "none";
-  document.querySelector(".counterContainer").style.display = "block";
+
   document.querySelector(".failed--task").style.display = "none";
+  document.querySelector(".serach--task").style.display = "none";
+  document.querySelector(".paganation").style.display = "flex";
+
+  inputSearch.value = "";
+  inputDate.value = "";
+  addInput.value = "";
 });
 // button today
 const btnToday = document.querySelector(".btn--today");
@@ -275,23 +401,32 @@ const btnToday = document.querySelector(".btn--today");
 ///////////////////
 const listToday = document.querySelector(".today--list");
 
-btnToday.addEventListener("click", function () {
-  listToday.innerHTML = "";
+const dayView = function (day, list) {
   for (i = 0; i < input.length; i++) {
-    if (today == input[i][1]) {
-      listToday.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span class="span--to-do">${input[i][0]}</span
+    if (day == input[i][1]) {
+      list.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span class="span--to-do">${input[i][0]}</span
     ><span>${input[i][1]}</span><button class="btn--confirm">Confirm</button></li>`;
     }
   }
-  document.querySelector(".add").style.display = "none";
+};
+
+btnToday.addEventListener("click", function () {
+  listToday.innerHTML = "";
+  dayView(today, listToday);
+
   document.querySelector(".to--do").style.display = "none";
   document.querySelector(".today--task").style.display = "block";
   document.querySelector(".completed").style.display = "none";
   document.querySelector(".tomorrow--task").style.display = "none";
-  document.querySelector(".counterContainer").style.display = "none";
+
   document.querySelector(".failed--task").style.display = "none";
+  document.querySelector(".serach--task").style.display = "none";
+  document.querySelector(".paganation").style.display = "none";
+
+  inputSearch.value = "";
 });
 listToday.addEventListener("click", confirmToDo);
+listToday.addEventListener("mouseover", markerFly);
 
 /////////////////////////
 //tomorrow
@@ -311,21 +446,20 @@ const listTomorrow = document.querySelector(".tomorrow--list");
 
 btnTomorrow.addEventListener("click", function () {
   listTomorrow.innerHTML = "";
-  for (i = 0; i < input.length; i++) {
-    if (tomorrow == input[i][1]) {
-      listTomorrow.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span class="span--to-do">${input[i][0]}</span
-    ><span>${input[i][1]}</span><button class="btn--confirm">Confirm</button></li>`;
-    }
-  }
-  document.querySelector(".add").style.display = "none";
+  dayView(tomorrow, listTomorrow);
+
   document.querySelector(".to--do").style.display = "none";
   document.querySelector(".today--task").style.display = "none";
   document.querySelector(".completed").style.display = "none";
   document.querySelector(".tomorrow--task").style.display = "block";
-  document.querySelector(".counterContainer").style.display = "none";
+
   document.querySelector(".failed--task").style.display = "none";
+  document.querySelector(".serach--task").style.display = "none";
+  inputSearch.value = "";
+  document.querySelector(".paganation").style.display = "none";
 });
 listTomorrow.addEventListener("click", confirmToDo);
+listTomorrow.addEventListener("mouseover", markerFly);
 
 /////////
 //failed
@@ -333,55 +467,375 @@ listTomorrow.addEventListener("click", confirmToDo);
 const btnFailed = document.querySelector(".btn--failed");
 const listFailed = document.querySelector(".failed--list");
 
+const failedView = function () {
+  for (i = 0; i < failed.length; i++) {
+    listFailed.innerHTML += `<li class='completed--li'><span class="span--completed">${failed[i][0]}</span><span class='date-for-delete'>${failed[i][1]}</span><button class='delete'>Delete</button></li>`;
+  }
+};
+
 btnFailed.addEventListener("click", function () {
   if (JSON.parse(localStorage.getItem("todo2"))) {
     failed = JSON.parse(localStorage.getItem("todo2"));
   }
   listFailed.innerHTML = "";
-  for (i = 0; i < failed.length; i++) {
-    listFailed.innerHTML += `<li class='completed--li'><span class="span--completed">${failed[i][0]}</span><span>${failed[i][1]}</span><button class='delete'>Delete</button></li>`;
-  }
 
-  document.querySelector(".add").style.display = "none";
+  failedView();
+
   document.querySelector(".to--do").style.display = "none";
   document.querySelector(".today--task").style.display = "none";
   document.querySelector(".completed").style.display = "none";
   document.querySelector(".tomorrow--task").style.display = "none";
-  document.querySelector(".counterContainer").style.display = "none";
+
+  document.querySelector(".serach--task").style.display = "none";
+  document.querySelector(".paganation").style.display = "none";
+
+  inputSearch.value = "";
+
   document.querySelector(".failed--task").style.display = "block";
 });
 
-//listFailed.addEventListener("click", confirmToDo); ??
-// faild odraditi delete i vratiti da ne moze da se unese prosli datum
-
-//srediti js code jer se ponavlja na mnogo mesta
-// search
-// api poruku neku
-//
-//paganation
 listFailed.addEventListener("click", function (e) {
   if (e.target.classList.contains("delete")) {
     e.target.parentElement.remove();
 
     const element = [
       e.target.parentElement.querySelector(".span--completed").textContent,
-      e.target.previousElementSibling.textContent,
+      e.target.parentElement.querySelector(".date-for-delete").textContent,
     ];
-    console.log(element);
-    let index = -1;
-    const indexFunction = function () {
-      for (i = 0; i < failed.length; i++) {
-        if (failed[i][0][1] == element[0][1]) {
-          index = i;
-        }
-      }
-    };
-    indexFunction();
 
-    if (index !== -1) {
-      failed.splice(index, 1);
+    for (i = 0; i < failed.length; i++) {
+      if (failed[i][0] === element[0] && failed[i][1] === element[1]) {
+        failed.splice(i, 1);
+      }
     }
-    console.log(index);
     localStorage.setItem("todo2", JSON.stringify(failed));
   }
 });
+
+/////////////////////////
+//search
+const btnSearch = document.querySelector(".btn--search");
+const inputSearch = document.querySelector(".input--search");
+const listSearch = document.querySelector(".search--list");
+
+const searchView = function () {
+  for (i = 0; i < temporary.length; i++) {
+    listSearch.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span class="span--to-do">${temporary[i][0]}</span
+  ><span>${temporary[i][1]}</span><button class="btn--confirm">Confirm</button></li>`;
+  }
+};
+
+const search = function () {
+  listSearch.innerHTML = "";
+  document.querySelector(".no--search").style.display = "none";
+
+  temporary = [];
+
+  if (inputSearch.value.length == 0) {
+    alert("Please input a text");
+  } else {
+    for (i = 0; i < input.length; i++) {
+      if (input[i][0].includes(inputSearch.value)) {
+        temporary.push(input[i]);
+      }
+    }
+    if (temporary.length == 0) {
+      document.querySelector(".no--search").style.display = "block";
+      console.log(temporary.length);
+    }
+
+    searchView();
+    inputSearch.value = "";
+
+    document.querySelector(".to--do").style.display = "none";
+    document.querySelector(".today--task").style.display = "none";
+    document.querySelector(".completed").style.display = "none";
+    document.querySelector(".tomorrow--task").style.display = "none";
+
+    document.querySelector(".failed--task").style.display = "none";
+    document.querySelector(".paganation").style.display = "none";
+
+    document.querySelector(".serach--task").style.display = "block";
+  }
+};
+listSearch.addEventListener("click", confirmToDo);
+listSearch.addEventListener("mouseover", markerFly);
+
+btnSearch.addEventListener("click", search);
+inputSearch.addEventListener("keypress", function (e) {
+  if (e.key === "Enter") {
+    search();
+  }
+});
+
+//////////////////////////////////////////
+//PAGANATION
+const btnLeft = document.querySelector(".left");
+const btnRight = document.querySelector(".right");
+
+btnLeft.addEventListener("click", function () {
+  if (pageNumber > 0) {
+    pageNumber--;
+    window.scrollTo(0, 0);
+    pageLoadTask();
+    page.textContent = `${pageNumber + 1} / ${Math.ceil(input.length / 10)}`;
+  }
+});
+
+btnRight.addEventListener("click", function () {
+  if (pageNumber < Math.ceil(input.length / 10) - 1) {
+    pageNumber++;
+    page.textContent = `${pageNumber + 1} / ${Math.ceil(input.length / 10)}`;
+    pageLoadTask();
+    window.scrollTo(0, 0);
+  }
+});
+///////////////////////////////////////////
+//sort
+const upSortValue = document.querySelector(".value--up");
+const downSortValue = document.querySelector(".value--down");
+
+upSortValue.addEventListener("click", function () {
+  input.reverse();
+
+  for (i = 0; i < input.length; i++) {
+    marker = input[i][4];
+
+    map.removeLayer(marker);
+  }
+  //addMarker();
+
+  storage();
+
+  list.innerHTML = "";
+  listToday.innerHTML = "";
+
+  localStorage.setItem("todo", JSON.stringify(storageInput));
+
+  dayView(today, listToday);
+  console.log(input);
+
+  listTomorrow.innerHTML = "";
+  dayView(tomorrow, listTomorrow);
+  allView();
+
+  temporary.reverse();
+  listSearch.innerHTML = "";
+  searchView();
+
+  inputOne.reverse();
+  localStorage.setItem("todo1", JSON.stringify(inputOne));
+
+  completed.innerHTML = "";
+  completedView();
+
+  failed.sort();
+  listFailed.innerHTML = "";
+  localStorage.setItem("todo2", JSON.stringify(failed));
+
+  failedView();
+  window.scrollTo(0, 0);
+  addMarker();
+});
+console.log(input);
+downSortValue.addEventListener("click", function () {
+  for (i = 0; i < input.length; i++) {
+    marker = input[i][4];
+
+    map.removeLayer(marker);
+  }
+  input.sort();
+
+  storage();
+  list.innerHTML = "";
+
+  listToday.innerHTML = "";
+
+  localStorage.setItem("todo", JSON.stringify(storageInput));
+  dayView(today, listToday);
+
+  listTomorrow.innerHTML = "";
+  dayView(tomorrow, listTomorrow);
+
+  listSearch.innerHTML = "";
+  temporary.sort();
+  searchView();
+  allView();
+
+  inputOne.sort();
+  localStorage.setItem("todo1", JSON.stringify(inputOne));
+
+  completed.innerHTML = "";
+  completedView();
+
+  failed.sort();
+  listFailed.innerHTML = "";
+  localStorage.setItem("todo2", JSON.stringify(failed));
+
+  failedView();
+  window.scrollTo(0, 0);
+  console.log(input);
+  addMarker();
+});
+/////////////////////////////////////////////
+// Modal
+
+const btnModal = document.querySelector(".add-modal-btn");
+
+btnModal.addEventListener("click", function () {
+  document.querySelector(".modal").classList.add("modal--open");
+  document.querySelector(".modal").classList.remove("modal--close");
+  addInput.focus();
+});
+document.querySelector(".close--modal").addEventListener("click", function (e) {
+  document.querySelector(".modal").classList.remove("modal--open");
+  document.querySelector(".modal").classList.add("modal--close");
+});
+////////////////////////////////////////////////
+//API
+// GET POSITION LAT & LNG
+
+const currentPosition = function (lat, lng) {
+  fetch(
+    `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`
+  )
+    .then((response) => {
+      if (!response.ok) throw new Error(`City not found ${response.status}`);
+      return response.json();
+    })
+    .then((data) => {
+      const city = data.city;
+      renderCity(city);
+      return fetch(`https://goweather.herokuapp.com/weather/${city}`);
+    })
+    .then((rep) => rep.json())
+    .then((data) => {
+      console.log(data);
+      renderWeather(data.temperature, data.wind, data.description);
+    });
+};
+
+const renderWeather = function (temperature, wind, weather) {
+  if (temperature == "") {
+    const html = `<p>:(</p>`;
+    displayClock.insertAdjacentHTML("afterend", html);
+  } else {
+    const html = `
+
+  <p>${temperature}</p>
+   <p>${wind}</p>
+   <p>${weather}</p>
+   `;
+    displayClock.insertAdjacentHTML("afterend", html);
+  }
+};
+
+const renderCity = function (city) {
+  const html = `
+  
+  <p>${city}</p>
+   `;
+
+  displayClock.insertAdjacentHTML("afterend", html);
+};
+
+//////////////////////////////////////////
+//map
+let map, mapEvent;
+
+const addMarker = function () {
+  for (i = 0; i < input.length; i++) {
+    storageMarker = L.marker([input[i][2], input[i][3]])
+      .addTo(map)
+      .bindPopup(
+        L.popup({
+          maxWidth: 250,
+          minWidth: 100,
+          autoClose: false,
+          closeOnClick: false,
+          className: "",
+
+          //class name odrediti da bi lakse stilizovali popup
+          //mozda i menjali za failed i confirm
+        })
+      )
+      .setPopupContent(input[i][0])
+      .openPopup();
+
+    input[i].push(storageMarker);
+  }
+};
+console.log(mapEvent);
+navigator.geolocation.getCurrentPosition(
+  function (position) {
+    const { latitude } = position.coords;
+    const { longitude } = position.coords;
+
+    // l. je internation -name space koji nam omogucava- global variable
+    //razlicite metode .map . setwiew su metode  'map' je id diva gde ce ici mapa
+    // moramo imati i u html div sa map
+    // var menjamo u const
+    //44.787197, 20.457273
+    map = L.map("map").setView([latitude, longitude], 14);
+
+    L.tileLayer("http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}", {
+      maxZoom: 20,
+      subdomains: ["mt0", "mt1", "mt2", "mt3"],
+    }).addTo(map);
+    // L.tileLayer("https://{s}.tile.openstreetmap.fr/hot//{z}/{x}/{y}.png", {
+    //   attribution:
+    //     '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    // }).addTo(map);
+
+    //marker();
+    addMarker();
+
+    currentPosition(latitude, longitude);
+    map.flyTo([latitude, longitude], 14);
+
+    //leaflet version of click event
+    map.on("click", function (e) {
+      mapEvent = e;
+      console.log(mapEvent.latlng);
+      document.querySelector(".modal").classList.add("modal--open");
+      document.querySelector(".modal").classList.remove("modal--close");
+      addInput.focus();
+    });
+  },
+  function () {
+    alert("nema lokacije");
+    let latitude, longitude;
+    if (input.length == 0) {
+      latitude = 44.787197;
+      longitude = 20.457273;
+    } else {
+      x = input.length - 1;
+      latitude = input[x][2];
+      longitude = input[x][3];
+    }
+
+    map = L.map("map").setView([latitude, longitude], 8);
+
+    L.tileLayer("http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}", {
+      maxZoom: 20,
+      subdomains: ["mt0", "mt1", "mt2", "mt3"],
+    }).addTo(map);
+
+    //marker();
+    addMarker();
+
+    currentPosition(latitude, longitude);
+
+    //leaflet version of click event
+    map.on("click", function (e) {
+      mapEvent = e;
+      console.log(mapEvent.latlng);
+      document.querySelector(".modal").classList.add("modal--open");
+      document.querySelector(".modal").classList.remove("modal--close");
+      addInput.focus();
+    });
+  }
+);
+
+// loader dok ucitava
+//hamburger menu

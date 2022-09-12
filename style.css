@@ -3,11 +3,14 @@
   margin: 0;
   padding: 0;
 }
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   font-size: 20px;
   font-family: "Montserrat", sans-serif;
-  background: #03396c;
+  background-color: #fff;
 }
 
 h3 {
@@ -24,10 +27,11 @@ ul {
 }
 
 .container {
+  margin-left: 15vw;
+  margin-top: 50px;
   padding-top: 40px;
-  background: #6497b1;
-  width: 400px;
-  margin: 0 auto;
+  background-color: #fff;
+  width: 50vw;
   padding-bottom: 40px;
 }
 /* ----- DATE && CLOCK ----- */
@@ -106,14 +110,13 @@ ul {
 
 .span--to-do,
 .span--completed {
-  color: #011f4b;
   width: 75%;
   height: 100%;
   padding: 0 10px;
   font-size: 18px;
 }
 
-.span--to-do {
+span {
   cursor: pointer;
 }
 /*
@@ -171,4 +174,102 @@ ul {
 }
 .failed--task {
   display: none;
+}
+.serach--task {
+  display: none;
+}
+.no--search {
+  display: none;
+}
+
+.paganation {
+  display: flex;
+  justify-content: space-between;
+}
+.left,
+.right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin: 0 40px;
+  background-color: #011f4b;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+}
+
+.sort {
+  display: flex;
+  justify-content: center;
+}
+
+.modal {
+  display: block;
+  z-index: 200;
+  position: fixed;
+  top: 50px;
+  width: 30vw;
+  background-color: greenyellow;
+  transition: right 0.5s;
+}
+
+.modal--open {
+  right: 0;
+}
+.modal--close {
+  right: -35vw;
+}
+.right--layout {
+  background-color: white;
+  width: 30vw;
+  height: 100vh;
+  margin-top: 50px;
+  position: fixed;
+  right: 0;
+}
+
+.container--global {
+  display: flex;
+
+  transition: all 1s;
+}
+
+.buttons--all {
+  display: flex;
+  flex-direction: column;
+  width: 15vw;
+  gap: 20px;
+  position: fixed;
+  top: 50px;
+  left: 0px;
+  background-color: #e5e5e5;
+  height: 100vh;
+}
+
+.navbar {
+  display: flex;
+  z-index: 200;
+  width: 100vw;
+  padding-left: 10vw;
+  padding-right: 30vw;
+  background-color: #ff3b3f;
+  justify-content: space-between;
+  height: 50px;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+}
+
+.btn--all,
+.btn--today,
+.btn--tomorrow,
+.btn--completed,
+.btn--failed {
+  height: 40px;
+  cursor: pointer;
+}
+#map {
+  width: 30vw;
+  height: 70vh;
 }
