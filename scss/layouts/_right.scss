@@ -11,6 +11,9 @@
   width: 60vw;
   height: 70vh;
   z-index: 0;
+  @include response(xl) {
+    width: 50vw;
+  }
 }
 
 .map--cover {
@@ -21,6 +24,9 @@
   height: 70vh;
   opacity: 0.9;
   background-color: white;
+  @include response(xl) {
+    width: 50vw;
+  }
 }
 
 .map--cover-p {
@@ -32,6 +38,9 @@
   height: 70vh;
   z-index: 200;
   @include center;
+  @include response(xl) {
+    width: 50vw;
+  }
 }
 
 .weather {
@@ -41,6 +50,9 @@
   height: 14rem;
   background-color: color(white);
   margin-bottom: 1rem;
+  @include response(xl) {
+    width: 50vw;
+  }
 }
 
 .city {
@@ -55,6 +67,10 @@
   justify-content: space-between;
   padding: 4rem 5vw;
   font-size: size(l);
+  @include response(xl) {
+    font-size: size(m);
+    padding: 3rem 5vw;
+  }
 }
 
 .temp {

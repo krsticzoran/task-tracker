@@ -3,6 +3,9 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  @include response(xl) {
+    width: 50vw;
+  }
 }
 
 h3 {
@@ -72,19 +75,22 @@ li {
 
 .span--to-do,
 .span--completed {
-  width: 75%;
+  width: 65%;
   height: 100%;
   padding: 0 1rem;
-  font-size: size(l);
+  font-size: size(m);
   color: color(primary);
   padding-top: 0.5rem;
+  @include response(xl) {
+    font-size: size(s);
+  }
 }
 
 .span--to-do-date {
   color: color(supportone);
-  font-weight: 100;
-  padding-right: 7rem;
-  width: 15rem;
+  font-weight: 400;
+
+  width: 25%;
 }
 
 span {

@@ -142,6 +142,9 @@ select:focus {
   height: 14rem;
   background-color: #878afe;
   transition: right 0.5s; }
+  @media (max-width: 1200px) {
+    .modal {
+      width: 50vw; } }
 
 .modal--open {
   right: 0; }
@@ -151,9 +154,6 @@ select:focus {
   @media (max-width: 1200px) {
     .modal--close {
       right: -65vw; } }
-  @media (max-width: 1200px) {
-    .modal--close {
-      right: -100vw; } }
 
 .add {
   margin-top: 2rem; }
@@ -165,6 +165,10 @@ select:focus {
   width: 20rem;
   font-size: 1.6rem;
   color: #31446c; }
+  @media (max-width: 1200px) {
+    .input--date {
+      margin: 0 1rem 0 1rem;
+      width: 17rem; } }
 
 .input--add {
   padding-left: 2rem;
@@ -172,12 +176,16 @@ select:focus {
   height: 3rem;
   font-size: 1.6rem;
   color: #31446c; }
+  @media (max-width: 1200px) {
+    .input--add {
+      margin: 0 1rem 0 1rem;
+      width: 17rem; } }
 
 .close--modal-cancel {
   display: flex;
   justify-content: flex-end;
   padding-right: 4rem;
-  padding-top: 2rem; }
+  padding-top: 1rem; }
 
 .close--modal {
   text-align: center;
@@ -210,16 +218,28 @@ select:focus {
   margin-left: 40rem;
   color: #31446c;
   font-size: 1.6rem; }
+  @media (max-width: 1200px) {
+    .counterContainer {
+      margin-left: 32rem; } }
 
 .container--global {
   display: flex;
   position: relative; }
+  @media (max-width: 1200px) {
+    .container--global {
+      background-color: pink; } }
+  @media (max-width: 800px) {
+    .container--global {
+      background-color: yellowgreen; } }
 
 .container {
   width: 40vw;
   display: flex;
   align-items: center;
   flex-direction: column; }
+  @media (max-width: 1200px) {
+    .container {
+      width: 50vw; } }
 
 h3 {
   font-size: 2.6rem;
@@ -279,18 +299,21 @@ li {
 
 .span--to-do,
 .span--completed {
-  width: 75%;
+  width: 65%;
   height: 100%;
   padding: 0 1rem;
-  font-size: 2.1rem;
+  font-size: 1.8rem;
   color: #878afe;
   padding-top: 0.5rem; }
+  @media (max-width: 1200px) {
+    .span--to-do,
+    .span--completed {
+      font-size: 1.6rem; } }
 
 .span--to-do-date {
   color: #31446c;
-  font-weight: 100;
-  padding-right: 7rem;
-  width: 15rem; }
+  font-weight: 400;
+  width: 25%; }
 
 span {
   cursor: pointer; }
@@ -364,6 +387,9 @@ span {
   width: 60vw;
   height: 70vh;
   z-index: 0; }
+  @media (max-width: 1200px) {
+    #map {
+      width: 50vw; } }
 
 .map--cover {
   z-index: 100;
@@ -373,6 +399,9 @@ span {
   height: 70vh;
   opacity: 0.9;
   background-color: white; }
+  @media (max-width: 1200px) {
+    .map--cover {
+      width: 50vw; } }
 
 .map--cover-p {
   position: absolute;
@@ -385,6 +414,9 @@ span {
   display: flex;
   align-items: center;
   justify-content: center; }
+  @media (max-width: 1200px) {
+    .map--cover-p {
+      width: 50vw; } }
 
 .weather {
   margin-top: 1rem;
@@ -393,6 +425,9 @@ span {
   height: 14rem;
   background-color: #fff;
   margin-bottom: 1rem; }
+  @media (max-width: 1200px) {
+    .weather {
+      width: 50vw; } }
 
 .city {
   text-align: center;
@@ -405,6 +440,10 @@ span {
   justify-content: space-between;
   padding: 4rem 5vw;
   font-size: 2.1rem; }
+  @media (max-width: 1200px) {
+    .temp--container {
+      font-size: 1.8rem;
+      padding: 3rem 5vw; } }
 
 .temp {
   color: #f4863c; }

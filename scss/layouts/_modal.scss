@@ -7,6 +7,9 @@
   height: 14rem;
   background-color: color(primary);
   transition: right 0.5s;
+  @include response(xl) {
+    width: 50vw;
+  }
 }
 
 .modal--open {
@@ -16,9 +19,7 @@
   @include response(xl) {
     right: -65vw;
   }
-  @include response(xl) {
-    right: -100vw;
-  }
+
   right: -45vw;
 }
 
@@ -33,6 +34,10 @@
   width: 20rem;
   font-size: size(s);
   color: color(supportone);
+  @include response(xl) {
+    margin: 0 1rem 0 1rem;
+    width: 17rem;
+  }
 }
 
 .input--add {
@@ -42,12 +47,16 @@
   height: 3rem;
   font-size: size(s);
   color: color(supportone);
+  @include response(xl) {
+    margin: 0 1rem 0 1rem;
+    width: 17rem;
+  }
 }
 .close--modal-cancel {
   display: flex;
   justify-content: flex-end;
   padding-right: 4rem;
-  padding-top: 2rem;
+  padding-top: 1rem;
 }
 
 .close--modal {
@@ -84,4 +93,7 @@
   margin-left: 40rem;
   color: color(supportone);
   font-size: size(s);
+  @include response(xl) {
+    margin-left: 32rem;
+  }
 }
