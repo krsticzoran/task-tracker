@@ -214,12 +214,6 @@ select:focus {
 .container--global {
   display: flex;
   position: relative; }
-  @media (max-width: 1200px) {
-    .container--global {
-      background-color: pink; } }
-  @media (max-width: 800px) {
-    .container--global {
-      background-color: yellowgreen; } }
 
 .container {
   width: 40vw;

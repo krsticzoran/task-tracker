@@ -1,10 +1,5 @@
 .container--global {
   display: flex;
-  @include response(xl) {
-    background-color: pink;
-  }
-  @include response(l) {
-    background-color: yellowgreen;
-  }
+
   position: relative;
 }
