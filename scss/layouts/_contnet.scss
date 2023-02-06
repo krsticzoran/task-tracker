@@ -1,0 +1,151 @@
+.container {
+  width: 40vw;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+h3 {
+  font-size: size(xxl);
+  font-weight: 400;
+  text-align: center;
+  margin: 5rem 0;
+  color: color(primary);
+}
+
+.today--task,
+.tomorrow--task,
+.serach--task,
+.failed--task,
+.completed {
+  display: none;
+}
+
+// sort
+.sort {
+  position: absolute;
+  top: 10rem;
+  left: 7%;
+}
+
+.value--up {
+  stroke: color(primary);
+  border-radius: 50%;
+  height: 3rem;
+  width: 3rem;
+  background-color: #f8f8f8;
+  cursor: pointer;
+  color: color(primary);
+  transition: all 1s;
+
+  &:active {
+    color: color(white);
+    stroke: color(white);
+  }
+}
+
+// LISTS
+li {
+  list-style: none;
+}
+.all--lists {
+  width: 85%;
+  height: 70%;
+}
+
+.list--li,
+.completed--li {
+  margin: 1rem 0;
+  background: color(white);
+  height: 3.5rem;
+  position: relative;
+  @include center;
+  border-top-right-radius: 10rem;
+  border-bottom-right-radius: 10rem;
+}
+
+.check {
+  margin-left: 0.5rem;
+  width: 5%;
+  cursor: pointer;
+}
+
+.span--to-do,
+.span--completed {
+  width: 75%;
+  height: 100%;
+  padding: 0 1rem;
+  font-size: size(l);
+  color: color(primary);
+  padding-top: 0.5rem;
+}
+
+.span--to-do-date {
+  color: color(supportone);
+  font-weight: 100;
+  padding-right: 7rem;
+  width: 15rem;
+}
+
+span {
+  cursor: pointer;
+}
+
+// PAGANATION
+.paganation {
+  display: flex;
+  width: 30%;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 3rem;
+  @include response(xl) {
+    width: 35%;
+  }
+}
+.page {
+  color: color(primary);
+  font-size: size(l);
+}
+.left,
+.right {
+  @include center;
+  cursor: pointer;
+  margin: 0 4rem;
+  background-color: color(primary);
+  border-radius: 50%;
+  height: 4rem;
+  width: 4rem;
+  color: color(white);
+  font-size: size(s);
+  font-weight: 900;
+  @include shadow;
+
+  &:active {
+    @include btn-active;
+  }
+}
+
+.btn--confirm,
+.delete {
+  height: 3.5rem;
+  width: 10rem;
+  background-color: color(secondary);
+  color: color(white);
+
+  @include center;
+  border: 1px solid transparent;
+  text-transform: uppercase;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 10rem;
+}
+
+.delete-all {
+  cursor: pointer;
+  position: absolute;
+  bottom: 4vw;
+  left: 30vw;
+  text-align: right;
+  color: color(supportone);
+  font-size: size(l);
+}

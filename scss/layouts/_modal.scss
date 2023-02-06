@@ -1,0 +1,87 @@
+.modal {
+  display: block;
+  z-index: 200;
+  position: fixed;
+  top: 9rem;
+  width: 50rem;
+  height: 14rem;
+  background-color: color(primary);
+  transition: right 0.5s;
+}
+
+.modal--open {
+  right: 0;
+}
+.modal--close {
+  @include response(xl) {
+    right: -65vw;
+  }
+  @include response(xl) {
+    right: -100vw;
+  }
+  right: -45vw;
+}
+
+.add {
+  margin-top: 2rem;
+}
+
+.input--date {
+  height: 3rem;
+  padding-left: 2rem;
+  margin: 0 2rem 0 4rem;
+  width: 20rem;
+  font-size: size(s);
+  color: color(supportone);
+}
+
+.input--add {
+  padding-left: 2rem;
+
+  width: 20rem;
+  height: 3rem;
+  font-size: size(s);
+  color: color(supportone);
+}
+.close--modal-cancel {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 4rem;
+  padding-top: 2rem;
+}
+
+.close--modal {
+  text-align: center;
+  font-size: size(l);
+  padding-right: 1rem;
+  padding-top: 1rem;
+  cursor: pointer;
+  color: color(white);
+  padding-right: 5rem;
+}
+
+.btn--add {
+  width: 10rem;
+  height: 3rem;
+  border-radius: 10rem;
+
+  background-color: color(supportthree);
+
+  @include center;
+  border: 1px solid transparent;
+  text-transform: uppercase;
+  font-weight: 600;
+  cursor: pointer;
+
+  @include shadow;
+  &:active {
+    @include btn-active;
+  }
+}
+
+.counterContainer {
+  margin-top: 0.5rem;
+  margin-left: 40rem;
+  color: color(supportone);
+  font-size: size(s);
+}

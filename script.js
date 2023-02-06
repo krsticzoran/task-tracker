@@ -17,7 +17,7 @@ const pageLoadTask = function () {
   for (i = pageNumber * 10; i <= pageNumber * 10 + 9; i++) {
     if (input[i] !== undefined)
       list.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span class="span--to-do">${input[i][0]}</span
-><span>${input[i][1]}</span><button class="btn--confirm">Confirm</button></li>`;
+><span class='span--to-do-date'>${input[i][1]}</span><button class="btn--confirm">Confirm</button></li>`;
   }
 };
 
@@ -133,7 +133,7 @@ const completedView = function () {
     inputOne = JSON.parse(localStorage.getItem("todo1"));
 
     for (i = 0; i < inputOne.length; i++) {
-      completed.innerHTML += `<li class='completed--li'><span class="span--completed">${inputOne[i][0]}</span><span class='date-for-delete'>${inputOne[i][1]}</span><button class='delete'>Delete</button></li>`;
+      completed.innerHTML += `<li class='completed--li'><span class="span--completed">${inputOne[i][0]}</span><span class='date-for-delete span--to-do-date'>${inputOne[i][1]}</span><button class='delete'>Delete</button></li>`;
     }
   }
 };
@@ -162,7 +162,7 @@ const add = function () {
     alert("Please input a valid date");
   } else {
     list.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span class="span--to-do">${addInput.value}</span
-    ><span>${inputDate.value}</span><button class="btn--confirm">Confirm</button></li>`;
+    ><span class='span--to-do-date'>${inputDate.value}</span><button class="btn--confirm">Confirm</button></li>`;
     console.log(mapEvent);
     const { lat } = mapEvent.latlng;
     const { lng } = mapEvent.latlng;
@@ -364,6 +364,7 @@ btnCompleted.addEventListener("click", function () {
   document.querySelector(".serach--task").style.display = "none";
   inputSearch.value = "";
   document.querySelector(".paganation").style.display = "none";
+  closeMenu();
 });
 
 // button all
@@ -380,6 +381,7 @@ btnAll.addEventListener("click", function () {
 
   allView();
   addMarker();
+  closeMenu();
 
   document.querySelector(".to--do").style.display = "block";
   document.querySelector(".completed").style.display = "none";
@@ -405,7 +407,7 @@ const dayView = function (day, list) {
   for (i = 0; i < input.length; i++) {
     if (day == input[i][1]) {
       list.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span class="span--to-do">${input[i][0]}</span
-    ><span>${input[i][1]}</span><button class="btn--confirm">Confirm</button></li>`;
+    ><span class='span--to-do-date'>${input[i][1]}</span><button class="btn--confirm">Confirm</button></li>`;
     }
   }
 };
@@ -413,6 +415,7 @@ const dayView = function (day, list) {
 btnToday.addEventListener("click", function () {
   listToday.innerHTML = "";
   dayView(today, listToday);
+  closeMenu();
 
   document.querySelector(".to--do").style.display = "none";
   document.querySelector(".today--task").style.display = "block";
@@ -447,6 +450,7 @@ const listTomorrow = document.querySelector(".tomorrow--list");
 btnTomorrow.addEventListener("click", function () {
   listTomorrow.innerHTML = "";
   dayView(tomorrow, listTomorrow);
+  closeMenu();
 
   document.querySelector(".to--do").style.display = "none";
   document.querySelector(".today--task").style.display = "none";
@@ -469,7 +473,7 @@ const listFailed = document.querySelector(".failed--list");
 
 const failedView = function () {
   for (i = 0; i < failed.length; i++) {
-    listFailed.innerHTML += `<li class='completed--li'><span class="span--completed">${failed[i][0]}</span><span class='date-for-delete'>${failed[i][1]}</span><button class='delete'>Delete</button></li>`;
+    listFailed.innerHTML += `<li class='completed--li'><span class="span--completed">${failed[i][0]}</span><span class='date-for-delete span--to-do-date'>${failed[i][1]}</span><button class='delete'>Delete</button></li>`;
   }
 };
 
@@ -492,6 +496,7 @@ btnFailed.addEventListener("click", function () {
   inputSearch.value = "";
 
   document.querySelector(".failed--task").style.display = "block";
+  closeMenu();
 });
 
 listFailed.addEventListener("click", function (e) {
@@ -521,7 +526,7 @@ const listSearch = document.querySelector(".search--list");
 const searchView = function () {
   for (i = 0; i < temporary.length; i++) {
     listSearch.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span class="span--to-do">${temporary[i][0]}</span
-  ><span>${temporary[i][1]}</span><button class="btn--confirm">Confirm</button></li>`;
+  ><span class='span--to-do-date'>${temporary[i][1]}</span><button class="btn--confirm">Confirm</button></li>`;
   }
 };
 
@@ -594,49 +599,82 @@ btnRight.addEventListener("click", function () {
 //sort
 const upSortValue = document.querySelector(".value--up");
 const downSortValue = document.querySelector(".value--down");
-
+let x = 1;
 upSortValue.addEventListener("click", function () {
-  input.reverse();
-
   for (i = 0; i < input.length; i++) {
     marker = input[i][4];
 
     map.removeLayer(marker);
   }
-  //addMarker();
 
-  storage();
+  if (x == 1) {
+    input.sort();
+    storage();
+    list.innerHTML = "";
 
-  list.innerHTML = "";
-  listToday.innerHTML = "";
+    listToday.innerHTML = "";
 
-  localStorage.setItem("todo", JSON.stringify(storageInput));
+    localStorage.setItem("todo", JSON.stringify(storageInput));
+    dayView(today, listToday);
 
-  dayView(today, listToday);
+    listTomorrow.innerHTML = "";
+    dayView(tomorrow, listTomorrow);
+
+    listSearch.innerHTML = "";
+    temporary.sort();
+    searchView();
+    allView();
+
+    inputOne.sort();
+    localStorage.setItem("todo1", JSON.stringify(inputOne));
+
+    completed.innerHTML = "";
+    completedView();
+
+    failed.sort();
+    listFailed.innerHTML = "";
+    localStorage.setItem("todo2", JSON.stringify(failed));
+    x = 2;
+  } else {
+    input.reverse();
+
+    storage();
+
+    list.innerHTML = "";
+    listToday.innerHTML = "";
+
+    localStorage.setItem("todo", JSON.stringify(storageInput));
+
+    dayView(today, listToday);
+    console.log(input);
+
+    listTomorrow.innerHTML = "";
+    dayView(tomorrow, listTomorrow);
+    allView();
+
+    temporary.reverse();
+    listSearch.innerHTML = "";
+    searchView();
+
+    inputOne.reverse();
+    localStorage.setItem("todo1", JSON.stringify(inputOne));
+
+    completed.innerHTML = "";
+    completedView();
+
+    failed.sort();
+    listFailed.innerHTML = "";
+    localStorage.setItem("todo2", JSON.stringify(failed));
+    x = 1;
+  }
   console.log(input);
-
-  listTomorrow.innerHTML = "";
-  dayView(tomorrow, listTomorrow);
-  allView();
-
-  temporary.reverse();
-  listSearch.innerHTML = "";
-  searchView();
-
-  inputOne.reverse();
-  localStorage.setItem("todo1", JSON.stringify(inputOne));
-
-  completed.innerHTML = "";
-  completedView();
-
-  failed.sort();
-  listFailed.innerHTML = "";
-  localStorage.setItem("todo2", JSON.stringify(failed));
-
   failedView();
   window.scrollTo(0, 0);
   addMarker();
+  console.log(x);
 });
+
+/*
 console.log(input);
 downSortValue.addEventListener("click", function () {
   for (i = 0; i < input.length; i++) {
@@ -677,16 +715,17 @@ downSortValue.addEventListener("click", function () {
   console.log(input);
   addMarker();
 });
+*/
 /////////////////////////////////////////////
 // Modal
-
-const btnModal = document.querySelector(".add-modal-btn");
+/*
+const btnModal = document.querySelector(".add--modal-btn");
 
 btnModal.addEventListener("click", function () {
   document.querySelector(".modal").classList.add("modal--open");
   document.querySelector(".modal").classList.remove("modal--close");
   addInput.focus();
-});
+});*/
 document.querySelector(".close--modal").addEventListener("click", function (e) {
   document.querySelector(".modal").classList.remove("modal--open");
   document.querySelector(".modal").classList.add("modal--close");
@@ -694,6 +733,7 @@ document.querySelector(".close--modal").addEventListener("click", function (e) {
 ////////////////////////////////////////////////
 //API
 // GET POSITION LAT & LNG
+const weatherPlacement = document.querySelector(".weather");
 
 const currentPosition = function (lat, lng) {
   fetch(
@@ -718,25 +758,26 @@ const currentPosition = function (lat, lng) {
 const renderWeather = function (temperature, wind, weather) {
   if (temperature == "") {
     const html = `<p>:(</p>`;
-    displayClock.insertAdjacentHTML("afterend", html);
+    weatherPlacement.insertAdjacentHTML("beforeend", html);
   } else {
     const html = `
-
-  <p>${temperature}</p>
-   <p>${wind}</p>
-   <p>${weather}</p>
+<div class='temp--container'>
+  <p class='temp'>Temperature: ${temperature}</p>
+   <p class='wind'>Wind: ${wind}</p>
+   </div>
    `;
-    displayClock.insertAdjacentHTML("afterend", html);
+    weatherPlacement.insertAdjacentHTML("beforeend", html);
   }
 };
 
 const renderCity = function (city) {
+  console.log(city);
   const html = `
   
-  <p>${city}</p>
+  <p class='city'>${city}</p>
    `;
 
-  displayClock.insertAdjacentHTML("afterend", html);
+  weatherPlacement.insertAdjacentHTML("afterbegin", html);
 };
 
 //////////////////////////////////////////
@@ -839,3 +880,29 @@ navigator.geolocation.getCurrentPosition(
 
 // loader dok ucitava
 //hamburger menu
+
+//hamburger
+const cambio = document.getElementById("menu");
+const one = document.getElementById("one");
+const two = document.getElementById("two");
+const three = document.getElementById("three");
+const menuOpen = document.querySelector(".buttons--all-open");
+
+const closeMenu = function () {
+  one.classList.toggle("bar-one");
+  two.classList.toggle("bar-two");
+  three.classList.toggle("bar-three");
+
+  menuOpen.classList.toggle("buttons--all-open");
+};
+
+cambio.addEventListener("click", closeMenu);
+
+//map cover hidden
+
+document
+  .querySelector(".map--cover-p")
+  .addEventListener("mouseover", function () {
+    document.querySelector(".map--cover-p").style.display = "none";
+    document.querySelector(".map--cover").style.display = "none";
+  });

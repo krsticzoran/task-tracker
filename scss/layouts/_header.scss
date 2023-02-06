@@ -1,0 +1,140 @@
+//@import "../abstracts/variables";
+
+.header {
+  display: flex;
+  background-color: color(primary);
+  height: 8rem;
+}
+//hamburger menu
+.menu {
+  width: 40vw;
+  display: flex;
+  text-align: center;
+  cursor: pointer;
+
+  border-radius: 0.4rem;
+  padding: 0rem 0.4rem;
+  &--center {
+    margin: auto 0rem auto 3rem;
+  }
+}
+
+.bar {
+  height: 0.6rem;
+  width: 3.6rem;
+  background: color(white);
+  border-radius: 0.4rem;
+  margin: 0.6rem 0rem;
+  transition: 0.2s all ease-in-out;
+  display: block;
+  transition: all 0.5s;
+  @include shadow;
+
+  &-one {
+    transform: translateY(11.7px) rotateZ(45deg);
+  }
+  &-two {
+    opacity: 0;
+  }
+  &-three {
+    transform: translateY(-11.7px) rotateZ(-45deg);
+  }
+}
+
+//search
+.search {
+  width: 35vw;
+  position: relative;
+  display: flex;
+  padding-left: 2rem;
+
+  align-items: flex-end;
+  padding-bottom: 1rem;
+}
+
+.input--search {
+  font-size: size(m);
+  color: color(primary);
+  padding-left: 3rem;
+  width: 35rem;
+  height: 3rem;
+  border-radius: 10rem;
+  @include shadow;
+  @include response(xl) {
+    width: 90%;
+    padding-left: 5%;
+  }
+}
+
+.btn--search {
+  border: none;
+  position: absolute;
+  left: 34rem;
+  cursor: pointer;
+  border-radius: 50%;
+  color: color(primary);
+  width: 3rem;
+  height: 2.8rem;
+  border: none;
+  background-color: transparent;
+  @include response(xl) {
+    left: 80%;
+  }
+}
+input:focus,
+textarea:focus,
+select:focus {
+  outline-offset: 0rem;
+  outline: none;
+}
+.search--icon {
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+}
+
+//date and time
+
+.date--clock-container {
+  width: 25vw;
+  color: color(white);
+  text-align: right;
+  padding-top: 1rem;
+  padding-right: 2rem;
+  font-size: size(m);
+}
+.date {
+  padding-bottom: 1rem;
+}
+//add
+/*
+.add--modal {
+  width: 25vw;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding-right: 2rem;
+  font-size: size(s);
+  &-center {
+    width: 10rem;
+    height: 3rem;
+    border-radius: 10rem;
+
+    background-color: color(white);
+    margin-bottom: 1rem;
+    @include center;
+    border: 1px solid transparent;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+
+    @include shadow;
+    &:active {
+      @include btn-active;
+    }
+  }
+  &-btn {
+    color: color(secondary);
+  }
+}
+*/

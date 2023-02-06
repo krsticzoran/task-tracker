@@ -1,0 +1,65 @@
+.right--layout {
+  position: relative;
+}
+
+.map--container {
+  margin: 1 rem 0;
+  position: relative;
+}
+
+#map {
+  width: 60vw;
+  height: 70vh;
+  z-index: 0;
+}
+
+.map--cover {
+  z-index: 100;
+  position: absolute;
+  top: 0;
+  width: 60vw;
+  height: 70vh;
+  opacity: 0.9;
+  background-color: white;
+}
+
+.map--cover-p {
+  position: absolute;
+  top: 0;
+  color: color(supporttwo);
+  font-size: size(xxl);
+  width: 60vw;
+  height: 70vh;
+  z-index: 200;
+  @include center;
+}
+
+.weather {
+  margin-top: 1rem;
+  z-index: 500;
+  width: 60vw;
+  height: 14rem;
+  background-color: color(white);
+  margin-bottom: 1rem;
+}
+
+.city {
+  text-align: center;
+  font-size: size(xl);
+  padding-top: 1rem;
+  color: color(secondary);
+}
+
+.temp--container {
+  display: flex;
+  justify-content: space-between;
+  padding: 4rem 5vw;
+  font-size: size(l);
+}
+
+.temp {
+  color: color(supportthree);
+}
+.wind {
+  color: color(supporttwo);
+}

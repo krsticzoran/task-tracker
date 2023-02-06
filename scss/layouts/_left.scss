@@ -1,0 +1,39 @@
+.navbar {
+  display: flex;
+
+  flex-direction: row;
+
+  width: 100vw;
+}
+
+.buttons--all {
+  text-transform: uppercase;
+
+  @include center;
+  z-index: 300;
+  flex-direction: column;
+  width: 40vw;
+  height: 60rem;
+  position: absolute;
+  top: 8rem;
+  left: 0;
+  transition: all 1s ease;
+  background-color: color(white);
+  cursor: pointer;
+  font-size: size(m);
+  color: color(secondary);
+
+  &-open {
+    position: absolute;
+    top: 8rem;
+    left: -60vw;
+  }
+}
+
+.btn--all,
+.btn--today,
+.btn--tomorrow,
+.btn--completed,
+.btn--failed {
+  padding-bottom: 1rem;
+}

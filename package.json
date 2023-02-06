@@ -1,0 +1,19 @@
+{
+  "name": "y",
+  "version": "1.0.0",
+  "description": "# My First App",
+  "main": "script.js",
+  "scripts": {
+    "watch": "node-sass -o css scss/main.scss --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zorannkrstic/to-do-list.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zorannkrstic/to-do-list/issues"
+  },
+  "homepage": "https://github.com/zorannkrstic/to-do-list#readme"
+}

@@ -1,0 +1,24 @@
+$colors: (
+  primary: #878afe,
+  secondary: #666af6,
+  supportone: #31446c,
+  supporttwo: #f5a921,
+  supportthree: #f4863c,
+  white: #fff,
+);
+
+@function color($color) {
+  @return map-get($colors, $color);
+}
+
+$sizes: (
+  xxl: 2.6rem,
+  xl: 2.4rem,
+  l: 2.1rem,
+  m: 1.8rem,
+  s: 1.6rem,
+);
+
+@function size($size) {
+  @return map-get($sizes, $size);
+}

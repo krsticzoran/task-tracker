@@ -5,7 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>To Do List</title>
-    <link rel="stylesheet" href="style.css" type="text/css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;600;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="css/main.css" type="text/css" />
 
     <link
       rel="stylesheet"
@@ -22,55 +30,105 @@
     <script defer src="script.js"></script>
   </head>
   <body>
-    <nav class="navbar">
-      <div class="search">
-        <input type="search" class="input--search" />
-        <button class="btn--search">Search</button>
-      </div>
-
-      <div class="sort">
-        <div class="sort--value">
-          <p class="value--up">up</p>
-          <p class="value--down">down</p>
+    <header class="header">
+      <div class="menu" id="menu">
+        <div class="menu--center">
+          <div class="bar" id="one"></div>
+          <div class="bar" id="two"></div>
+          <div class="bar" id="three"></div>
         </div>
       </div>
+
+      <div class="search">
+        <input
+          type="search"
+          maxlength="20"
+          class="input--search"
+          placeholder="search here..."
+        />
+        <button class="btn--search">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            class="search--icon"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10.5 3.75a6.75 6.75 0 100 13.5 6.75 6.75 0 000-13.5zM2.25 10.5a8.25 8.25 0 1114.59 5.28l4.69 4.69a.75.75 0 11-1.06 1.06l-4.69-4.69A8.25 8.25 0 012.25 10.5z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </button>
+      </div>
+      <div class="date--clock-container">
+        <div class="date"></div>
+        <div class="clock"></div>
+      </div>
+    </header>
+    <!--
       <div class="add--modal">
-        <p class="add-modal-btn">add</p>
+        <div class="add--modal-center">
+          <p class="add--modal-btn">add</p>
+        </div>
+      </div>-->
+    <nav class="navbar">
+      <div class="buttons--all buttons--all-open">
+        <div class="btn--all">Home</div>
+        <div class="btn--today">Today</div>
+        <div class="btn--tomorrow">Tomorrow</div>
+        <div class="btn--completed">Completed</div>
+        <div class="btn--failed">Failed</div>
       </div>
     </nav>
-    <div class="container--global">
-      <div class="modal modal--close">
-        <p class="close--modal">x</p>
 
-        <div class="add">
-          <input type="date" class="input--date" />
-          <input
-            type="text"
-            class="input--add"
-            maxlength="20"
-            placeholder="to do - task  "
-          />
-          <button class="btn--add">Add</button>
-        </div>
+    <div class="modal modal--close">
+      <div class="add">
+        <input type="date" class="input--date" />
+        <input
+          type="text"
+          class="input--add"
+          maxlength="20"
+          placeholder="to do - task  "
+        />
         <div class="counterContainer">
           <p class="characterCounter">20/20</p>
         </div>
+        <div class="close--modal-cancel">
+          <p class="close--modal">Cancel</p>
+          <button class="btn--add">Add</button>
+        </div>
       </div>
-      <div class="buttons--all">
-        <button class="btn--all">All</button>
-        <button class="btn--today">Today</button>
-        <button class="btn--tomorrow">Tomorrow</button>
-        <button class="btn--completed">Completed</button>
-        <button class="btn--failed">Failed</button>
-      </div>
+    </div>
+
+    <div class="container--global">
       <div class="container">
-        <div class="to--do">
-          <h3>To do List</h3>
-          <ul class="list">
-            <!---
+        <div class="all--lists">
+          <div class="sort">
+            <div class="sort--value">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="value--up"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M6.97 2.47a.75.75 0 011.06 0l4.5 4.5a.75.75 0 01-1.06 1.06L8.25 4.81V16.5a.75.75 0 01-1.5 0V4.81L3.53 8.03a.75.75 0 01-1.06-1.06l4.5-4.5zm9.53 4.28a.75.75 0 01.75.75v11.69l3.22-3.22a.75.75 0 111.06 1.06l-4.5 4.5a.75.75 0 01-1.06 0l-4.5-4.5a.75.75 0 111.06-1.06l3.22 3.22V7.5a.75.75 0 01.75-.75z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+
+              <!--<p class="value--down">down</p>-->
+            </div>
+          </div>
+          <div class="to--do">
+            <h3>To do List</h3>
+            <ul class="list">
+              <!---
           <li class="list--li">
            
-            <input type="checkbox" class="check" /><span class="span--to-do">
+            <input type="checkbox" class="check" checked="checked" /><span class="span--to-do">
               Sports</span
             ><button class="btn--confirm">Confirm</button>
           </li>
@@ -81,56 +139,59 @@
             ><button class="btn--confirm">Confirm</button>
           </li>
         -->
-          </ul>
-        </div>
-        <div class="today--task">
-          <h3>Today</h3>
-          <ul class="today--list"></ul>
-        </div>
+            </ul>
+          </div>
+          <div class="today--task">
+            <h3>Today</h3>
+            <ul class="today--list"></ul>
+          </div>
 
-        <div class="tomorrow--task">
-          <h3>Tomorrow</h3>
-          <ul class="tomorrow--list"></ul>
-        </div>
+          <div class="tomorrow--task">
+            <h3>Tomorrow</h3>
+            <ul class="tomorrow--list"></ul>
+          </div>
 
-        <div class="serach--task">
-          <h3>Search Results</h3>
-          <p class="no--search">No Search Results</p>
+          <div class="serach--task">
+            <h3>Search Results</h3>
+            <p class="no--search">No Search Results</p>
 
-          <ul class="search--list"></ul>
-        </div>
+            <ul class="search--list"></ul>
+          </div>
 
-        <div class="failed--task">
-          <h3>Failed</h3>
-          <p class="delete-all-failed">Delete All</p>
+          <div class="failed--task">
+            <h3>Failed</h3>
 
-          <ul class="failed--list"></ul>
-          <li class="no--search">No Search Results</li>
-        </div>
+            <ul class="failed--list"></ul>
+            <p class="delete-all-failed delete-all">Delete All</p>
+          </div>
 
-        <div class="completed">
-          <h3>Completed</h3>
+          <div class="completed">
+            <h3>Completed</h3>
 
-          <p class="delete-all-completed">Delete All</p>
-          <ul class="completed--list">
-            <li class="completed--li">
-              <!--
+            <ul class="completed--list">
+              <li class="completed--li">
+                <!--
             <span class="span--completed">Sports</span
             ><button class="delete">Delete</button>
-            --></li>
-          </ul>
-        </div>
-        <div class="paganation">
-          <p class="left"><</p>
-          <p class="page"></p>
-          <p class="right">></p>
+            -->
+              </li>
+            </ul>
+            <p class="delete-all delete-all-completed">Delete All</p>
+          </div>
+          <div class="paganation">
+            <p class="left"><</p>
+            <p class="page"></p>
+            <p class="right">></p>
+          </div>
         </div>
       </div>
       <div class="right--layout">
-        <div class="date"></div>
-        <div class="clock"></div>
-
-        <div id="map"></div>
+        <div class="weather"></div>
+        <div class="map--container">
+          <p class="map--cover-p">Click on map! <br />Add task location!</p>
+          <div class="map--cover"></div>
+          <div id="map"></div>
+        </div>
       </div>
     </div>
   </body>
