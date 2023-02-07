@@ -26,4 +26,9 @@ body {
       @content;
     }
   }
+  @if ($breakpoint == m) {
+    @media (max-width: 600px) {
+      @content;
+    }
+  }
 }

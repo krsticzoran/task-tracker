@@ -4,6 +4,12 @@
   display: flex;
   background-color: color(primary);
   height: 8rem;
+  @include response(l) {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10000;
+  }
 }
 //hamburger menu
 .menu {
@@ -16,6 +22,10 @@
   padding: 0rem 0.4rem;
   &--center {
     margin: auto 0rem auto 3rem;
+  }
+
+  @include response(l) {
+    width: 60vw;
   }
 }
 
@@ -50,6 +60,9 @@
 
   align-items: flex-end;
   padding-bottom: 1rem;
+  @include response(l) {
+    width: 40vw;
+  }
 }
 
 .input--search {
@@ -63,6 +76,9 @@
   @include response(xl) {
     width: 90%;
     padding-left: 5%;
+  }
+  @include response(m) {
+    font-size: size(xs);
   }
 }
 
@@ -79,6 +95,12 @@
   background-color: transparent;
   @include response(xl) {
     left: 80%;
+  }
+  @include response(l) {
+    left: 78%;
+  }
+  @include response(l) {
+    left: 73%;
   }
 }
 input:focus,
@@ -102,6 +124,9 @@ select:focus {
   padding-top: 1rem;
   padding-right: 2rem;
   font-size: size(m);
+  @include response(l) {
+    display: none;
+  }
 }
 .date {
   padding-bottom: 1rem;

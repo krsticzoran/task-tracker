@@ -23,10 +23,24 @@
   font-size: size(m);
   color: color(secondary);
 
+  @include response(xl) {
+    width: 50vw;
+  }
+  @include response(l) {
+    position: fixed;
+
+    width: 100%;
+  }
+
   &-open {
     position: absolute;
     top: 8rem;
-    left: -60vw;
+    left: -100vw;
+  }
+  @include response(l) {
+    position: fixed;
+
+    width: 100%;
   }
 }
 

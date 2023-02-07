@@ -882,7 +882,7 @@ navigator.geolocation.getCurrentPosition(
 //hamburger menu
 
 //hamburger
-const cambio = document.getElementById("menu");
+const menuLeft = document.getElementById("menu--center");
 const one = document.getElementById("one");
 const two = document.getElementById("two");
 const three = document.getElementById("three");
@@ -896,7 +896,7 @@ const closeMenu = function () {
   menuOpen.classList.toggle("buttons--all-open");
 };
 
-cambio.addEventListener("click", closeMenu);
+menuLeft.addEventListener("click", closeMenu);
 
 //map cover hidden
 

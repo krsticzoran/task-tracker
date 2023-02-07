@@ -16,6 +16,12 @@ body {
   display: flex;
   background-color: #878afe;
   height: 8rem; }
+  @media (max-width: 800px) {
+    .header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 10000; } }
 
 .menu {
   width: 40vw;
@@ -26,6 +32,9 @@ body {
   padding: 0rem 0.4rem; }
   .menu--center {
     margin: auto 0rem auto 3rem; }
+  @media (max-width: 800px) {
+    .menu {
+      width: 60vw; } }
 
 .bar {
   height: 0.6rem;
@@ -51,6 +60,9 @@ body {
   padding-left: 2rem;
   align-items: flex-end;
   padding-bottom: 1rem; }
+  @media (max-width: 800px) {
+    .search {
+      width: 40vw; } }
 
 .input--search {
   font-size: 1.8rem;
@@ -64,6 +76,9 @@ body {
     .input--search {
       width: 90%;
       padding-left: 5%; } }
+  @media (max-width: 600px) {
+    .input--search {
+      font-size: 1.2rem; } }
 
 .btn--search {
   border: none;
@@ -79,6 +94,12 @@ body {
   @media (max-width: 1200px) {
     .btn--search {
       left: 80%; } }
+  @media (max-width: 800px) {
+    .btn--search {
+      left: 78%; } }
+  @media (max-width: 800px) {
+    .btn--search {
+      left: 73%; } }
 
 input:focus,
 textarea:focus,
@@ -98,6 +119,9 @@ select:focus {
   padding-top: 1rem;
   padding-right: 2rem;
   font-size: 1.8rem; }
+  @media (max-width: 800px) {
+    .date--clock-container {
+      display: none; } }
 
 .date {
   padding-bottom: 1rem; }
@@ -145,6 +169,11 @@ select:focus {
   @media (max-width: 1200px) {
     .modal {
       width: 50vw; } }
+  @media (max-width: 800px) {
+    .modal {
+      width: 100vw;
+      top: 12rem;
+      height: 15rem; } }
 
 .modal--open {
   right: 0; }
@@ -154,6 +183,9 @@ select:focus {
   @media (max-width: 1200px) {
     .modal--close {
       right: -65vw; } }
+  @media (max-width: 800px) {
+    .modal--close {
+      right: -100vw; } }
 
 .add {
   margin-top: 2rem; }
@@ -169,6 +201,10 @@ select:focus {
     .input--date {
       margin: 0 1rem 0 1rem;
       width: 17rem; } }
+  @media (max-width: 600px) {
+    .input--date {
+      width: 13rem;
+      font-size: 1.2rem; } }
 
 .input--add {
   padding-left: 2rem;
@@ -180,6 +216,10 @@ select:focus {
     .input--add {
       margin: 0 1rem 0 1rem;
       width: 17rem; } }
+  @media (max-width: 600px) {
+    .input--add {
+      width: 13rem;
+      font-size: 1.2rem; } }
 
 .close--modal-cancel {
   display: flex;
@@ -221,16 +261,12 @@ select:focus {
   @media (max-width: 1200px) {
     .counterContainer {
       margin-left: 32rem; } }
+  @media (max-width: 1200px) {
+    .counterContainer {
+      margin-left: 23rem; } }
 
 .container--global {
-  display: flex;
-  position: relative; }
-  @media (max-width: 1200px) {
-    .container--global {
-      background-color: pink; } }
-  @media (max-width: 800px) {
-    .container--global {
-      background-color: yellowgreen; } }
+  display: flex; }
 
 .container {
   width: 40vw;
@@ -240,6 +276,16 @@ select:focus {
   @media (max-width: 1200px) {
     .container {
       width: 50vw; } }
+  @media (max-width: 800px) {
+    .container {
+      width: 80vw;
+      margin: auto;
+      height: 110vw;
+      margin-top: 8rem; } }
+  @media (max-width: 600px) {
+    .container {
+      width: 90vw;
+      height: 100vh; } }
 
 h3 {
   font-size: 2.6rem;
@@ -259,6 +305,9 @@ h3 {
   position: absolute;
   top: 10rem;
   left: 7%; }
+  @media (max-width: 800px) {
+    .sort {
+      left: 20%; } }
 
 .value--up {
   stroke: #878afe;
@@ -291,6 +340,10 @@ li {
   justify-content: center;
   border-top-right-radius: 10rem;
   border-bottom-right-radius: 10rem; }
+  @media (max-width: 600px) {
+    .list--li,
+    .completed--li {
+      height: 2.5rem; } }
 
 .check {
   margin-left: 0.5rem;
@@ -309,11 +362,19 @@ li {
     .span--to-do,
     .span--completed {
       font-size: 1.6rem; } }
+  @media (max-width: 600px) {
+    .span--to-do,
+    .span--completed {
+      font-size: 1.2rem; } }
 
 .span--to-do-date {
   color: #31446c;
   font-weight: 400;
   width: 25%; }
+  @media (max-width: 600px) {
+    .span--to-do-date {
+      font-size: 0.8rem;
+      margin-right: 1rem; } }
 
 span {
   cursor: pointer; }
@@ -327,6 +388,18 @@ span {
   @media (max-width: 1200px) {
     .paganation {
       width: 35%; } }
+  @media (max-width: 800px) {
+    .paganation {
+      width: 60vw;
+      position: static;
+      margin: auto;
+      padding-top: 3rem; } }
+  @media (max-width: 600px) {
+    .paganation {
+      width: 80vw;
+      position: static;
+      margin: auto;
+      padding-top: 3rem; } }
 
 .page {
   color: #878afe;
@@ -366,6 +439,12 @@ span {
   font-weight: 600;
   cursor: pointer;
   border-radius: 10rem; }
+  @media (max-width: 600px) {
+    .btn--confirm,
+    .delete {
+      height: 2.5rem;
+      width: 7rem;
+      font-size: 0.8rem; } }
 
 .delete-all {
   cursor: pointer;
@@ -375,6 +454,12 @@ span {
   text-align: right;
   color: #31446c;
   font-size: 2.1rem; }
+  @media (max-width: 800px) {
+    .delete-all {
+      width: 60vw;
+      position: static;
+      margin: auto;
+      padding-top: 3rem; } }
 
 .right--layout {
   position: relative; }
@@ -390,6 +475,9 @@ span {
   @media (max-width: 1200px) {
     #map {
       width: 50vw; } }
+  @media (max-width: 800px) {
+    #map {
+      width: 100vw; } }
 
 .map--cover {
   z-index: 100;
@@ -402,6 +490,9 @@ span {
   @media (max-width: 1200px) {
     .map--cover {
       width: 50vw; } }
+  @media (max-width: 800px) {
+    .map--cover {
+      width: 100vw; } }
 
 .map--cover-p {
   position: absolute;
@@ -417,6 +508,9 @@ span {
   @media (max-width: 1200px) {
     .map--cover-p {
       width: 50vw; } }
+  @media (max-width: 800px) {
+    .map--cover-p {
+      width: 100vw; } }
 
 .weather {
   margin-top: 1rem;
@@ -428,6 +522,9 @@ span {
   @media (max-width: 1200px) {
     .weather {
       width: 50vw; } }
+  @media (max-width: 800px) {
+    .weather {
+      display: none; } }
 
 .city {
   text-align: center;
@@ -473,10 +570,21 @@ span {
   cursor: pointer;
   font-size: 1.8rem;
   color: #666af6; }
+  @media (max-width: 1200px) {
+    .buttons--all {
+      width: 50vw; } }
+  @media (max-width: 800px) {
+    .buttons--all {
+      position: fixed;
+      width: 100%; } }
   .buttons--all-open {
     position: absolute;
     top: 8rem;
-    left: -60vw; }
+    left: -100vw; }
+  @media (max-width: 800px) {
+    .buttons--all {
+      position: fixed;
+      width: 100%; } }
 
 .btn--all,
 .btn--today,

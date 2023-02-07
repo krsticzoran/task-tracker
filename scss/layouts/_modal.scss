@@ -10,6 +10,11 @@
   @include response(xl) {
     width: 50vw;
   }
+  @include response(l) {
+    width: 100vw;
+    top: 12rem;
+    height: 15rem;
+  }
 }
 
 .modal--open {
@@ -19,7 +24,9 @@
   @include response(xl) {
     right: -65vw;
   }
-
+  @include response(l) {
+    right: -100vw;
+  }
   right: -45vw;
 }
 
@@ -38,6 +45,10 @@
     margin: 0 1rem 0 1rem;
     width: 17rem;
   }
+  @include response(m) {
+    width: 13rem;
+    font-size: size(xs);
+  }
 }
 
 .input--add {
@@ -50,6 +61,10 @@
   @include response(xl) {
     margin: 0 1rem 0 1rem;
     width: 17rem;
+  }
+  @include response(m) {
+    width: 13rem;
+    font-size: size(xs);
   }
 }
 .close--modal-cancel {
@@ -95,5 +110,8 @@
   font-size: size(s);
   @include response(xl) {
     margin-left: 32rem;
+  }
+  @include response(xl) {
+    margin-left: 23rem;
   }
 }
