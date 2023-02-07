@@ -1,3 +1,9 @@
 .container--global {
   display: flex;
+  @include response(xl) {
+    position: relative;
+  }
+  @include response(l) {
+    display: block;
+  }
 }

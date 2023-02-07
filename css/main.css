@@ -267,6 +267,12 @@ select:focus {
 
 .container--global {
   display: flex; }
+  @media (max-width: 1200px) {
+    .container--global {
+      position: relative; } }
+  @media (max-width: 800px) {
+    .container--global {
+      display: block; } }
 
 .container {
   width: 40vw;
@@ -280,12 +286,12 @@ select:focus {
     .container {
       width: 80vw;
       margin: auto;
-      height: 110vw;
       margin-top: 8rem; } }
   @media (max-width: 600px) {
     .container {
       width: 90vw;
-      height: 100vh; } }
+      height: 100%;
+      margin-bottom: 5rem; } }
 
 h3 {
   font-size: 2.6rem;
@@ -478,6 +484,9 @@ span {
   @media (max-width: 800px) {
     #map {
       width: 100vw; } }
+  @media (max-width: 600px) {
+    #map {
+      height: 100vh; } }
 
 .map--cover {
   z-index: 100;
@@ -493,6 +502,9 @@ span {
   @media (max-width: 800px) {
     .map--cover {
       width: 100vw; } }
+  @media (max-width: 600px) {
+    .map--cover {
+      height: 100vh; } }
 
 .map--cover-p {
   position: absolute;
@@ -511,6 +523,9 @@ span {
   @media (max-width: 800px) {
     .map--cover-p {
       width: 100vw; } }
+  @media (max-width: 600px) {
+    .map--cover-p {
+      height: 100vh; } }
 
 .weather {
   margin-top: 1rem;

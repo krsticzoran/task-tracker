@@ -17,6 +17,9 @@
   @include response(l) {
     width: 100vw;
   }
+  @include response(m) {
+    height: 100vh;
+  }
 }
 
 .map--cover {
@@ -32,6 +35,9 @@
   }
   @include response(l) {
     width: 100vw;
+  }
+  @include response(m) {
+    height: 100vh;
   }
 }
 
@@ -49,6 +55,9 @@
   }
   @include response(l) {
     width: 100vw;
+  }
+  @include response(m) {
+    height: 100vh;
   }
 }
 

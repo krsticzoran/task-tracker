@@ -9,12 +9,13 @@
   @include response(l) {
     width: 80vw;
     margin: auto;
-    height: 110vw;
+
     margin-top: 8rem;
   }
   @include response(m) {
     width: 90vw;
-    height: 100vh;
+    height: 100%;
+    margin-bottom: 5rem;
   }
 }
 
