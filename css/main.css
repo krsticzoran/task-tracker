@@ -14,7 +14,8 @@ body {
 
 .header {
   display: flex;
-  background-color: #878afe;
+  background: linear-gradient(90deg, #878afe 0%, #666af6 100%);
+  /*background-color: color(primary);*/
   height: 8rem; }
   @media (max-width: 800px) {
     .header {
