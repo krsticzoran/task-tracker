@@ -746,6 +746,9 @@ const currentPosition = function (lat, lng) {
     .then((data) => {
       const city = data.city;
       renderCity(city);
+      if (city) {
+        document.querySelector(".loader").style.display = "none";
+      }
       return fetch(`https://goweather.herokuapp.com/weather/${city}`);
     })
     .then((rep) => rep.json())

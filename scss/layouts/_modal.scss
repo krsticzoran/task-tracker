@@ -7,6 +7,7 @@
   height: 14rem;
   background-color: color(primary);
   transition: right 0.5s;
+
   @include response(xl) {
     width: 50vw;
   }

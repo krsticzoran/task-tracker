@@ -3,6 +3,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+
   @include response(xl) {
     width: 50vw;
   }
