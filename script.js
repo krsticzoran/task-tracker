@@ -746,6 +746,7 @@ const currentPosition = function (lat, lng) {
     .then((data) => {
       const city = data.city;
       renderCity(city);
+
       if (city) {
         document.querySelector(".loader").style.display = "none";
       }
@@ -763,10 +764,17 @@ const renderWeather = function (temperature, wind, weather) {
     const html = `<p>:(</p>`;
     weatherPlacement.insertAdjacentHTML("beforeend", html);
   } else {
+    let temrmometar;
+    temperature >= 8
+      ? (temrmometar = "<img  src='../scss/pictures/warm.png'>")
+      : (temrmometar = "<img  src='../scss/pictures/warm.png'>");
     const html = `
+   
+    
 <div class='temp--container'>
-  <p class='temp'>Temperature: ${temperature}</p>
+  <p class='temp'>${temperature} ${temrmometar} </p>
    <p class='wind'>Wind: ${wind}</p>
+
    </div>
    `;
     weatherPlacement.insertAdjacentHTML("beforeend", html);
