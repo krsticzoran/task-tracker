@@ -765,9 +765,12 @@ const renderWeather = function (temperature, wind, weather) {
     weatherPlacement.insertAdjacentHTML("beforeend", html);
   } else {
     let temrmometar;
-    temperature >= 8
+    let temperatureNumber = temperature[1];
+
+    temperatureNumber >= 8
       ? (temrmometar = "<img  src='../scss/pictures/warm.png'>")
-      : (temrmometar = "<img  src='../scss/pictures/warm.png'>");
+      : (temrmometar = "<img  src='../scss/pictures/cold.png'>");
+    console.log(temperature);
     const html = `
    
     
