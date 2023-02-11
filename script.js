@@ -766,17 +766,27 @@ const renderWeather = function (temperature, wind, weather) {
   } else {
     let temrmometar;
     let temperatureNumber = temperature[1];
-
+    let weatherPicture;
+    if (weather == "Sunny") {
+      weatherPicture = "<img  src='../scss/pictures/sun.png'>";
+    }
+    if (weather == "Clear") {
+      weatherPicture = "<img  src='../scss/pictures/clear.png'>";
+    }
     temperatureNumber >= 8
       ? (temrmometar = "<img  src='../scss/pictures/warm.png'>")
       : (temrmometar = "<img  src='../scss/pictures/cold.png'>");
     console.log(temperature);
+    let windPicture = "<img  src='../scss/pictures/wind.png'>";
+
     const html = `
    
     
 <div class='temp--container'>
   <p class='temp'>${temperature} ${temrmometar} </p>
-   <p class='wind'>Wind: ${wind}</p>
+  <p>${weatherPicture}</p>
+   <p class='wind'> ${wind}  ${windPicture}</p>
+   
 
    </div>
    `;
