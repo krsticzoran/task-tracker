@@ -784,7 +784,7 @@ const renderWeather = function (temperature, wind, weather) {
     
 <div class='temp--container'>
   <p class='temp'>${temperature} ${temrmometar} </p>
-  <p>${weatherPicture}</p>
+  <div class="weather--icons">${weatherPicture}</div>
    <p class='wind'> ${wind}  ${windPicture}</p>
    
 

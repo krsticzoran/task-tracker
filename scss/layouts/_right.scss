@@ -140,3 +140,14 @@
 .wind {
   color: color(supporttwo);
 }
+
+.weather--icons {
+  position: absolute;
+  left: 50%;
+  top: 70%;
+  transform: translate(-50%, -50%);
+}
+
+.weather--icons img {
+  width: 72px;
+}

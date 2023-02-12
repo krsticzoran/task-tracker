@@ -600,6 +600,15 @@ span {
 .wind {
   color: #f5a921; }
 
+.weather--icons {
+  position: absolute;
+  left: 50%;
+  top: 70%;
+  transform: translate(-50%, -50%); }
+
+.weather--icons img {
+  width: 72px; }
+
 .navbar {
   display: flex;
   flex-direction: row;
