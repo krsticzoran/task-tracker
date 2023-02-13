@@ -38,6 +38,19 @@ let input = [],
   failed = [],
   temporary = [];
 
+const viewPages = () => {
+  document.querySelector(".today--task").style.display = "none";
+
+  document.querySelector(".to--do").style.display = "none";
+  document.querySelector(".completed").style.display = "none";
+  document.querySelector(".tomorrow--task").style.display = "none";
+
+  document.querySelector(".failed--task").style.display = "none";
+  document.querySelector(".serach--task").style.display = "none";
+  inputSearch.value = "";
+  document.querySelector(".paganation").style.display = "none";
+};
+
 /////////////////////////////////////////////////////////////////////
 // ----- DISPLAY THE CURRENT DATE ----
 
@@ -354,16 +367,12 @@ const btnCompleted = document.querySelector(".btn--completed");
 btnCompleted.addEventListener("click", function () {
   completed.innerHTML = "";
   completedView();
-  document.querySelector(".today--task").style.display = "none";
 
-  document.querySelector(".to--do").style.display = "none";
+  viewPages();
   document.querySelector(".completed").style.display = "block";
-  document.querySelector(".tomorrow--task").style.display = "none";
 
-  document.querySelector(".failed--task").style.display = "none";
-  document.querySelector(".serach--task").style.display = "none";
   inputSearch.value = "";
-  document.querySelector(".paganation").style.display = "none";
+
   closeMenu();
 });
 
@@ -383,13 +392,8 @@ btnAll.addEventListener("click", function () {
   addMarker();
   closeMenu();
 
+  viewPages();
   document.querySelector(".to--do").style.display = "block";
-  document.querySelector(".completed").style.display = "none";
-  document.querySelector(".today--task").style.display = "none";
-  document.querySelector(".tomorrow--task").style.display = "none";
-
-  document.querySelector(".failed--task").style.display = "none";
-  document.querySelector(".serach--task").style.display = "none";
   document.querySelector(".paganation").style.display = "flex";
 
   inputSearch.value = "";
@@ -417,14 +421,8 @@ btnToday.addEventListener("click", function () {
   dayView(today, listToday);
   closeMenu();
 
-  document.querySelector(".to--do").style.display = "none";
+  viewPages();
   document.querySelector(".today--task").style.display = "block";
-  document.querySelector(".completed").style.display = "none";
-  document.querySelector(".tomorrow--task").style.display = "none";
-
-  document.querySelector(".failed--task").style.display = "none";
-  document.querySelector(".serach--task").style.display = "none";
-  document.querySelector(".paganation").style.display = "none";
 
   inputSearch.value = "";
 });
@@ -452,15 +450,8 @@ btnTomorrow.addEventListener("click", function () {
   dayView(tomorrow, listTomorrow);
   closeMenu();
 
-  document.querySelector(".to--do").style.display = "none";
-  document.querySelector(".today--task").style.display = "none";
-  document.querySelector(".completed").style.display = "none";
+  viewPages();
   document.querySelector(".tomorrow--task").style.display = "block";
-
-  document.querySelector(".failed--task").style.display = "none";
-  document.querySelector(".serach--task").style.display = "none";
-  inputSearch.value = "";
-  document.querySelector(".paganation").style.display = "none";
 });
 listTomorrow.addEventListener("click", confirmToDo);
 listTomorrow.addEventListener("mouseover", markerFly);
@@ -485,13 +476,7 @@ btnFailed.addEventListener("click", function () {
 
   failedView();
 
-  document.querySelector(".to--do").style.display = "none";
-  document.querySelector(".today--task").style.display = "none";
-  document.querySelector(".completed").style.display = "none";
-  document.querySelector(".tomorrow--task").style.display = "none";
-
-  document.querySelector(".serach--task").style.display = "none";
-  document.querySelector(".paganation").style.display = "none";
+  viewPages();
 
   inputSearch.value = "";
 
@@ -552,13 +537,7 @@ const search = function () {
     searchView();
     inputSearch.value = "";
 
-    document.querySelector(".to--do").style.display = "none";
-    document.querySelector(".today--task").style.display = "none";
-    document.querySelector(".completed").style.display = "none";
-    document.querySelector(".tomorrow--task").style.display = "none";
-
-    document.querySelector(".failed--task").style.display = "none";
-    document.querySelector(".paganation").style.display = "none";
+    viewPages();
 
     document.querySelector(".serach--task").style.display = "block";
   }
