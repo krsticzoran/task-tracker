@@ -61,11 +61,6 @@ const options = {
   month: "long",
   year: "numeric",
 };
-/*const taskOptions = {
-  day: "numeric",
-  month: "long",
-};
-const taskDate = currentDate.toLocaleDateString(locale, taskOptions);*/
 
 currentDate = currentDate.toLocaleDateString(locale, options);
 displayDate.innerHTML = `<p>${currentDate}</p>`;
