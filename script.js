@@ -1,4 +1,8 @@
 /////////////////////////////////////////////////////////////////////
+
+import { currentDate, clock } from "./js/timeDate.js";
+import { viewPages } from "./js/view.js";
+
 // ----- MY FIRST APP -----
 
 const btnAdd = document.querySelector(".btn--add");
@@ -14,7 +18,7 @@ const page = document.querySelector(".page");
 let pageNumber = 0;
 const pageLoadTask = function () {
   list.innerHTML = "";
-  for (i = pageNumber * 10; i <= pageNumber * 10 + 9; i++) {
+  for (let i = pageNumber * 10; i <= pageNumber * 10 + 9; i++) {
     if (input[i] !== undefined)
       list.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span class="span--to-do">${input[i][0]}</span
 ><span class='span--to-do-date'>${input[i][1]}</span><button class="btn--confirm">Confirm</button></li>`;
@@ -38,55 +42,12 @@ let input = [],
   failed = [],
   temporary = [];
 
-const viewPages = () => {
-  document.querySelector(".today--task").style.display = "none";
-
-  document.querySelector(".to--do").style.display = "none";
-  document.querySelector(".completed").style.display = "none";
-  document.querySelector(".tomorrow--task").style.display = "none";
-
-  document.querySelector(".failed--task").style.display = "none";
-  document.querySelector(".serach--task").style.display = "none";
-  inputSearch.value = "";
-  document.querySelector(".paganation").style.display = "none";
-};
-
 /////////////////////////////////////////////////////////////////////
 // ----- DISPLAY THE CURRENT DATE ----
 
-const locale = navigator.language;
-let currentDate = new Date();
-const options = {
-  day: "numeric",
-  month: "long",
-  year: "numeric",
-};
-
-currentDate = currentDate.toLocaleDateString(locale, options);
 displayDate.innerHTML = `<p>${currentDate}</p>`;
 
-/////////////////////////////////////////////////////////////////////
-
-// ----- CLOCK -----
-
-const clock = () => {
-  const currentTime = new Date();
-  let hour =
-    currentTime.getHours() < 10
-      ? "0" + currentTime.getHours()
-      : currentTime.getHours();
-  let minutes =
-    currentTime.getMinutes() < 10
-      ? "0" + currentTime.getMinutes()
-      : currentTime.getMinutes();
-  let seconds =
-    currentTime.getSeconds() < 10
-      ? "0" + currentTime.getSeconds()
-      : currentTime.getSeconds();
-
-  displayClock.innerHTML = ` <p>${hour}:${minutes}:${seconds}</p>`;
-  setTimeout(clock, 1000);
-};
+// ----- DISPLAY - CLOCK -----
 
 clock();
 
@@ -113,7 +74,7 @@ const allView = function () {
   if (JSON.parse(localStorage.getItem("todo"))) {
     input = JSON.parse(localStorage.getItem("todo"));
 
-    for (i = 0; i < input.length; i++) {
+    for (let i = 0; i < input.length; i++) {
       if (today !== input[i][1] && Date.now() > taskTime(input[i][1])) {
         failed.push(input[i]);
         localStorage.setItem("todo2", JSON.stringify(failed));
@@ -140,7 +101,7 @@ const completedView = function () {
   if (JSON.parse(localStorage.getItem("todo1"))) {
     inputOne = JSON.parse(localStorage.getItem("todo1"));
 
-    for (i = 0; i < inputOne.length; i++) {
+    for (let i = 0; i < inputOne.length; i++) {
       completed.innerHTML += `<li class='completed--li'><span class="span--completed">${inputOne[i][0]}</span><span class='date-for-delete span--to-do-date'>${inputOne[i][1]}</span><button class='delete'>Delete</button></li>`;
     }
   }
@@ -377,7 +338,7 @@ const btnAll = document.querySelector(".btn--all");
 btnAll.addEventListener("click", function () {
   list.innerHTML = "";
 
-  for (i = 0; i < input.length; i++) {
+  for (let i = 0; i < input.length; i++) {
     marker = input[i][4];
 
     map.removeLayer(marker);
@@ -403,7 +364,7 @@ const btnToday = document.querySelector(".btn--today");
 const listToday = document.querySelector(".today--list");
 
 const dayView = function (day, list) {
-  for (i = 0; i < input.length; i++) {
+  for (let i = 0; i < input.length; i++) {
     if (day == input[i][1]) {
       list.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span class="span--to-do">${input[i][0]}</span
     ><span class='span--to-do-date'>${input[i][1]}</span><button class="btn--confirm">Confirm</button></li>`;
@@ -783,7 +744,7 @@ const renderCity = function (city) {
 let map, mapEvent;
 
 const addMarker = function () {
-  for (i = 0; i < input.length; i++) {
+  for (let i = 0; i < input.length; i++) {
     storageMarker = L.marker([input[i][2], input[i][3]])
       .addTo(map)
       .bindPopup(
