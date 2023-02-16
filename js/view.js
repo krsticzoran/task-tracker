@@ -7,7 +7,6 @@ export const viewPages = () => {
 
   document.querySelector(".failed--task").style.display = "none";
   document.querySelector(".serach--task").style.display = "none";
-  //inputSearch.value = "";
+
   document.querySelector(".paganation").style.display = "none";
 };
-//imput search problem
