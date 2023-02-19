@@ -1,6 +1,8 @@
 /////////////////////////////////////////////////////////////////////
 // ----- MY FIRST APP -----
 
+import { renderCity } from "./views/cityView.js";
+
 const btnAdd = document.querySelector(".btn--add");
 const addInput = document.querySelector(".input--add");
 const inputDate = document.querySelector(".input--date");
@@ -14,7 +16,7 @@ const page = document.querySelector(".page");
 let pageNumber = 0;
 const pageLoadTask = function () {
   list.innerHTML = "";
-  for (i = pageNumber * 10; i <= pageNumber * 10 + 9; i++) {
+  for (let i = pageNumber * 10; i <= pageNumber * 10 + 9; i++) {
     if (input[i] !== undefined)
       list.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span class="span--to-do">${input[i][0]}</span
 ><span class='span--to-do-date'>${input[i][1]}</span><button class="btn--confirm">Confirm</button></li>`;
@@ -118,7 +120,7 @@ const allView = function () {
   if (JSON.parse(localStorage.getItem("todo"))) {
     input = JSON.parse(localStorage.getItem("todo"));
 
-    for (i = 0; i < input.length; i++) {
+    for (let i = 0; i < input.length; i++) {
       if (today !== input[i][1] && Date.now() > taskTime(input[i][1])) {
         failed.push(input[i]);
         localStorage.setItem("todo2", JSON.stringify(failed));
@@ -773,23 +775,13 @@ const renderWeather = function (temperature, wind, weather) {
   }
 };
 
-const renderCity = function (city) {
-  console.log(city);
-  const html = `
-  
-  <p class='city'>${city}</p>
-   `;
-
-  weatherPlacement.insertAdjacentHTML("afterbegin", html);
-};
-
 //////////////////////////////////////////
 //map
 let map, mapEvent;
 
 const addMarker = function () {
-  for (i = 0; i < input.length; i++) {
-    storageMarker = L.marker([input[i][2], input[i][3]])
+  for (let i = 0; i < input.length; i++) {
+    let storageMarker = L.marker([input[i][2], input[i][3]])
       .addTo(map)
       .bindPopup(
         L.popup({
