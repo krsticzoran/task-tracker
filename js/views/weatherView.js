@@ -14,11 +14,16 @@ export const renderWeather = function (temperature, wind, weather) {
     if (weather == "Clear") {
       weatherPicture = "<img  src='../scss/pictures/clear.png'>";
     }
+
     temperatureNumber >= 8
       ? (temrmometar = "<img  src='../scss/pictures/warm.png'>")
       : (temrmometar = "<img  src='../scss/pictures/cold.png'>");
     console.log(temperature);
     let windPicture = "<img  src='../scss/pictures/wind.png'>";
+
+    if (!weatherPicture) {
+      weatherPicture = "";
+    }
 
     const html = `
    

@@ -4,6 +4,8 @@
 import { renderCity } from "./views/cityView.js";
 import { renderWeather } from "./views/weatherView.js";
 
+import * as models from "./models/weatherModel.js";
+
 const btnAdd = document.querySelector(".btn--add");
 const addInput = document.querySelector(".input--add");
 const inputDate = document.querySelector(".input--date");
@@ -656,88 +658,23 @@ upSortValue.addEventListener("click", function () {
   console.log(x);
 });
 
-/*
-console.log(input);
-downSortValue.addEventListener("click", function () {
-  for (i = 0; i < input.length; i++) {
-    marker = input[i][4];
-
-    map.removeLayer(marker);
-  }
-  input.sort();
-
-  storage();
-  list.innerHTML = "";
-
-  listToday.innerHTML = "";
-
-  localStorage.setItem("todo", JSON.stringify(storageInput));
-  dayView(today, listToday);
-
-  listTomorrow.innerHTML = "";
-  dayView(tomorrow, listTomorrow);
-
-  listSearch.innerHTML = "";
-  temporary.sort();
-  searchView();
-  allView();
-
-  inputOne.sort();
-  localStorage.setItem("todo1", JSON.stringify(inputOne));
-
-  completed.innerHTML = "";
-  completedView();
-
-  failed.sort();
-  listFailed.innerHTML = "";
-  localStorage.setItem("todo2", JSON.stringify(failed));
-
-  failedView();
-  window.scrollTo(0, 0);
-  console.log(input);
-  addMarker();
-});
-*/
-/////////////////////////////////////////////
-// Modal
-/*
-const btnModal = document.querySelector(".add--modal-btn");
-
-btnModal.addEventListener("click", function () {
-  document.querySelector(".modal").classList.add("modal--open");
-  document.querySelector(".modal").classList.remove("modal--close");
-  addInput.focus();
-});*/
 document.querySelector(".close--modal").addEventListener("click", function (e) {
   document.querySelector(".modal").classList.remove("modal--open");
   document.querySelector(".modal").classList.add("modal--close");
 });
 ////////////////////////////////////////////////
 //API
-// GET POSITION LAT & LNG
+// WEATHER & CITY
 
-const currentPosition = function (lat, lng) {
-  fetch(
-    `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`
-  )
-    .then((response) => {
-      if (!response.ok) throw new Error(`City not found ${response.status}`);
-      return response.json();
-    })
-    .then((data) => {
-      const city = data.city;
-      renderCity(city);
-
-      if (city) {
-        document.querySelector(".loader").style.display = "none";
-      }
-      return fetch(`https://goweather.herokuapp.com/weather/${city}`);
-    })
-    .then((rep) => rep.json())
-    .then((data) => {
-      console.log(data);
-      renderWeather(data.temperature, data.wind, data.description);
-    });
+const currentPosition = async function (lat, lng) {
+  await models.cityFetch(lat, lng);
+  document.querySelector(".loader").style.display = "none";
+  renderCity(models.city);
+  renderWeather(
+    models.dataWeather.temperature,
+    models.dataWeather.wind,
+    models.dataWeather.description
+  );
 };
 
 //////////////////////////////////////////
@@ -792,6 +729,7 @@ navigator.geolocation.getCurrentPosition(
     addMarker();
 
     currentPosition(latitude, longitude);
+
     map.flyTo([latitude, longitude], 14);
 
     //leaflet version of click event
