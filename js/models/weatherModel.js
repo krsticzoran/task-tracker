@@ -66,3 +66,11 @@ export let today = new Date()
   .split("/")
   .reverse()
   .join("-");
+
+// TASK TIME
+
+export const taskTime = function (time) {
+  const str = new Date(time);
+  const timestamp = str.getTime();
+  return timestamp;
+};

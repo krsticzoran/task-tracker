@@ -266,6 +266,9 @@ select:focus {
     .counterContainer {
       margin-left: 23rem; } }
 
+.zeroCharacterLeft {
+  color: red; }
+
 .container--global {
   display: flex; }
   @media (max-width: 1200px) {

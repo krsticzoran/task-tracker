@@ -3,8 +3,9 @@
 
 import { renderCity } from "./views/cityView.js";
 import { renderWeather } from "./views/weatherView.js";
-
+import { viewPages } from "./views/view.js";
 import * as models from "./models/weatherModel.js";
+import updateValue from "./models/character.js";
 
 const btnAdd = document.querySelector(".btn--add");
 const addInput = document.querySelector(".input--add");
@@ -12,7 +13,6 @@ const inputDate = document.querySelector(".input--date");
 const list = document.querySelector(".list");
 const completed = document.querySelector(".completed--list");
 const displayDate = document.querySelector(".date");
-const characterCounter = document.querySelector(".characterCounter");
 
 const page = document.querySelector(".page");
 let pageNumber = 0;
@@ -26,29 +26,10 @@ const pageLoadTask = function () {
   }
 };
 
-const taskTime = function (time) {
-  const str = new Date(time);
-  const timestamp = str.getTime();
-  return timestamp;
-};
-
 let input = [],
   inputOne = [],
   failed = [],
   temporary = [];
-
-const viewPages = () => {
-  document.querySelector(".today--task").style.display = "none";
-
-  document.querySelector(".to--do").style.display = "none";
-  document.querySelector(".completed").style.display = "none";
-  document.querySelector(".tomorrow--task").style.display = "none";
-
-  document.querySelector(".failed--task").style.display = "none";
-  document.querySelector(".serach--task").style.display = "none";
-  inputSearch.value = "";
-  document.querySelector(".paganation").style.display = "none";
-};
 
 /////////////////////////////////////////////////////////////////////
 // ----- DISPLAY THE CURRENT DATE & CLOCK ----
@@ -58,19 +39,9 @@ displayDate.innerHTML = `<p>${models.currentDate}</p>`;
 models.clock();
 
 ///////////////////////////////////////////////////////////////////
-addInput.addEventListener("input", updateValue);
+//CHARACTER COUNTER
 
-function updateValue() {
-  let x = this.value.length;
-  if (x === 20) characterCounter.classList.add("zeroCharacterLeft");
-  if (x < 20) characterCounter.classList.remove("zeroCharacterLeft");
-  if (x == 0) {
-    characterCounter.textContent = "20/20";
-  } else {
-    characterCounter.textContent = `${20 - x}/20`;
-  }
-}
-/////////////////////////////////////////////////////////////////////
+addInput.addEventListener("input", updateValue);
 
 ////////////////////////////////////////////////////////////////////////
 //---- LOCALSTORAGE --
@@ -81,7 +52,10 @@ const allView = function () {
     input = JSON.parse(localStorage.getItem("todo"));
 
     for (let i = 0; i < input.length; i++) {
-      if (models.today !== input[i][1] && Date.now() > taskTime(input[i][1])) {
+      if (
+        models.today !== input[i][1] &&
+        Date.now() > models.taskTime(input[i][1])
+      ) {
         failed.push(input[i]);
         localStorage.setItem("todo2", JSON.stringify(failed));
         input.splice(i, 1);
@@ -132,7 +106,8 @@ const add = function () {
     alert("input a task");
   } else if (
     inputDate.value == 0 ||
-    (models.today !== inputDate.value && Date.now() > taskTime(inputDate.value))
+    (models.today !== inputDate.value &&
+      Date.now() > models.taskTime(inputDate.value))
   ) {
     alert("Please input a valid date");
   } else {
@@ -414,6 +389,7 @@ btnTomorrow.addEventListener("click", function () {
 
   viewPages();
   document.querySelector(".tomorrow--task").style.display = "block";
+  inputSearch.value = "";
 });
 listTomorrow.addEventListener("click", confirmToDo);
 listTomorrow.addEventListener("mouseover", markerFly);
@@ -486,7 +462,7 @@ const search = function () {
   if (inputSearch.value.length == 0) {
     alert("Please input a text");
   } else {
-    for (i = 0; i < input.length; i++) {
+    for (let i = 0; i < input.length; i++) {
       if (input[i][0].includes(inputSearch.value)) {
         temporary.push(input[i]);
       }
