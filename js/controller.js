@@ -12,13 +12,13 @@ const inputDate = document.querySelector(".input--date");
 const list = document.querySelector(".list");
 const completed = document.querySelector(".completed--list");
 const displayDate = document.querySelector(".date");
-const displayClock = document.querySelector(".clock");
 const characterCounter = document.querySelector(".characterCounter");
 
 const page = document.querySelector(".page");
 let pageNumber = 0;
 const pageLoadTask = function () {
   list.innerHTML = "";
+  console.log(pageNumber);
   for (let i = pageNumber * 10; i <= pageNumber * 10 + 9; i++) {
     if (input[i] !== undefined)
       list.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span class="span--to-do">${input[i][0]}</span
@@ -31,12 +31,6 @@ const taskTime = function (time) {
   const timestamp = str.getTime();
   return timestamp;
 };
-let today = new Date()
-  .toLocaleString()
-  .slice(0, 10)
-  .split("/")
-  .reverse()
-  .join("-");
 
 let input = [],
   inputOne = [],
@@ -57,48 +51,11 @@ const viewPages = () => {
 };
 
 /////////////////////////////////////////////////////////////////////
-// ----- DISPLAY THE CURRENT DATE ----
+// ----- DISPLAY THE CURRENT DATE & CLOCK ----
 
-const locale = navigator.language;
-let currentDate = new Date();
-const options = {
-  day: "numeric",
-  month: "long",
-  year: "numeric",
-};
-/*const taskOptions = {
-  day: "numeric",
-  month: "long",
-};
-const taskDate = currentDate.toLocaleDateString(locale, taskOptions);*/
+displayDate.innerHTML = `<p>${models.currentDate}</p>`;
 
-currentDate = currentDate.toLocaleDateString(locale, options);
-displayDate.innerHTML = `<p>${currentDate}</p>`;
-
-/////////////////////////////////////////////////////////////////////
-
-// ----- CLOCK -----
-
-const clock = () => {
-  const currentTime = new Date();
-  let hour =
-    currentTime.getHours() < 10
-      ? "0" + currentTime.getHours()
-      : currentTime.getHours();
-  let minutes =
-    currentTime.getMinutes() < 10
-      ? "0" + currentTime.getMinutes()
-      : currentTime.getMinutes();
-  let seconds =
-    currentTime.getSeconds() < 10
-      ? "0" + currentTime.getSeconds()
-      : currentTime.getSeconds();
-
-  displayClock.innerHTML = ` <p>${hour}:${minutes}:${seconds}</p>`;
-  setTimeout(clock, 1000);
-};
-
-clock();
+models.clock();
 
 ///////////////////////////////////////////////////////////////////
 addInput.addEventListener("input", updateValue);
@@ -124,7 +81,7 @@ const allView = function () {
     input = JSON.parse(localStorage.getItem("todo"));
 
     for (let i = 0; i < input.length; i++) {
-      if (today !== input[i][1] && Date.now() > taskTime(input[i][1])) {
+      if (models.today !== input[i][1] && Date.now() > taskTime(input[i][1])) {
         failed.push(input[i]);
         localStorage.setItem("todo2", JSON.stringify(failed));
         input.splice(i, 1);
@@ -150,7 +107,7 @@ const completedView = function () {
   if (JSON.parse(localStorage.getItem("todo1"))) {
     inputOne = JSON.parse(localStorage.getItem("todo1"));
 
-    for (i = 0; i < inputOne.length; i++) {
+    for (let i = 0; i < inputOne.length; i++) {
       completed.innerHTML += `<li class='completed--li'><span class="span--completed">${inputOne[i][0]}</span><span class='date-for-delete span--to-do-date'>${inputOne[i][1]}</span><button class='delete'>Delete</button></li>`;
     }
   }
@@ -163,7 +120,7 @@ let storageInput = [];
 
 const storage = function () {
   storageInput = [];
-  for (i = 0; i < input.length; i++) {
+  for (let i = 0; i < input.length; i++) {
     storageInput.push([input[i][0], input[i][1], input[i][2], input[i][3]]);
   }
 };
@@ -175,7 +132,7 @@ const add = function () {
     alert("input a task");
   } else if (
     inputDate.value == 0 ||
-    (today !== inputDate.value && Date.now() > taskTime(inputDate.value))
+    (models.today !== inputDate.value && Date.now() > taskTime(inputDate.value))
   ) {
     alert("Please input a valid date");
   } else {
@@ -211,7 +168,7 @@ const add = function () {
     characterCounter.classList.remove("zeroCharacterLeft");
 
     listToday.innerHTML = "";
-    dayView(today, listToday);
+    dayView(models.today, listToday);
 
     listTomorrow.innerHTML = "";
     dayView(tomorrow, listTomorrow);
@@ -413,7 +370,7 @@ const btnToday = document.querySelector(".btn--today");
 const listToday = document.querySelector(".today--list");
 
 const dayView = function (day, list) {
-  for (i = 0; i < input.length; i++) {
+  for (let i = 0; i < input.length; i++) {
     if (day == input[i][1]) {
       list.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span class="span--to-do">${input[i][0]}</span
     ><span class='span--to-do-date'>${input[i][1]}</span><button class="btn--confirm">Confirm</button></li>`;
@@ -423,7 +380,7 @@ const dayView = function (day, list) {
 
 btnToday.addEventListener("click", function () {
   listToday.innerHTML = "";
-  dayView(today, listToday);
+  dayView(models.today, listToday);
   closeMenu();
 
   viewPages();
@@ -468,7 +425,7 @@ const btnFailed = document.querySelector(".btn--failed");
 const listFailed = document.querySelector(".failed--list");
 
 const failedView = function () {
-  for (i = 0; i < failed.length; i++) {
+  for (let i = 0; i < failed.length; i++) {
     listFailed.innerHTML += `<li class='completed--li'><span class="span--completed">${failed[i][0]}</span><span class='date-for-delete span--to-do-date'>${failed[i][1]}</span><button class='delete'>Delete</button></li>`;
   }
 };
@@ -498,7 +455,7 @@ listFailed.addEventListener("click", function (e) {
       e.target.parentElement.querySelector(".date-for-delete").textContent,
     ];
 
-    for (i = 0; i < failed.length; i++) {
+    for (let i = 0; i < failed.length; i++) {
       if (failed[i][0] === element[0] && failed[i][1] === element[1]) {
         failed.splice(i, 1);
       }
@@ -514,7 +471,7 @@ const inputSearch = document.querySelector(".input--search");
 const listSearch = document.querySelector(".search--list");
 
 const searchView = function () {
-  for (i = 0; i < temporary.length; i++) {
+  for (let i = 0; i < temporary.length; i++) {
     listSearch.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span class="span--to-do">${temporary[i][0]}</span
   ><span class='span--to-do-date'>${temporary[i][1]}</span><button class="btn--confirm">Confirm</button></li>`;
   }
@@ -599,7 +556,7 @@ upSortValue.addEventListener("click", function () {
     listToday.innerHTML = "";
 
     localStorage.setItem("todo", JSON.stringify(storageInput));
-    dayView(today, listToday);
+    dayView(models.today, listToday);
 
     listTomorrow.innerHTML = "";
     dayView(tomorrow, listTomorrow);
@@ -629,7 +586,7 @@ upSortValue.addEventListener("click", function () {
 
     localStorage.setItem("todo", JSON.stringify(storageInput));
 
-    dayView(today, listToday);
+    dayView(models.today, listToday);
     console.log(input);
 
     listTomorrow.innerHTML = "";
