@@ -205,7 +205,7 @@ const markerFly = function (e) {
       .textContent,
   ];
 
-  for (i = 0; i < input.length; i++) {
+  for (let i = 0; i < input.length; i++) {
     if (input[i][0] === element[0] && input[i][1] === element[1]) {
       map.flyTo([input[i][2], input[i][3]], 14);
     }
@@ -225,7 +225,7 @@ const confirmToDo = function (e) {
     e.target.classList.contains("btn--confirm") &&
     e.target.parentElement.firstElementChild.checked
   ) {
-    for (i = 0; i < input.length; i++) {
+    for (let i = 0; i < input.length; i++) {
       if (input[i][0] === element[0] && input[i][1] === element[1]) {
         marker = input[i][4];
 
@@ -288,7 +288,7 @@ completed.addEventListener("click", function (e) {
       e.target.parentElement.querySelector(".date-for-delete").textContent,
     ];
 
-    for (i = 0; i < inputOne.length; i++) {
+    for (let i = 0; i < inputOne.length; i++) {
       if (inputOne[i][0] === element[0] && inputOne[i][1] === element[1]) {
         console.log(i);
         inputOne.splice(i, 1);
@@ -344,7 +344,7 @@ const btnAll = document.querySelector(".btn--all");
 btnAll.addEventListener("click", function () {
   list.innerHTML = "";
 
-  for (i = 0; i < input.length; i++) {
+  for (let i = 0; i < input.length; i++) {
     marker = input[i][4];
 
     map.removeLayer(marker);
@@ -542,7 +542,7 @@ const upSortValue = document.querySelector(".value--up");
 const downSortValue = document.querySelector(".value--down");
 let x = 1;
 upSortValue.addEventListener("click", function () {
-  for (i = 0; i < input.length; i++) {
+  for (let i = 0; i < input.length; i++) {
     marker = input[i][4];
 
     map.removeLayer(marker);
