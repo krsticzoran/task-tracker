@@ -39,3 +39,4 @@ export const renderWeather = function (temperature, wind, weather) {
     weatherPlacement.insertAdjacentHTML("beforeend", html);
   }
 };
+// Light sleet

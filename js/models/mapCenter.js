@@ -4,11 +4,12 @@ export const markerFly = function (e, input) {
     e.target.parentElement.querySelector(".span--to-do").nextSibling
       .textContent,
   ];
-
-  for (let i = 0; i < input.length; i++) {
-    if (input[i][0] === element[0] && input[i][1] === element[1]) {
-      console.log([input[i][2], input[i][3]], 14);
-      return [input[i][2], input[i][3]];
+  if (input) {
+    for (let i = 0; i < input.length; i++) {
+      if (input[i][0] === element[0] && input[i][1] === element[1]) {
+        console.log([input[i][2], input[i][3]], 14);
+        return [input[i][2], input[i][3]];
+      }
     }
   }
 };

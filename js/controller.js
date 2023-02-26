@@ -14,6 +14,7 @@ import { allView, page } from "./models/page.js";
 import { completed, completedView } from "./views/completedView.js";
 import { storage, storageInput } from "./models/storage.js";
 import { markerFly, fly, setMarker, addMarker } from "./models/mapCenter.js";
+import { deleteAll } from "./models/deleteAll.js";
 
 const btnAdd = document.querySelector(".btn--add");
 const addInput = document.querySelector(".input--add");
@@ -208,22 +209,14 @@ completed.addEventListener("click", function (e) {
 document
   .querySelector(".delete-all-completed")
   .addEventListener("click", function () {
-    inputOne = [];
-    console.log(inputOne);
-    localStorage.setItem("todo1", JSON.stringify(inputOne));
-    completed.innerHTML = "";
-    //completedView();
+    deleteAll(inputOne, "todo1", completed);
   });
 //delete all falied
 
 document
   .querySelector(".delete-all-failed")
   .addEventListener("click", function () {
-    failed = [];
-
-    localStorage.setItem("todo2", JSON.stringify(failed));
-    listFailed.innerHTML = "";
-    console.log(failed);
+    deleteAll(failed, "todo2", listFailed);
   });
 //localStorage.clear();
 ///////////////////////////////////////////////////////
@@ -487,17 +480,11 @@ const currentPosition = async function (lat, lng) {
 //map
 let map, mapEvent;
 
-console.log(mapEvent);
 navigator.geolocation.getCurrentPosition(
   function (position) {
-    const { latitude } = position.coords;
-    const { longitude } = position.coords;
+    let { latitude } = position.coords;
+    let { longitude } = position.coords;
 
-    // l. je internation -name space koji nam omogucava- global variable
-    //razlicite metode .map . setwiew su metode  'map' je id diva gde ce ici mapa
-    // moramo imati i u html div sa map
-    // var menjamo u const
-    //44.787197, 20.457273
     map = L.map("map").setView([latitude, longitude], 14);
 
     L.tileLayer("http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}", {
