@@ -14,7 +14,13 @@ import { allView, page } from "./models/page.js";
 import { completed, completedView } from "./views/completedView.js";
 import { storage, storageInput } from "./models/storage.js";
 import { markerFly, fly, setMarker, addMarker } from "./models/mapCenter.js";
-import { deleteAll } from "./models/deleteAll.js";
+import { deleteAll, delAllFail, delAllCompl } from "./models/deleteAll.js";
+import { deleteCompleted } from "./models/delete.js";
+import {
+  elementConfirm,
+  inputOnePush,
+  inputSplice,
+} from "./models/confirmToDo.js";
 
 const btnAdd = document.querySelector(".btn--add");
 const addInput = document.querySelector(".input--add");
@@ -53,11 +59,7 @@ addInput.addEventListener("input", updateValue);
 ////////////////////////////////////////////////////////////////////////
 //---- START PAGE--
 
-//localStorage.clear();
-
 allView(input, pageNumber, pageLoadTask, models.today, models.taskTime);
-
-////////////
 
 /////////////////////////////////////////////////////////////////////
 // ----- ADD TASKS -----
@@ -128,33 +130,21 @@ list.addEventListener("click", (e) => fly(markerFly(e, input), map));
 // ----- CONFIRM / TO DO LIST -----
 
 const confirmToDo = function (e) {
-  const element = [
-    e.target.parentElement.querySelector(".span--to-do").textContent,
-    e.target.previousElementSibling.textContent,
-  ];
-
+  const element = elementConfirm(e);
   if (
     e.target.classList.contains("btn--confirm") &&
     e.target.parentElement.firstElementChild.checked
   ) {
-    for (let i = 0; i < input.length; i++) {
-      if (input[i][0] === element[0] && input[i][1] === element[1]) {
-        marker = input[i][4];
-        input.splice(i, 1);
-        map.removeLayer(marker);
-      }
-    }
-    inputOne.push(element);
-
+    inputSplice(input, marker, map, element);
     storage(input);
-    e.target.parentElement.remove();
-    localStorage.setItem("todo", JSON.stringify(storageInput));
-    localStorage.setItem("todo1", JSON.stringify(inputOne));
-    page.textContent = `${pageNumber + 1} / ${Math.ceil(input.length / 10)}`;
+    inputOnePush(inputOne, element, e, storageInput);
+
     pageLoadTask(input, pageNumber);
-    if (input.length == 0) {
-      page.textContent = "";
-    }
+    input.length == 0
+      ? (page.textContent = "")
+      : (page.textContent = `${pageNumber + 1} / ${Math.ceil(
+          input.length / 10
+        )}`);
   }
 };
 list.addEventListener("click", confirmToDo);
@@ -188,36 +178,19 @@ document
 // ----- DELETE -----
 
 completed.addEventListener("click", function (e) {
-  if (e.target.classList.contains("delete")) {
-    const element = [
-      e.target.parentElement.querySelector(".span--completed").textContent,
-      e.target.parentElement.querySelector(".date-for-delete").textContent,
-    ];
-
-    for (let i = 0; i < inputOne.length; i++) {
-      if (inputOne[i][0] === element[0] && inputOne[i][1] === element[1]) {
-        console.log(i);
-        inputOne.splice(i, 1);
-      }
-    }
-    e.target.parentElement.remove();
-    localStorage.setItem("todo1", JSON.stringify(inputOne));
-  }
+  deleteCompleted(e, inputOne, "todo1");
 });
 
 //delete all completed
-document
-  .querySelector(".delete-all-completed")
-  .addEventListener("click", function () {
-    deleteAll(inputOne, "todo1", completed);
-  });
+
+delAllCompl.addEventListener("click", function () {
+  deleteAll(inputOne, "todo1", completed);
+});
 //delete all falied
 
-document
-  .querySelector(".delete-all-failed")
-  .addEventListener("click", function () {
-    deleteAll(failed, "todo2", listFailed);
-  });
+delAllFail.addEventListener("click", function () {
+  deleteAll(failed, "todo2", listFailed);
+});
 //localStorage.clear();
 ///////////////////////////////////////////////////////
 // button completed
@@ -297,21 +270,7 @@ btnFailed.addEventListener("click", function () {
 });
 
 listFailed.addEventListener("click", function (e) {
-  if (e.target.classList.contains("delete")) {
-    e.target.parentElement.remove();
-
-    const element = [
-      e.target.parentElement.querySelector(".span--completed").textContent,
-      e.target.parentElement.querySelector(".date-for-delete").textContent,
-    ];
-
-    for (let i = 0; i < failed.length; i++) {
-      if (failed[i][0] === element[0] && failed[i][1] === element[1]) {
-        failed.splice(i, 1);
-      }
-    }
-    localStorage.setItem("todo2", JSON.stringify(failed));
-  }
+  deleteCompleted(e, failed, "todo2");
 });
 
 /////////////////////////
