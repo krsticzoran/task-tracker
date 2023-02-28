@@ -15,3 +15,17 @@ export const coverView = () => {
   document.querySelector(".map--cover-p").style.display = "none";
   document.querySelector(".map--cover").style.display = "none";
 };
+
+export const emptyView = function (list, tod, tom, sear, com, fail) {
+  list.innerHTML = "";
+
+  tod.innerHTML = "";
+
+  tom.innerHTML = "";
+
+  sear.innerHTML = "";
+
+  com.innerHTML = "";
+
+  fail.innerHTML = "";
+};

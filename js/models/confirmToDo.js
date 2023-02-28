@@ -1,4 +1,4 @@
-export const elementConfirm = function (e) {
+export const elConfirm = function (e) {
   const element = [
     e.target.parentElement.querySelector(".span--to-do").textContent,
     e.target.previousElementSibling.textContent,

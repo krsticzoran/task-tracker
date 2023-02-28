@@ -7,7 +7,6 @@ export const deleteCompleted = function (e, arr, stor) {
     ];
 
     for (let i = 0; i < arr.length; i++) {
-      console.log(arr[i][0], arr[i][1], arr[1]);
       if (arr[i][0] === element[0] && arr[i][1] === element[1]) {
         arr.splice(i, 1);
 

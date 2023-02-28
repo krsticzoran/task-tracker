@@ -3,7 +3,7 @@
 
 import { renderCity } from "./views/cityView.js";
 import { renderWeather } from "./views/weatherView.js";
-import { viewPages, coverView } from "./views/view.js";
+import { viewPages, coverView, emptyView } from "./views/view.js";
 import * as models from "./models/weatherModel.js";
 import { updateValue, resetCharacter } from "./models/character.js";
 import { closeMenu } from "./views/menu.js";
@@ -16,11 +16,8 @@ import { storage, storageInput } from "./models/storage.js";
 import { markerFly, fly, setMarker, addMarker } from "./models/mapCenter.js";
 import { deleteAll, delAllFail, delAllCompl } from "./models/deleteAll.js";
 import { deleteCompleted } from "./models/delete.js";
-import {
-  elementConfirm,
-  inputOnePush,
-  inputSplice,
-} from "./models/confirmToDo.js";
+import { elConfirm, inputOnePush, inputSplice } from "./models/confirmToDo.js";
+import { sortReverse } from "./models/sort.js";
 
 const btnAdd = document.querySelector(".btn--add");
 const addInput = document.querySelector(".input--add");
@@ -130,7 +127,7 @@ list.addEventListener("click", (e) => fly(markerFly(e, input), map));
 // ----- CONFIRM / TO DO LIST -----
 
 const confirmToDo = function (e) {
-  const element = elementConfirm(e);
+  const element = elConfirm(e);
   if (
     e.target.classList.contains("btn--confirm") &&
     e.target.parentElement.firstElementChild.checked
@@ -339,81 +336,59 @@ btnRight.addEventListener("click", function () {
 });
 ///////////////////////////////////////////
 //sort
+
 const upSortValue = document.querySelector(".value--up");
 const downSortValue = document.querySelector(".value--down");
 let x = 1;
 upSortValue.addEventListener("click", function () {
-  for (let i = 0; i < input.length; i++) {
-    marker = input[i][4];
-
-    map.removeLayer(marker);
-  }
+  let arr = [list, listToday, listTomorrow, listSearch, completed, listFailed];
 
   if (x == 1) {
-    input.sort();
-    storage(input);
-    list.innerHTML = "";
+    emptyView(...arr);
+    sortReverse("sort", input, temporary, inputOne, failed);
 
-    listToday.innerHTML = "";
+    storage(input);
 
     localStorage.setItem("todo", JSON.stringify(storageInput));
     dayView(input, models.today, listToday);
 
-    listTomorrow.innerHTML = "";
     dayView(input, models.tomorrow, listTomorrow);
 
-    listSearch.innerHTML = "";
-    temporary.sort();
-    searchView();
+    searchView(temporary);
     allView(input, pageNumber, pageLoadTask, models.today, models.taskTime);
 
-    inputOne.sort();
     localStorage.setItem("todo1", JSON.stringify(inputOne));
 
-    completed.innerHTML = "";
     completedView(inputOne);
 
-    failed.sort();
-    listFailed.innerHTML = "";
     localStorage.setItem("todo2", JSON.stringify(failed));
     x = 2;
   } else {
-    input.reverse();
+    emptyView(...arr);
+    sortReverse("reverse", input, temporary, inputOne, failed);
 
     storage(input);
-
-    list.innerHTML = "";
-    listToday.innerHTML = "";
 
     localStorage.setItem("todo", JSON.stringify(storageInput));
 
     dayView(input, models.today, listToday);
-    console.log(input);
 
-    listTomorrow.innerHTML = "";
     dayView(input, models.tomorrow, listTomorrow);
     allView(input, pageNumber, pageLoadTask, models.today, models.taskTime);
 
-    temporary.reverse();
-    listSearch.innerHTML = "";
-    searchView();
+    searchView(temporary);
 
-    inputOne.reverse();
     localStorage.setItem("todo1", JSON.stringify(inputOne));
 
-    completed.innerHTML = "";
     completedView(inputOne);
 
-    failed.sort();
-    listFailed.innerHTML = "";
     localStorage.setItem("todo2", JSON.stringify(failed));
     x = 1;
   }
-  console.log(input);
-  failedView();
+
+  failedView(failed);
   window.scrollTo(0, 0);
-  addMarker(input, L, map);
-  console.log(x);
+  //addMarker(input, L, map);
 });
 
 document.querySelector(".close--modal").addEventListener("click", function (e) {
