@@ -10,3 +10,8 @@ export const viewPages = () => {
 
   document.querySelector(".paganation").style.display = "none";
 };
+
+export const coverView = () => {
+  document.querySelector(".map--cover-p").style.display = "none";
+  document.querySelector(".map--cover").style.display = "none";
+};

@@ -3,7 +3,7 @@
 
 import { renderCity } from "./views/cityView.js";
 import { renderWeather } from "./views/weatherView.js";
-import { viewPages } from "./views/view.js";
+import { viewPages, coverView } from "./views/view.js";
 import * as models from "./models/weatherModel.js";
 import { updateValue, resetCharacter } from "./models/character.js";
 import { closeMenu } from "./views/menu.js";
@@ -13,7 +13,7 @@ import { list, dayView, listToday, pageLoadTask } from "./views/todayView.js";
 import { allView, page } from "./models/page.js";
 import { completed, completedView } from "./views/completedView.js";
 import { storage, storageInput } from "./models/storage.js";
-import { markerFly, fly } from "./models/mapCenter.js";
+import { markerFly, fly, setMarker, addMarker } from "./models/mapCenter.js";
 
 const btnAdd = document.querySelector(".btn--add");
 const addInput = document.querySelector(".input--add");
@@ -22,11 +22,21 @@ const displayDate = document.querySelector(".date");
 
 let pageNumber = 0,
   failed = [],
-  temporary = [];
+  temporary = [],
+  inputOne = [];
 
 let input = JSON.parse(localStorage.getItem("todo")) || [];
 
-let inputOne = JSON.parse(localStorage.getItem("todo1")) || [];
+const viewFunction = function (dom, className) {
+  dom.innerHTML = "";
+
+  viewPages();
+
+  inputSearch.value = "";
+
+  document.querySelector(className).style.display = "block";
+  closeMenu();
+};
 /////////////////////////////////////////////////////////////////////
 // ----- DISPLAY THE CURRENT DATE & CLOCK ----
 
@@ -64,28 +74,13 @@ const add = function () {
   ) {
     alert("Please input a valid date");
   } else {
-    list.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span class="span--to-do">${addInput.value}</span
-    ><span class='span--to-do-date'>${inputDate.value}</span><button class="btn--confirm">Confirm</button></li>`;
     console.log(mapEvent);
     const { lat } = mapEvent.latlng;
     const { lng } = mapEvent.latlng;
 
-    marker = L.marker([lat, lng])
-      .addTo(map)
-      .bindPopup(
-        L.popup({
-          maxWidth: 250,
-          minWidth: 100,
-          autoClose: false,
-          closeOnClick: false,
-          className: "",
-          //class name odrediti da bi lakse stilizovali popup
-          //mozda i menjali za failed i confirm
-        })
-      )
-      .setPopupContent(addInput.value)
-      .openPopup();
+    marker = setMarker(addInput.value, lat, lng, L, map);
 
+    console.log(marker);
     map.flyTo([lat, lng], 14);
 
     input.push([addInput.value, inputDate.value, lat, lng, marker]);
@@ -144,19 +139,12 @@ const confirmToDo = function (e) {
     for (let i = 0; i < input.length; i++) {
       if (input[i][0] === element[0] && input[i][1] === element[1]) {
         marker = input[i][4];
-
         input.splice(i, 1);
-        console.log(input);
+        map.removeLayer(marker);
       }
     }
-    map.removeLayer(marker);
     inputOne.push(element);
 
-    /*completed.innerHTML += `<li class='completed--li'><span class="span--completed">${
-      e.target.parentElement.querySelector(".span--to-do").textContent
-    }</span><span>${
-      e.target.previousElementSibling.textContent
-    }</span><button class='delete'>Delete</button></li>`;*/
     storage(input);
     e.target.parentElement.remove();
     localStorage.setItem("todo", JSON.stringify(storageInput));
@@ -244,15 +232,11 @@ const btnCompleted = document.querySelector(".btn--completed");
 ////////////////////////
 
 btnCompleted.addEventListener("click", function () {
-  completed.innerHTML = "";
+  inputOne = JSON.parse(localStorage.getItem("todo1")) || [];
+
+  viewFunction(completed, ".completed");
+
   completedView(inputOne);
-
-  viewPages();
-  document.querySelector(".completed").style.display = "block";
-
-  inputSearch.value = "";
-
-  closeMenu();
 });
 
 // button all
@@ -268,7 +252,7 @@ btnAll.addEventListener("click", function () {
   }
 
   allView(input, pageNumber, pageLoadTask, models.today, models.taskTime);
-  addMarker();
+  addMarker(input, L, map);
   closeMenu();
 
   viewPages();
@@ -286,15 +270,11 @@ const btnToday = document.querySelector(".btn--today");
 // TODAY
 
 btnToday.addEventListener("click", function () {
-  listToday.innerHTML = "";
+  viewFunction(listToday, ".today--task");
+
   dayView(input, models.today, listToday);
-  closeMenu();
-
-  viewPages();
-  document.querySelector(".today--task").style.display = "block";
-
-  inputSearch.value = "";
 });
+
 listToday.addEventListener("click", confirmToDo);
 listToday.addEventListener("click", markerFly);
 
@@ -306,13 +286,8 @@ const btnTomorrow = document.querySelector(".btn--tomorrow");
 const listTomorrow = document.querySelector(".tomorrow--list");
 
 btnTomorrow.addEventListener("click", function () {
-  listTomorrow.innerHTML = "";
+  viewFunction(listTomorrow, ".tomorrow--task");
   dayView(input, models.tomorrow, listTomorrow);
-  closeMenu();
-
-  viewPages();
-  document.querySelector(".tomorrow--task").style.display = "block";
-  inputSearch.value = "";
 });
 listTomorrow.addEventListener("click", confirmToDo);
 listTomorrow.addEventListener("mouseover", markerFly);
@@ -322,19 +297,10 @@ listTomorrow.addEventListener("mouseover", markerFly);
 
 const btnFailed = document.querySelector(".btn--failed");
 btnFailed.addEventListener("click", function () {
-  if (JSON.parse(localStorage.getItem("todo2"))) {
-    failed = JSON.parse(localStorage.getItem("todo2"));
-  }
-  listFailed.innerHTML = "";
+  failed = JSON.parse(localStorage.getItem("todo2")) || [];
 
+  viewFunction(listFailed, ".failed--task");
   failedView(failed);
-
-  viewPages();
-
-  inputSearch.value = "";
-
-  document.querySelector(".failed--task").style.display = "block";
-  closeMenu();
 });
 
 listFailed.addEventListener("click", function (e) {
@@ -494,7 +460,7 @@ upSortValue.addEventListener("click", function () {
   console.log(input);
   failedView();
   window.scrollTo(0, 0);
-  addMarker();
+  addMarker(input, L, map);
   console.log(x);
 });
 
@@ -521,28 +487,6 @@ const currentPosition = async function (lat, lng) {
 //map
 let map, mapEvent;
 
-const addMarker = function () {
-  for (let i = 0; i < input.length; i++) {
-    let storageMarker = L.marker([input[i][2], input[i][3]])
-      .addTo(map)
-      .bindPopup(
-        L.popup({
-          maxWidth: 250,
-          minWidth: 100,
-          autoClose: false,
-          closeOnClick: false,
-          className: "",
-
-          //class name odrediti da bi lakse stilizovali popup
-          //mozda i menjali za failed i confirm
-        })
-      )
-      .setPopupContent(input[i][0])
-      .openPopup();
-
-    input[i].push(storageMarker);
-  }
-};
 console.log(mapEvent);
 navigator.geolocation.getCurrentPosition(
   function (position) {
@@ -566,7 +510,7 @@ navigator.geolocation.getCurrentPosition(
     // }).addTo(map);
 
     //marker();
-    addMarker();
+    addMarker(input, L, map);
 
     currentPosition(latitude, longitude);
 
@@ -601,7 +545,7 @@ navigator.geolocation.getCurrentPosition(
     }).addTo(map);
 
     //marker();
-    addMarker();
+    addMarker(input, L, map);
 
     currentPosition(latitude, longitude);
 
@@ -623,9 +567,4 @@ menuLeft.addEventListener("click", closeMenu);
 
 //map cover hidden
 
-document
-  .querySelector(".map--cover-p")
-  .addEventListener("mouseover", function () {
-    document.querySelector(".map--cover-p").style.display = "none";
-    document.querySelector(".map--cover").style.display = "none";
-  });
+document.querySelector(".map--cover-p").addEventListener("click", coverView);

@@ -70,7 +70,7 @@ tomorrow = new Date(tomorrow)
 
 //TODAY
 
-let today = new Date()
+export let today = new Date()
   .toLocaleString()
   .slice(0, 10)
   .split("/")
