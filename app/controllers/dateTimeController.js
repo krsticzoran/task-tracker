@@ -1,9 +1,9 @@
 import TimeView from "../views/timeView.js";
-
+let currentTime = 0;
 class MainController {
   constructor() {
     this.timeView = new TimeView();
-    let currentTime = 0;
+
     // call displayTime() method every second to update the clock
     setInterval(() => {
       currentTime = currentTime + 1;
