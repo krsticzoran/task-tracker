@@ -10,4 +10,7 @@ export function updateValue() {
   }
 }
 
-export default updateValue;
+export function resetCharacter() {
+  characterCounter.textContent = "20/20";
+  characterCounter.classList.remove("zeroCharacterLeft");
+}

@@ -5,32 +5,28 @@ import { renderCity } from "./views/cityView.js";
 import { renderWeather } from "./views/weatherView.js";
 import { viewPages } from "./views/view.js";
 import * as models from "./models/weatherModel.js";
-import updateValue from "./models/character.js";
+import { updateValue, resetCharacter } from "./models/character.js";
+import { closeMenu } from "./views/menu.js";
+import { failedView, listFailed } from "./views/failedWiew.js";
+import { searchView, listSearch } from "./views/searchView.js";
+import { list, dayView, listToday, pageLoadTask } from "./views/todayView.js";
+import { allView, page } from "./models/page.js";
+import { completed, completedView } from "./views/completedView.js";
+import { storage, storageInput } from "./models/storage.js";
+import { markerFly, fly } from "./models/mapCenter.js";
 
 const btnAdd = document.querySelector(".btn--add");
 const addInput = document.querySelector(".input--add");
 const inputDate = document.querySelector(".input--date");
-const list = document.querySelector(".list");
-const completed = document.querySelector(".completed--list");
 const displayDate = document.querySelector(".date");
 
-const page = document.querySelector(".page");
-let pageNumber = 0;
-const pageLoadTask = function () {
-  list.innerHTML = "";
-  console.log(pageNumber);
-  for (let i = pageNumber * 10; i <= pageNumber * 10 + 9; i++) {
-    if (input[i] !== undefined)
-      list.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span class="span--to-do">${input[i][0]}</span
-><span class='span--to-do-date'>${input[i][1]}</span><button class="btn--confirm">Confirm</button></li>`;
-  }
-};
-
-let input = [],
-  inputOne = [],
+let pageNumber = 0,
   failed = [],
   temporary = [];
 
+let input = JSON.parse(localStorage.getItem("todo")) || [];
+
+let inputOne = JSON.parse(localStorage.getItem("todo1")) || [];
 /////////////////////////////////////////////////////////////////////
 // ----- DISPLAY THE CURRENT DATE & CLOCK ----
 
@@ -44,60 +40,17 @@ models.clock();
 addInput.addEventListener("input", updateValue);
 
 ////////////////////////////////////////////////////////////////////////
-//---- LOCALSTORAGE --
+//---- START PAGE--
 
 //localStorage.clear();
-const allView = function () {
-  if (JSON.parse(localStorage.getItem("todo"))) {
-    input = JSON.parse(localStorage.getItem("todo"));
 
-    for (let i = 0; i < input.length; i++) {
-      if (
-        models.today !== input[i][1] &&
-        Date.now() > models.taskTime(input[i][1])
-      ) {
-        failed.push(input[i]);
-        localStorage.setItem("todo2", JSON.stringify(failed));
-        input.splice(i, 1);
+allView(input, pageNumber, pageLoadTask, models.today, models.taskTime);
 
-        localStorage.setItem("todo", JSON.stringify(input));
-        i--;
-      }
-    }
-    //////////////////////////
-    //
-
-    page.textContent = `${pageNumber + 1} / ${Math.ceil(input.length / 10)}`;
-    if (input.length === 0) {
-      page.textContent = "";
-    }
-
-    pageLoadTask();
-  }
-};
-allView();
-
-const completedView = function () {
-  if (JSON.parse(localStorage.getItem("todo1"))) {
-    inputOne = JSON.parse(localStorage.getItem("todo1"));
-
-    for (let i = 0; i < inputOne.length; i++) {
-      completed.innerHTML += `<li class='completed--li'><span class="span--completed">${inputOne[i][0]}</span><span class='date-for-delete span--to-do-date'>${inputOne[i][1]}</span><button class='delete'>Delete</button></li>`;
-    }
-  }
-};
+////////////
 
 /////////////////////////////////////////////////////////////////////
 // ----- ADD TASKS -----
 let marker;
-let storageInput = [];
-
-const storage = function () {
-  storageInput = [];
-  for (let i = 0; i < input.length; i++) {
-    storageInput.push([input[i][0], input[i][1], input[i][2], input[i][3]]);
-  }
-};
 
 const add = function () {
   if (mapEvent === undefined || mapEvent === "") {
@@ -134,22 +87,23 @@ const add = function () {
       .openPopup();
 
     map.flyTo([lat, lng], 14);
-    input.push([addInput.value, inputDate.value, lat, lng, marker]);
 
-    storage();
+    input.push([addInput.value, inputDate.value, lat, lng, marker]);
+    console.log(input);
+    storage(input);
+    console.log(storageInput);
     localStorage.setItem("todo", JSON.stringify(storageInput));
 
-    characterCounter.textContent = "20/20";
-    characterCounter.classList.remove("zeroCharacterLeft");
+    resetCharacter();
 
     listToday.innerHTML = "";
-    dayView(models.today, listToday);
+    dayView(input, models.today, listToday);
 
     listTomorrow.innerHTML = "";
-    dayView(tomorrow, listTomorrow);
+    dayView(input, models.tomorrow, listTomorrow);
 
     page.textContent = `${pageNumber + 1} / ${Math.ceil(input.length / 10)}`;
-    pageLoadTask();
+    pageLoadTask(input, pageNumber);
 
     window.scrollTo(0, 0);
 
@@ -173,20 +127,7 @@ addInput.addEventListener("keypress", function (e) {
 ////////////////////////////////////////////////////////////////////////////
 //map center on click
 
-const markerFly = function (e) {
-  const element = [
-    e.target.parentElement.querySelector(".span--to-do").textContent,
-    e.target.parentElement.querySelector(".span--to-do").nextSibling
-      .textContent,
-  ];
-
-  for (let i = 0; i < input.length; i++) {
-    if (input[i][0] === element[0] && input[i][1] === element[1]) {
-      map.flyTo([input[i][2], input[i][3]], 14);
-    }
-  }
-};
-list.addEventListener("click", markerFly);
+list.addEventListener("click", (e) => fly(markerFly(e, input), map));
 //////////////////////////////////
 // ----- CONFIRM / TO DO LIST -----
 
@@ -205,6 +146,7 @@ const confirmToDo = function (e) {
         marker = input[i][4];
 
         input.splice(i, 1);
+        console.log(input);
       }
     }
     map.removeLayer(marker);
@@ -215,12 +157,12 @@ const confirmToDo = function (e) {
     }</span><span>${
       e.target.previousElementSibling.textContent
     }</span><button class='delete'>Delete</button></li>`;*/
-    storage();
+    storage(input);
     e.target.parentElement.remove();
     localStorage.setItem("todo", JSON.stringify(storageInput));
     localStorage.setItem("todo1", JSON.stringify(inputOne));
     page.textContent = `${pageNumber + 1} / ${Math.ceil(input.length / 10)}`;
-    pageLoadTask();
+    pageLoadTask(input, pageNumber);
     if (input.length == 0) {
       page.textContent = "";
     }
@@ -303,7 +245,7 @@ const btnCompleted = document.querySelector(".btn--completed");
 
 btnCompleted.addEventListener("click", function () {
   completed.innerHTML = "";
-  completedView();
+  completedView(inputOne);
 
   viewPages();
   document.querySelector(".completed").style.display = "block";
@@ -325,7 +267,7 @@ btnAll.addEventListener("click", function () {
     map.removeLayer(marker);
   }
 
-  allView();
+  allView(input, pageNumber, pageLoadTask, models.today, models.taskTime);
   addMarker();
   closeMenu();
 
@@ -341,21 +283,11 @@ btnAll.addEventListener("click", function () {
 const btnToday = document.querySelector(".btn--today");
 
 /////
-///////////////////
-const listToday = document.querySelector(".today--list");
-
-const dayView = function (day, list) {
-  for (let i = 0; i < input.length; i++) {
-    if (day == input[i][1]) {
-      list.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span class="span--to-do">${input[i][0]}</span
-    ><span class='span--to-do-date'>${input[i][1]}</span><button class="btn--confirm">Confirm</button></li>`;
-    }
-  }
-};
+// TODAY
 
 btnToday.addEventListener("click", function () {
   listToday.innerHTML = "";
-  dayView(models.today, listToday);
+  dayView(input, models.today, listToday);
   closeMenu();
 
   viewPages();
@@ -364,27 +296,18 @@ btnToday.addEventListener("click", function () {
   inputSearch.value = "";
 });
 listToday.addEventListener("click", confirmToDo);
-listToday.addEventListener("mouseover", markerFly);
+listToday.addEventListener("click", markerFly);
 
 /////////////////////////
 //tomorrow
 //const today = new Date()
-let tomorrow = new Date();
-tomorrow.setDate(tomorrow.getDate() + 1);
-tomorrow = new Date(tomorrow)
-  .toISOString()
-  .slice(0, 10)
-  .split("/")
-  .reverse()
-  .join("-");
-console.log(tomorrow);
 
 const btnTomorrow = document.querySelector(".btn--tomorrow");
 const listTomorrow = document.querySelector(".tomorrow--list");
 
 btnTomorrow.addEventListener("click", function () {
   listTomorrow.innerHTML = "";
-  dayView(tomorrow, listTomorrow);
+  dayView(input, models.tomorrow, listTomorrow);
   closeMenu();
 
   viewPages();
@@ -398,21 +321,13 @@ listTomorrow.addEventListener("mouseover", markerFly);
 //failed
 
 const btnFailed = document.querySelector(".btn--failed");
-const listFailed = document.querySelector(".failed--list");
-
-const failedView = function () {
-  for (let i = 0; i < failed.length; i++) {
-    listFailed.innerHTML += `<li class='completed--li'><span class="span--completed">${failed[i][0]}</span><span class='date-for-delete span--to-do-date'>${failed[i][1]}</span><button class='delete'>Delete</button></li>`;
-  }
-};
-
 btnFailed.addEventListener("click", function () {
   if (JSON.parse(localStorage.getItem("todo2"))) {
     failed = JSON.parse(localStorage.getItem("todo2"));
   }
   listFailed.innerHTML = "";
 
-  failedView();
+  failedView(failed);
 
   viewPages();
 
@@ -444,14 +359,6 @@ listFailed.addEventListener("click", function (e) {
 //search
 const btnSearch = document.querySelector(".btn--search");
 const inputSearch = document.querySelector(".input--search");
-const listSearch = document.querySelector(".search--list");
-
-const searchView = function () {
-  for (let i = 0; i < temporary.length; i++) {
-    listSearch.innerHTML += `<li class="list--li"><input type="checkbox" class="check" /><span class="span--to-do">${temporary[i][0]}</span
-  ><span class='span--to-do-date'>${temporary[i][1]}</span><button class="btn--confirm">Confirm</button></li>`;
-  }
-};
 
 const search = function () {
   listSearch.innerHTML = "";
@@ -472,7 +379,7 @@ const search = function () {
       console.log(temporary.length);
     }
 
-    searchView();
+    searchView(temporary);
     inputSearch.value = "";
 
     viewPages();
@@ -499,7 +406,7 @@ btnLeft.addEventListener("click", function () {
   if (pageNumber > 0) {
     pageNumber--;
     window.scrollTo(0, 0);
-    pageLoadTask();
+    pageLoadTask(input, pageNumber);
     page.textContent = `${pageNumber + 1} / ${Math.ceil(input.length / 10)}`;
   }
 });
@@ -508,7 +415,7 @@ btnRight.addEventListener("click", function () {
   if (pageNumber < Math.ceil(input.length / 10) - 1) {
     pageNumber++;
     page.textContent = `${pageNumber + 1} / ${Math.ceil(input.length / 10)}`;
-    pageLoadTask();
+    pageLoadTask(input, pageNumber);
     window.scrollTo(0, 0);
   }
 });
@@ -526,27 +433,27 @@ upSortValue.addEventListener("click", function () {
 
   if (x == 1) {
     input.sort();
-    storage();
+    storage(input);
     list.innerHTML = "";
 
     listToday.innerHTML = "";
 
     localStorage.setItem("todo", JSON.stringify(storageInput));
-    dayView(models.today, listToday);
+    dayView(input, models.today, listToday);
 
     listTomorrow.innerHTML = "";
-    dayView(tomorrow, listTomorrow);
+    dayView(input, models.tomorrow, listTomorrow);
 
     listSearch.innerHTML = "";
     temporary.sort();
     searchView();
-    allView();
+    allView(input, pageNumber, pageLoadTask, models.today, models.taskTime);
 
     inputOne.sort();
     localStorage.setItem("todo1", JSON.stringify(inputOne));
 
     completed.innerHTML = "";
-    completedView();
+    completedView(inputOne);
 
     failed.sort();
     listFailed.innerHTML = "";
@@ -555,19 +462,19 @@ upSortValue.addEventListener("click", function () {
   } else {
     input.reverse();
 
-    storage();
+    storage(input);
 
     list.innerHTML = "";
     listToday.innerHTML = "";
 
     localStorage.setItem("todo", JSON.stringify(storageInput));
 
-    dayView(models.today, listToday);
+    dayView(input, models.today, listToday);
     console.log(input);
 
     listTomorrow.innerHTML = "";
-    dayView(tomorrow, listTomorrow);
-    allView();
+    dayView(input, models.tomorrow, listTomorrow);
+    allView(input, pageNumber, pageLoadTask, models.today, models.taskTime);
 
     temporary.reverse();
     listSearch.innerHTML = "";
@@ -577,7 +484,7 @@ upSortValue.addEventListener("click", function () {
     localStorage.setItem("todo1", JSON.stringify(inputOne));
 
     completed.innerHTML = "";
-    completedView();
+    completedView(inputOne);
 
     failed.sort();
     listFailed.innerHTML = "";
@@ -709,23 +616,8 @@ navigator.geolocation.getCurrentPosition(
   }
 );
 
-// loader dok ucitava
-//hamburger menu
-
 //hamburger
 const menuLeft = document.getElementById("menu--center");
-const one = document.getElementById("one");
-const two = document.getElementById("two");
-const three = document.getElementById("three");
-const menuOpen = document.querySelector(".buttons--all-open");
-
-const closeMenu = function () {
-  one.classList.toggle("bar-one");
-  two.classList.toggle("bar-two");
-  three.classList.toggle("bar-three");
-
-  menuOpen.classList.toggle("buttons--all-open");
-};
 
 menuLeft.addEventListener("click", closeMenu);
 

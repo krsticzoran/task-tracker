@@ -58,9 +58,19 @@ export const clock = () => {
 
 /////
 
+// TOMORROW
+export let tomorrow = new Date();
+tomorrow.setDate(tomorrow.getDate() + 1);
+tomorrow = new Date(tomorrow)
+  .toISOString()
+  .slice(0, 10)
+  .split("/")
+  .reverse()
+  .join("-");
+
 //TODAY
 
-export let today = new Date()
+let today = new Date()
   .toLocaleString()
   .slice(0, 10)
   .split("/")
@@ -68,7 +78,6 @@ export let today = new Date()
   .join("-");
 
 // TASK TIME
-
 export const taskTime = function (time) {
   const str = new Date(time);
   const timestamp = str.getTime();
