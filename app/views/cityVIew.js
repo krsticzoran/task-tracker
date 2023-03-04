@@ -7,8 +7,11 @@ class CityView {
   displayCity(city) {
     // Hides the loader element.
     this.loaderElement.style.display = "none";
-    // Updates the HTML content of the city element with the specified city.
-    this.cityElement.innerHTML = `<p class="city">${city}</p>`;
+    // Inserts the HTML content of the city element before the first child of the weather element.
+    this.weatherElement.insertAdjacentHTML(
+      "afterbegin",
+      `<p class="city">${city}</p>`
+    );
   }
 }
 
