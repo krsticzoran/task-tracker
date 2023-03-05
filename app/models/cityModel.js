@@ -14,9 +14,8 @@ class CityModel {
         position.coords.longitude
       );
       return city;
-      console.log(city);
     } catch (error) {
-      console.error(error);
+      //console.error(error);
       // Return default city if unable to get user's location
       return this.defaultCity;
     }
@@ -46,6 +45,3 @@ class CityModel {
 }
 
 export default CityModel;
-
-const test = new CityModel();
-test.getCity().then((city) => console.log(city));

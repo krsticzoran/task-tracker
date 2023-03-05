@@ -8,4 +8,5 @@ new DateTimeController();
 //gets the user's current location and displays the city name in the UI
 new CityController();
 
+// uses the location data to fetch weather information from an external API
 new WeatherController();

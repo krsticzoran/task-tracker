@@ -7,8 +7,9 @@ class CityView {
   displayCity(city) {
     // Hides the loader element.
     this.loaderElement.style.display = "none";
+
     // Inserts the HTML content of the city element before the first child of the weather element.
-    this.weatherElement.insertAdjacentHTML(
+    this.cityElement.insertAdjacentHTML(
       "afterbegin",
       `<p class="city">${city}</p>`
     );
