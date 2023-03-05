@@ -4,8 +4,7 @@
   "description": "# My First App",
   "main": "index.js",
   "scripts": {
-    "start": "webpack serve",
-    "build": "webpack"
+    "watch": "node-sass -o css scss/main.scss --watch"
   },
   "repository": {
     "type": "git",

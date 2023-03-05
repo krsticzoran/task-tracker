@@ -1,15 +1,16 @@
 class WeatherView {
   constructor() {
     this.weatherElement = document.querySelector(".weather");
+    this.tempIcon =
+      "<img class='weather--style' src='../../icons/tempurature.png'>";
+    this.windIcon = "<img class='weather--style' src='../../icons/wind.png'>";
   }
 
   displayWeather(temperature, wind, description, timeOfDay) {
-    // Construct the HTML string for the weather information
-
     const weatherHTML = `
       <div class='temp--container'>
-        <p class='temp'>${temperature} </p>
-        <p class='wind'> ${wind}</p>
+        <p class='temp'>${temperature} ${this.tempIcon}</p>
+        <p class='wind'> ${wind} ${this.windIcon}</p>
         <img class="weather--icons" src='${this.getIconUrl(
           description,
           timeOfDay

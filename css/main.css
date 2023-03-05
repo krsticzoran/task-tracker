@@ -591,7 +591,8 @@ span {
   display: flex;
   justify-content: space-between;
   padding: 4rem 5vw;
-  font-size: 2.1rem; }
+  font-size: 2.1rem;
+  margin-bottom: 5rem; }
   @media (max-width: 1200px) {
     .temp--container {
       font-size: 1.8rem;
@@ -611,6 +612,9 @@ span {
 
 .weather--icons img {
   width: 72px; }
+
+.weather--style {
+  width: 50px; }
 
 .navbar {
   display: flex;
