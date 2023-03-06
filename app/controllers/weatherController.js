@@ -20,7 +20,7 @@ class WeatherController {
     const city = await this.cityModel.getCity();
 
     // Get the weather for the city from the WeatherModel
-    const weather = await this.weatherModel.getWeather(city);
+    const weather = await this.weatherModel.getWeather(city.name);
 
     // Call the isDay() method to check if it is currently day or night
     const timeOfDay = this.dateModel.isDay();

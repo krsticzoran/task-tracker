@@ -11,7 +11,7 @@ class CityController {
   // Gets the current city from the CityModel and displays it in the CityView.
   async getAndDisplayCity() {
     const city = await this.cityModel.getCity();
-    this.cityView.displayCity(city);
+    this.cityView.displayCity(city.name);
   }
 }
 

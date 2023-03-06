@@ -1,6 +1,10 @@
 class CityModel {
   constructor() {
-    this.defaultCity = "Belgrade";
+    this.defaultCity = {
+      name: "Belgrade",
+      lat: 44.787197,
+      long: 20.457273,
+    };
   }
 
   async getCity() {
@@ -13,7 +17,11 @@ class CityModel {
         position.coords.latitude,
         position.coords.longitude
       );
-      return city;
+      return {
+        name: city,
+        lat: position.coords.latitude,
+        long: position.coords.longitude,
+      };
     } catch (error) {
       //console.error(error);
       // Return default city if unable to get user's location
