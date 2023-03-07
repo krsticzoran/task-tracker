@@ -7,9 +7,9 @@ class WeatherModel {
     const data = await response.json();
 
     // Extracts the temperature,description and wind values from the response data
-    const temperature = data.temperature;
-    const wind = data.wind;
-    const description = data.description;
+    const temperature = data.temperature || "";
+    const wind = data.wind || "";
+    const description = data.description || "";
 
     // Returns an object with the temperature,description and wind values
     return { temperature, wind, description };
