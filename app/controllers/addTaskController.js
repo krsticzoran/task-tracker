@@ -29,6 +29,9 @@ class AddTaskController {
       // display task
       this.inputView.renderToDoList([inputData]);
 
+      // store input to localeStorage
+      localStorage.setItem("todo", JSON.stringify(InputDataModel.input));
+
       this.addTaskView.clearInput();
       this.closeModal();
       MapModel.clearLatLong();

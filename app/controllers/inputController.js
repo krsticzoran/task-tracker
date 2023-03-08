@@ -8,6 +8,7 @@ class InputController {
   }
 
   displayToDo() {
+    InputDataModel.setInput();
     this.inputView.renderToDoList(InputDataModel.getInput());
   }
 }

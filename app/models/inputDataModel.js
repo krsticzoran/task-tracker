@@ -1,8 +1,18 @@
 class InputDataModel {
-  static input = [{ input: "Zoki", date: "29.01.1981" }];
+  static input = [];
 
   static getInput() {
     return this.input;
+  }
+
+  static setInput() {
+    //localStorage.clear("todo");
+    const localStorageInput = JSON.parse(localStorage.getItem("todo"));
+    if (localStorageInput) {
+      Array.isArray(localStorageInput)
+        ? this.input.unshift(...localStorageInput)
+        : this.input.unshift(localStorageInput);
+    }
   }
 
   static pushInput(input) {
