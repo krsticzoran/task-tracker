@@ -42,6 +42,10 @@ class AddTaskModel {
       alert("Please enter a valid date");
       return false;
     }
+    if (!inputData.date) {
+      alert("add a date");
+      return false;
+    }
     this.input = inputData.input;
     this.date = inputData.date;
     return true;

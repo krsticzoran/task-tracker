@@ -1,5 +1,5 @@
 class InputDataModel {
-  static input = [];
+  static input = [{ input: "Zoki", date: "29.01.1981" }];
 
   static getInput() {
     return this.input;
