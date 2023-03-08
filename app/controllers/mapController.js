@@ -1,6 +1,7 @@
 import MapView from "../views/mapView.js";
 import CityModel from "../models/cityModel.js";
 import AddTaskView from "../views/addTaskView.js";
+import MapModel from "../models/mapModel.js";
 
 class MapController {
   constructor() {
@@ -27,14 +28,11 @@ class MapController {
       subdomains: ["mt0", "mt1", "mt2", "mt3"],
     }).addTo(map);
 
-    // add markers,
     map.on("click", (e) => {
-      // create a marker at the clicked location
-      const marker = L.marker(e.latlng).addTo(map);
-      // do something with the marker, like adding a popup
-      marker
-        .bindPopup("You clicked the map at " + e.latlng.toString())
-        .openPopup();
+      // store lat and long
+      MapModel.setLatLong(e.latlng.lat, e.latlng.lng);
+
+      // open add Task
       this.addTaskView.openTaskModal();
     });
   }

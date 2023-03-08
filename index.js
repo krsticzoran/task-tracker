@@ -17,6 +17,8 @@ new WeatherController();
 //toggling its visibility and appearance when the menu button is clicked
 new MenuController();
 
+// display map and handle clicks on map
 new MapController();
 
+// add task and handle inputs
 new AddTaskController();
