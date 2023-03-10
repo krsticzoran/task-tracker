@@ -18,6 +18,7 @@ class AddTaskController {
     const { input, date } = this.addTaskModel.getData();
     // Get the latitude and longitude
     const { lat, lng } = MapModel.getLatLong();
+
     // Create an object with input data and location
     const inputData = { input, date, lat, lng };
 
@@ -28,12 +29,16 @@ class AddTaskController {
 
       // display task
       this.inputView.renderToDoList([inputData]);
+      //console.log(lat, long);
+
+      MapModel.addMarker(lat, lng, input);
 
       // store input to localeStorage
       localStorage.setItem("todo", JSON.stringify(InputDataModel.input));
 
       this.addTaskView.clearInput();
       this.closeModal();
+
       MapModel.clearLatLong();
     }
   }

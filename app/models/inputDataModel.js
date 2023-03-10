@@ -13,20 +13,25 @@ class InputDataModel {
     const localStorageInput = [];
     //localStorage.clear("todo2");
 
+    // store failed tasks in failed array from localeStorege
     JSON.parse(localStorage.getItem("todo2")) &&
       this.failed.unshift(...JSON.parse(localStorage.getItem("todo2")));
 
     //localStorage.clear("todo");
+    // store  tasks in localStorageInput array from localeStorege
     JSON.parse(localStorage.getItem("todo")) &&
       localStorageInput.unshift(...JSON.parse(localStorage.getItem("todo")));
     console.log(localStorageInput);
     if (localStorageInput) {
+      //Check if the task's time has expired and put that task in faild arrays
       const filteredFailed = localStorageInput.filter(function (task) {
         return new Date(task.date).getTime() < today.getTime();
       });
       filteredFailed && this.failed.unshift(...filteredFailed);
       localStorage.setItem("todo2", JSON.stringify(filteredFailed));
       console.log(this.failed);
+
+      //Filter tasks that have not yet expired and put them in an input array.
       const filteredInput = localStorageInput.filter(function (task) {
         return new Date(task.date).getTime() >= today.getTime();
       });
@@ -38,7 +43,6 @@ class InputDataModel {
 
   static pushInput(input) {
     this.input.unshift(input); // add input to the beginning of the array
-    console.log(this.input);
   }
 }
 

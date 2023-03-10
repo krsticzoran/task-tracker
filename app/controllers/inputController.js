@@ -1,5 +1,6 @@
 import InputView from "../views/inputView.js";
 import InputDataModel from "../models/inputDataModel.js";
+import MapModel from "../models/mapModel.js";
 
 class InputController {
   constructor() {
@@ -9,7 +10,12 @@ class InputController {
 
   displayToDo() {
     InputDataModel.setInput();
-    this.inputView.renderToDoList(InputDataModel.getInput());
+    const inputData = InputDataModel.getInput();
+    console.log(inputData);
+    this.inputView.renderToDoList(inputData);
+    inputData.map((item) => {
+      MapModel.addMarker(item.lng, item.lat, item.input);
+    });
   }
 }
 
