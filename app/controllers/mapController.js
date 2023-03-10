@@ -2,6 +2,7 @@ import MapView from "../views/mapView.js";
 import CityModel from "../models/cityModel.js";
 import AddTaskView from "../views/addTaskView.js";
 import MapModel from "../models/mapModel.js";
+import InputDataModel from "../models/inputDataModel.js";
 
 class MapController {
   constructor() {
@@ -20,6 +21,13 @@ class MapController {
     const city = await this.cityModel.getCity();
 
     MapModel.mapLoad(city.lat, city.long);
+
+    const inputData = InputDataModel.getInput();
+    console.log(inputData);
+
+    inputData.map((item) => {
+      MapModel.addMarker(item.lat, item.lng, item.input);
+    });
 
     MapModel.map.on("click", (e) => {
       // store lat and lng

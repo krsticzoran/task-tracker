@@ -32,22 +32,7 @@ class MapModel {
   }
 
   // Add a marker to the map
-  static async addMarker(lat, lng, text) {
-    // Wait for the map to load
-    await new Promise((resolve) => {
-      if (this.map) {
-        resolve();
-      } else {
-        const interval = setInterval(() => {
-          if (this.map) {
-            clearInterval(interval);
-            resolve();
-          }
-        }, 100);
-      }
-    });
-
-    // Add the marker with the given text
+  static addMarker(lat, lng, text) {
     const marker = L.marker([lat, lng]).addTo(this.map);
     marker.bindPopup(text).openPopup();
   }

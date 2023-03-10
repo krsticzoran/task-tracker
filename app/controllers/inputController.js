@@ -8,14 +8,10 @@ class InputController {
     this.displayToDo();
   }
 
-  displayToDo() {
+  async displayToDo() {
     InputDataModel.setInput();
-    const inputData = InputDataModel.getInput();
-    console.log(inputData);
-    this.inputView.renderToDoList(inputData);
-    inputData.map((item) => {
-      MapModel.addMarker(item.lng, item.lat, item.input);
-    });
+
+    this.inputView.renderToDoList(InputDataModel.getInput());
   }
 }
 
