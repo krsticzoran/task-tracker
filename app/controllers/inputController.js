@@ -6,10 +6,17 @@ class InputController {
   constructor() {
     this.inputView = new InputView();
     this.displayToDo();
+    this.inputView.bindFailedList(() => this.displayFailedList());
   }
 
-  async displayToDo() {
+  displayFailedList() {
+    this.inputView.clearToDoList();
+    this.inputView.renderToDoList(InputDataModel.getFailed());
+  }
+
+  displayToDo() {
     InputDataModel.setInput();
+    this.inputView.clearToDoList();
 
     this.inputView.renderToDoList(InputDataModel.getInput());
   }

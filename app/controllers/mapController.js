@@ -20,11 +20,13 @@ class MapController {
     // Get the city from the CityModel
     const city = await this.cityModel.getCity();
 
+    // render the map
     MapModel.mapLoad(city.lat, city.long);
 
+    // get all inputs
     const inputData = InputDataModel.getInput();
-    console.log(inputData);
 
+    // render markers on the map
     inputData.map((item) => {
       MapModel.addMarker(item.lat, item.lng, item.input);
     });

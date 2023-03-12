@@ -1,8 +1,17 @@
 class InputView {
   constructor() {
     this.list = document.querySelector(".list");
+    this.btnFailed = document.querySelector(".btn--failed");
+    //this.listFailed = document.querySelector(".failed--list");
   }
 
+  bindFailedList(handler) {
+    this.btnFailed.addEventListener("click", handler);
+  }
+
+  clearToDoList() {
+    this.list.innerHTML = "";
+  }
   // render tasks
   renderToDoList(input) {
     input.map((item) => {
