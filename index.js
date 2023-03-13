@@ -5,6 +5,7 @@ import MenuController from "./app/controllers/menuController.js";
 import MapController from "./app/controllers/mapController.js";
 import AddTaskController from "./app/controllers/addTaskController.js";
 import InputController from "./app/controllers/inputController.js";
+import FailedController from "./app/controllers/failedController.js";
 
 // create a new instance of the DateTimeController class to start the clock and date app
 new DateTimeController();
@@ -25,3 +26,5 @@ new MapController();
 new AddTaskController();
 
 new InputController();
+
+new FailedController();
