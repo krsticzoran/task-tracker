@@ -8,6 +8,8 @@ class FailedController {
     this.viewHandler = new ViewHandler();
     this.failedView.bindFailedList(() => this.displayFailedList());
   }
+
+  // Method to display the list of failed inputs
   displayFailedList() {
     this.viewHandler.showView(this.viewHandler.failed);
     this.failedView.renderFailedList(InputDataModel.getFailed());

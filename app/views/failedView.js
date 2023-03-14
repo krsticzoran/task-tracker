@@ -9,7 +9,9 @@ class FailedView {
   }
 
   renderFailedList(failed) {
+    // Clear the existing list
     this.listFailed.innerHTML = "";
+    // Map over the failed inputs array and create a list item for each input
     failed.map((item) => {
       this.listFailed.innerHTML += `<li class='completed--li'><span class="span--completed">${item.input}</span><span class='date-for-delete span--to-do-date'>${item.date}</span><button class='delete'>Delete</button></li>`;
     });
