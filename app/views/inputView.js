@@ -1,6 +1,15 @@
 class InputView {
   constructor() {
     this.list = document.querySelector(".list");
+    this.btnHome = document.querySelector(".btn--all");
+    this.task = document.querySelector(".list--li");
+  }
+  bindTask(handler) {
+    this.list.addEventListener("click", handler);
+  }
+
+  bindList(handler) {
+    this.btnHome.addEventListener("click", handler);
   }
 
   clearToDoList() {

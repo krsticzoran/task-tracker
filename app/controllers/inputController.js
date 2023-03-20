@@ -1,30 +1,29 @@
 import InputView from "../views/inputView.js";
 import InputDataModel from "../models/inputDataModel.js";
 import ViewHandler from "../views/viewHandler.js";
-import TodayTaskView from "../views/todayView.js";
-import TodayTaskModel from "../models/todayTaskModel.js";
+import MenuView from "../views/menuView.js";
 
 class InputController {
   constructor() {
     this.viewHandler = new ViewHandler();
     this.inputView = new InputView();
-    this.todayTaskView = new TodayTaskView();
-    this.todayTaskModel = new TodayTaskModel();
-    this.displayTasks();
-    this.todayTaskView.bindTodayList(() => this.displayTodayTasks());
+    this.menuView = new MenuView();
+    this.loadTasks();
+    this.inputView.bindList(() => this.displayTasks());
   }
 
-  displayTodayTasks() {
-    const todayTasks = this.todayTaskModel.getTodayTasks(
-      InputDataModel.getInput()
-    );
-    this.todayTaskView.renderTodayTask(todayTasks);
-    this.viewHandler.showView(this.viewHandler.today);
-  }
-
+  // rendering inputs when user click on home link/button
   displayTasks() {
-    InputDataModel.setInput();
     this.inputView.clearToDoList();
+    this.inputView.renderToDoList(InputDataModel.getInput());
+    this.viewHandler.showView(this.viewHandler.toDo);
+    this.menuView.toggleMenu();
+  }
+
+  // rendering input when user load page
+  loadTasks() {
+    this.inputView.clearToDoList();
+    InputDataModel.setInput();
 
     this.inputView.renderToDoList(InputDataModel.getInput());
     this.viewHandler.showView(this.viewHandler.toDo);

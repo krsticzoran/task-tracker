@@ -3,7 +3,9 @@ class CompletedTaskView {
     this.completedList = document.querySelector(".completed--list");
     this.btnCompleted = document.querySelector(".btn--completed");
   }
-
+  bindTask(handler) {
+    this.task.addEventListener("click", handler);
+  }
   bindCompletedList(handler) {
     this.btnCompleted.addEventListener("click", handler);
   }
