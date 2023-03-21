@@ -5,6 +5,27 @@ class CompletedTaskModel {
     return this.completedTask;
   }
 
+  static deleteTask(e) {
+    const element = this.getElement(e);
+    this.completedTask.forEach((task, index) => {
+      if (task.input == element[0] && task.date == element[1]) {
+        this.completedTask.splice(index, 1);
+        localStorage.setItem("todo1", JSON.stringify(this.completedTask));
+      }
+    });
+  }
+  static deleteAllCompletedTask() {
+    this.completedTask = [];
+    localStorage.setItem("todo1", JSON.stringify(this.completedTask));
+  }
+
+  static getElement(e) {
+    return [
+      e.target.parentElement.querySelector(".span--completed").textContent,
+      e.target.parentElement.querySelector(".date-for-delete").textContent,
+    ];
+  }
+
   static addCompletedTask(element) {
     this.completedTask.unshift({ input: element[0], date: element[1] });
     localStorage.setItem("todo1", JSON.stringify(this.completedTask));

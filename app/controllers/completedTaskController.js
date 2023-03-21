@@ -9,6 +9,24 @@ class CompletedTaskController {
     this.viewHandler = new ViewHandler();
     this.menuView = new MenuView();
     this.completedTaskView.bindCompletedList(() => this.displayCompletedList());
+    this.completedTaskView.bindCompletedClick((e) => this.deleteTask(e));
+    this.completedTaskView.bindDeleteAll(() => this.deleteAll());
+  }
+
+  deleteAll() {
+    CompletedTaskModel.deleteAllCompletedTask();
+    this.completedTaskView.renderCompletedTask(
+      CompletedTaskModel.getCompletedTask()
+    );
+  }
+
+  deleteTask(e) {
+    if (e.target.classList.contains("delete")) {
+      CompletedTaskModel.deleteTask(e);
+      this.completedTaskView.renderCompletedTask(
+        CompletedTaskModel.getCompletedTask()
+      );
+    }
   }
 
   displayCompletedList() {

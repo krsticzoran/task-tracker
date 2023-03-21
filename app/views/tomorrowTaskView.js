@@ -8,6 +8,10 @@ class TomorrowTaskView {
     this.btnTomorrow.addEventListener("click", handler);
   }
 
+  bindTomorrowClick(handler) {
+    this.listTomorrow.addEventListener("click", handler);
+  }
+
   renderTomorrowTask(task) {
     this.listTomorrow.innerHTML = "";
     task.map((item) => {

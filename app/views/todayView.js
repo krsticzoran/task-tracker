@@ -4,6 +4,10 @@ class TodayTaskView {
     this.btnToday = document.querySelector(".btn--today");
   }
 
+  bindTaskClick(handler) {
+    this.listToday.addEventListener("click", handler);
+  }
+
   bindTodayList(handler) {
     this.btnToday.addEventListener("click", handler);
   }
