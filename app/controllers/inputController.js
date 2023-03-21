@@ -2,6 +2,7 @@ import InputView from "../views/inputView.js";
 import InputDataModel from "../models/inputDataModel.js";
 import ViewHandler from "../views/viewHandler.js";
 import MenuView from "../views/menuView.js";
+import CompletedTaskModel from "../models/completedTaskModel.js";
 
 class InputController {
   constructor() {
@@ -27,6 +28,8 @@ class InputController {
 
     this.inputView.renderToDoList(InputDataModel.getInput());
     this.viewHandler.showView(this.viewHandler.toDo);
+
+    CompletedTaskModel.setCompletedTask();
   }
 }
 

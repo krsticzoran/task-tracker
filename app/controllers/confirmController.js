@@ -1,33 +1,23 @@
 import InputView from "../views/inputView.js";
+import ConfirmModel from "../models/confirmModel.js";
+import InputDataModel from "../models/inputDataModel.js";
+import CompletedTaskModel from "../models/completedTaskModel.js";
 
 class ConfirmController {
   constructor() {
     this.inputView = new InputView();
+    this.confirmModel = new ConfirmModel();
+
     this.inputView.bindTask((e) => this.confirmTask(e));
   }
 
-  checkbox(e) {
-    if (
-      e.target.classList.contains("span--to-do") ||
-      e.target.classList.contains("span--to-do-date")
-    ) {
-      if (e.target.parentElement.firstElementChild.checked == true) {
-        e.target.parentElement.firstElementChild.checked = false;
-      } else {
-        e.target.parentElement.firstElementChild.checked = true;
-      }
-    }
-  }
-
   confirmTask(e) {
-    this.checkbox(e);
-    if (
-      e.target.classList.contains("btn--confirm") &&
-      e.target.parentElement.firstElementChild.checked
-    ) {
-      console.log(
-        e.target.parentElement.querySelector(".span--to-do").textContent
-      );
+    this.confirmModel.clickCheckbox(e);
+    const isConfirm = this.confirmModel.confirmTask(e);
+    if (isConfirm) {
+      const element = this.confirmModel.getConfirmElement(e);
+      InputDataModel.delInput(element);
+      CompletedTaskModel.addCompletedTask(element);
     }
   }
 }

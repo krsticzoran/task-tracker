@@ -13,6 +13,7 @@ class CompletedTaskController {
 
   displayCompletedList() {
     this.viewHandler.showView(this.viewHandler.completed);
+
     this.completedTaskView.renderCompletedTask(
       CompletedTaskModel.getCompletedTask()
     );

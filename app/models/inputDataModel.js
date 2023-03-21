@@ -5,6 +5,14 @@ class InputDataModel {
   static getInput() {
     return this.input;
   }
+  static delInput(element) {
+    this.input.forEach((input, index) => {
+      if (input.input == element[0] && input.date == element[1]) {
+        this.input.splice(index, 1);
+        localStorage.setItem("todo", JSON.stringify(this.input));
+      }
+    });
+  }
 
   static getFailed() {
     return this.failed;
