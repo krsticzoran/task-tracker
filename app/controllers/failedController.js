@@ -9,6 +9,20 @@ class FailedController {
     this.viewHandler = new ViewHandler();
     this.menuView = new MenuView();
     this.failedView.bindFailedList(() => this.displayFailedList());
+    this.failedView.bindClickDelete((e) => this.deleteTask(e));
+    this.failedView.bindDeleteAll((e) => this.deleteAll(e));
+  }
+
+  deleteTask(e) {
+    if (e.target.classList.contains("delete")) {
+      InputDataModel.deleteTask(e);
+      this.failedView.renderFailedList(InputDataModel.getFailed());
+    }
+  }
+
+  deleteAll() {
+    InputDataModel.deleteAllFailed();
+    this.failedView.renderFailedList(InputDataModel.getFailed());
   }
 
   // Method to display the list of failed inputs

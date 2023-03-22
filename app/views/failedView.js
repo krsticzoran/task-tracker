@@ -2,10 +2,19 @@ class FailedView {
   constructor() {
     this.btnFailed = document.querySelector(".btn--failed");
     this.listFailed = document.querySelector(".failed--list");
+    this.deleteAll = document.querySelector(".delete-all-failed");
   }
 
   bindFailedList(handler) {
     this.btnFailed.addEventListener("click", handler);
+  }
+
+  bindClickDelete(handler) {
+    this.listFailed.addEventListener("click", handler);
+  }
+
+  bindDeleteAll(handler) {
+    this.deleteAll.addEventListener("click", handler);
   }
 
   renderFailedList(failed) {

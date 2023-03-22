@@ -14,10 +14,6 @@ class InputDataModel {
     });
   }
 
-  static getFailed() {
-    return this.failed;
-  }
-
   static setInput() {
     const today = new Date();
     today.setHours(0, 0, 0, 0); // set the time to 00:00:00:000 (midnight)
@@ -53,6 +49,31 @@ class InputDataModel {
 
   static pushInput(input) {
     this.input.unshift(input); // add input to the beginning of the array
+  }
+
+  static getFailed() {
+    return this.failed;
+  }
+
+  static deleteTask(e) {
+    const element = this.getElement(e);
+    this.failed.forEach((task, index) => {
+      if (task.input == element[0] && task.date == element[1]) {
+        this.failed.splice(index, 1);
+        localStorage.setItem("todo2", JSON.stringify(this.failed));
+      }
+    });
+  }
+  static deleteAllFailed() {
+    this.failed = [];
+    localStorage.setItem("todo2", JSON.stringify(this.failed));
+  }
+
+  static getElement(e) {
+    return [
+      e.target.parentElement.querySelector(".span--completed").textContent,
+      e.target.parentElement.querySelector(".date-for-delete").textContent,
+    ];
   }
 }
 
