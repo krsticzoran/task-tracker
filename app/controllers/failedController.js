@@ -27,7 +27,7 @@ class FailedController {
 
   // Method to display the list of failed inputs
   displayFailedList() {
-    this.viewHandler.showView(this.viewHandler.failed);
+    this.viewHandler.showView(this.viewHandler.failed, "none");
     this.failedView.renderFailedList(InputDataModel.getFailed());
     this.menuView.toggleMenu();
   }

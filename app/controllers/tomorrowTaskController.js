@@ -18,7 +18,7 @@ class TomorrowTaskController {
       InputDataModel.getInput()
     );
     this.tomorrowTaskView.renderTomorrowTask(tomorrowTasks);
-    this.viewHandler.showView(this.viewHandler.tomorrow);
+    this.viewHandler.showView(this.viewHandler.tomorrow, "none");
     this.menuView.toggleMenu();
   }
 }

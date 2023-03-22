@@ -3,7 +3,13 @@ class InputView {
     this.list = document.querySelector(".list");
     this.btnHome = document.querySelector(".btn--all");
     this.task = document.querySelector(".list--li");
+    this.sort = document.querySelector(".sort");
   }
+
+  bindSort(handler) {
+    this.sort.addEventListener("click", handler);
+  }
+
   bindTask(handler) {
     this.list.addEventListener("click", handler);
   }

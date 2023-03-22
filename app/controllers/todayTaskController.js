@@ -18,7 +18,7 @@ class TodayTaskController {
       InputDataModel.getInput()
     );
     this.todayTaskView.renderTodayTask(todayTasks);
-    this.viewHandler.showView(this.viewHandler.today);
+    this.viewHandler.showView(this.viewHandler.today, "none");
     this.menuView.toggleMenu();
   }
 }

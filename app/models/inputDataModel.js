@@ -1,6 +1,7 @@
 class InputDataModel {
   static input = [];
   static failed = [];
+  static sortController = 0;
 
   static getInput() {
     return this.input;
@@ -12,6 +13,16 @@ class InputDataModel {
         localStorage.setItem("todo", JSON.stringify(this.input));
       }
     });
+  }
+
+  static sortInput() {
+    if (this.sortController == 0) {
+      this.input.sort((a, b) => a.input.localeCompare(b.input));
+      this.sortController = 1;
+    } else {
+      this.input.sort((a, b) => b.input.localeCompare(a.input));
+      this.sortController = 0;
+    }
   }
 
   static setInput() {

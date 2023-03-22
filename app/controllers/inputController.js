@@ -11,13 +11,14 @@ class InputController {
     this.menuView = new MenuView();
     this.loadTasks();
     this.inputView.bindList(() => this.displayTasks());
+    this.inputView.bindSort(() => this.sortTasks());
   }
 
   // rendering inputs when user click on home link/button
   displayTasks() {
     this.inputView.clearToDoList();
     this.inputView.renderToDoList(InputDataModel.getInput());
-    this.viewHandler.showView(this.viewHandler.toDo);
+    this.viewHandler.showView(this.viewHandler.toDo, "block");
     this.menuView.toggleMenu();
   }
 
@@ -27,9 +28,15 @@ class InputController {
     InputDataModel.setInput();
 
     this.inputView.renderToDoList(InputDataModel.getInput());
-    this.viewHandler.showView(this.viewHandler.toDo);
+    this.viewHandler.showView(this.viewHandler.toDo, "block");
 
     CompletedTaskModel.setCompletedTask();
+  }
+
+  sortTasks() {
+    InputDataModel.sortInput();
+    this.inputView.clearToDoList();
+    this.inputView.renderToDoList(InputDataModel.getInput());
   }
 }
 

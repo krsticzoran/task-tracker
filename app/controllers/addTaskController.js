@@ -3,14 +3,22 @@ import MapModel from "../models/mapModel.js";
 import AddTaskModel from "../models/addTaskModel.js";
 import InputDataModel from "../models/inputDataModel.js";
 import InputView from "../views/inputView.js";
+import TodayTaskModel from "../models/todayTaskModel.js";
+import TodayView from "../views/todayView.js";
+import TomorrowTaskModel from "../models/tomorrowTaskmodel.js";
+import TomorrowTaskView from "../views/tomorrowTaskView.js";
 
 class AddTaskController {
   constructor() {
     this.addTaskView = new AddTaskView();
+    this.inputView = new InputView();
+    this.addTaskModel = new AddTaskModel();
+    this.todayTaskModel = new TodayTaskModel();
+    this.todayView = new TodayView();
+    this.tomorrowTaskModel = new TomorrowTaskModel();
+    this.tomorrowTaskView = new TomorrowTaskView();
     this.addTaskView.bindCloseModal(() => this.closeModal());
     this.addTaskView.bindAddTask(() => this.addTask());
-    this.addTaskModel = new AddTaskModel();
-    this.inputView = new InputView();
   }
 
   addTask() {
@@ -36,6 +44,18 @@ class AddTaskController {
       // store input to localeStorage
       localStorage.setItem("todo", JSON.stringify(InputDataModel.input));
 
+      //add task to today view
+      const todayTasks = this.todayTaskModel.getTodayTasks(
+        InputDataModel.getInput()
+      );
+      this.todayView.renderTodayTask(todayTasks);
+      //
+      const tomorrowTasks = this.tomorrowTaskModel.getTomorrowTasks(
+        InputDataModel.getInput()
+      );
+      this.tomorrowTaskView.renderTomorrowTask(tomorrowTasks);
+
+      //add task to tomorrow view
       this.addTaskView.clearInput();
       this.closeModal();
 
