@@ -3,6 +3,7 @@ import InputDataModel from "../models/inputDataModel.js";
 import ViewHandler from "../views/viewHandler.js";
 import MenuView from "../views/menuView.js";
 import CompletedTaskModel from "../models/completedTaskModel.js";
+import PagantionModel from "../models/paganationModel.js";
 
 class InputController {
   constructor() {
@@ -18,7 +19,7 @@ class InputController {
   displayTasks() {
     this.inputView.clearToDoList();
     this.inputView.renderToDoList(InputDataModel.getInput());
-    this.viewHandler.showView(this.viewHandler.toDo, "block");
+    this.viewHandler.showView(this.viewHandler.toDo, "block", "flex");
     this.menuView.toggleMenu();
   }
 
@@ -28,7 +29,7 @@ class InputController {
     InputDataModel.setInput();
 
     this.inputView.renderToDoList(InputDataModel.getInput());
-    this.viewHandler.showView(this.viewHandler.toDo, "block");
+    this.viewHandler.showView(this.viewHandler.toDo, "block", "flex");
 
     CompletedTaskModel.setCompletedTask();
   }

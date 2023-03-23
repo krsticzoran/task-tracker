@@ -10,7 +10,7 @@ class ViewHandler {
     this.sort = document.querySelector(".sort");
   }
 
-  showView(view, sort) {
+  showView(view, sort, paganation) {
     this.toDo.style.display = "none";
     this.today.style.display = "none";
     this.completed.style.display = "none";
@@ -19,6 +19,7 @@ class ViewHandler {
     this.search.style.display = "none";
     this.pagination.style.display = "none";
     this.sort.style.display = sort;
+    this.pagination.style.display = paganation;
     view.style.display = "block";
   }
 }
