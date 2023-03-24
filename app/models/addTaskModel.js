@@ -48,6 +48,7 @@ class AddTaskModel {
     }
     this.input = inputData.input;
     this.date = inputData.date;
+
     return true;
   }
 }

@@ -7,6 +7,7 @@ import TodayTaskModel from "../models/todayTaskModel.js";
 import TodayView from "../views/todayView.js";
 import TomorrowTaskModel from "../models/tomorrowTaskmodel.js";
 import TomorrowTaskView from "../views/tomorrowTaskView.js";
+import PagantionModel from "../models/paganationModel.js";
 
 class AddTaskController {
   constructor() {
@@ -36,7 +37,11 @@ class AddTaskController {
       InputDataModel.pushInput(inputData);
 
       // display task
-      this.inputView.renderToDoList([inputData]);
+      this.inputView.clearToDoList();
+      this.inputView.renderToDoList(
+        InputDataModel.getInput(),
+        PagantionModel.getPageNumber()
+      );
       //console.log(lat, long);
 
       MapModel.addMarker(lat, lng, input);
@@ -60,6 +65,8 @@ class AddTaskController {
       this.closeModal();
 
       MapModel.clearLatLong();
+
+      PagantionModel.setLength(InputDataModel.getInput());
     }
   }
   // Close the modal methtod

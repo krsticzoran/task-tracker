@@ -15,6 +15,8 @@ class PagantionModel {
 
   static setLength(input) {
     this.length = input.length;
+    if (this.pageNumber > Math.ceil(this.length / 10)) this.pageNumber -= 1;
+    if (this.pageNumber < 1) this.pageNumber = 1;
   }
 }
 
