@@ -1,4 +1,4 @@
-import CharacterCounterView from "../views/characterCounterView.js";
+import CharacterCounterView from "../../views/add-task/characterCounterView.js";
 
 class CharacterCounterController {
   constructor() {

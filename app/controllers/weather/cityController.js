@@ -1,5 +1,5 @@
-import CityModel from "../models/cityModel.js";
-import CityView from "../views/cityView.js";
+import CityModel from "../../models/weather/cityModel.js";
+import CityView from "../../views/weather/cityVIew.js";
 
 class CityController {
   constructor() {

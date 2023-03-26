@@ -1,7 +1,7 @@
-import TimeView from "../views/timeView.js";
-import DateView from "../views/dateView.js";
-import ClockModel from "../models/timeModel.js";
-import DateModel from "../models/dateModel.js";
+import TimeView from "../../views/weather/timeView.js";
+import DateView from "../../views/weather/dateView.js";
+import ClockModel from "../../models/weather/timeModel.js";
+import DateModel from "../../models/weather/dateModel.js";
 
 class DateTimeController {
   constructor() {
@@ -25,9 +25,3 @@ class DateTimeController {
 }
 
 export default DateTimeController;
-
-
-
-
-
-

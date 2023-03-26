@@ -1,13 +1,13 @@
-import AddTaskView from "../views/addTaskView.js";
-import MapModel from "../models/mapModel.js";
-import AddTaskModel from "../models/addTaskModel.js";
-import InputDataModel from "../models/inputDataModel.js";
-import InputView from "../views/inputView.js";
-import TodayTaskModel from "../models/todayTaskModel.js";
-import TodayView from "../views/todayView.js";
-import TomorrowTaskModel from "../models/tomorrowTaskmodel.js";
-import TomorrowTaskView from "../views/tomorrowTaskView.js";
-import PagantionModel from "../models/paganationModel.js";
+import AddTaskView from "../../views/add-task/addTaskView.js";
+import MapModel from "../../models/map/mapModel.js";
+import AddTaskModel from "../../models/add-task/addTaskModel.js";
+import InputDataModel from "../../models/tasks/inputDataModel.js";
+import InputView from "../../views/tasks/inputView.js";
+import TodayTaskModel from "../../models/tasks/todayTaskModel.js";
+import TodayView from "../../views/tasks/todayView.js";
+import TomorrowTaskModel from "../../models/tasks/tomorrowTaskmodel.js";
+import TomorrowTaskView from "../../views/tasks/tomorrowTaskView.js";
+import PagantionModel from "../../models/pagination/paginationModel.js";
 
 class AddTaskController {
   constructor() {

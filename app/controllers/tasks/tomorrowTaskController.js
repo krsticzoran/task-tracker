@@ -1,8 +1,8 @@
-import TomorrowTaskView from "../views/tomorrowTaskView.js";
-import TomorrowTaskModel from "../models/tomorrowTaskmodel.js";
-import InputDataModel from "../models/inputDataModel.js";
-import ViewHandler from "../views/viewHandler.js";
-import MenuView from "../views/menuView.js";
+import TomorrowTaskView from "../../views/tasks/tomorrowTaskView.js";
+import TomorrowTaskModel from "../../models/tasks/tomorrowTaskmodel.js";
+import InputDataModel from "../../models/tasks/inputDataModel.js";
+import ViewHandler from "../../views/tasks/viewHandler.js";
+import MenuView from "../../views/menu/menuView.js";
 
 class TomorrowTaskController {
   constructor() {

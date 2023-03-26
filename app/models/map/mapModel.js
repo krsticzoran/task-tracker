@@ -36,6 +36,7 @@ class MapModel {
     const marker = L.marker([lat, lng]).addTo(this.map);
     marker.bindPopup(text).openPopup();
   }
+
   // Remove markers based on lat and lng
   static removeMarker(lat, lng) {
     this.map.eachLayer((layer) => {
@@ -48,8 +49,10 @@ class MapModel {
     });
   }
 
-  static centerMap(lat, lng) {
-    this.map.setView([lat, lng], 12);
+  static centerMap(lat, lng, text) {
+    this.map.flyTo([lat, lng], 12);
+    const marker = L.marker([lat, lng]).addTo(this.map);
+    marker.bindPopup(text).openPopup();
   }
 }
 

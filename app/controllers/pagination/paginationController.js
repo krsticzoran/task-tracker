@@ -1,7 +1,7 @@
-import PagangtionView from "../views/paganationView.js";
-import PagantionModel from "../models/paganationModel.js";
-import InputDataModel from "../models/inputDataModel.js";
-import InputView from "../views/inputView.js";
+import PagangtionView from "../../views/pagination/paginationView.js";
+import PagantionModel from "../../models/pagination/paginationModel.js";
+import InputDataModel from "../../models/tasks/inputDataModel.js";
+import InputView from "../../views/tasks/inputView.js";
 
 class PaganationController {
   constructor() {

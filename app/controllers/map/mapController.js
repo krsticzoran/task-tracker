@@ -1,8 +1,8 @@
-import MapView from "../views/mapView.js";
-import CityModel from "../models/cityModel.js";
-import AddTaskView from "../views/addTaskView.js";
-import MapModel from "../models/mapModel.js";
-import InputDataModel from "../models/inputDataModel.js";
+import MapView from "../../views/map/mapView.js";
+import CityModel from "../../models/weather/cityModel.js";
+import AddTaskView from "../../views/add-task/addTaskView.js";
+import MapModel from "../../models/map/mapModel.js";
+import InputDataModel from "../../models/tasks/inputDataModel.js";
 
 class MapController {
   constructor() {

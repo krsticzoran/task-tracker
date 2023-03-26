@@ -1,17 +1,17 @@
-import DateTimeController from "./app/controllers/dateTimeController.js";
-import CityController from "./app/controllers/cityController.js";
-import WeatherController from "./app/controllers/weatherController.js";
-import MenuController from "./app/controllers/menuController.js";
-import MapController from "./app/controllers/mapController.js";
-import AddTaskController from "./app/controllers/addTaskController.js";
-import InputController from "./app/controllers/inputController.js";
-import FailedController from "./app/controllers/failedController.js";
-import CompletedTaskController from "./app/controllers/completedTaskController.js";
-import TodayTaskController from "./app/controllers/todayTaskController.js";
-import TomorrowTaskController from "./app/controllers/tomorrowTaskController.js";
-import ConfirmController from "./app/controllers/confirmController.js";
-import PaganationController from "./app/controllers/paganationController.js";
-import CharacterCounterController from "./app/controllers/characerCounterController.js";
+import DateTimeController from "./app/controllers/weather/dateTimeController.js";
+import CityController from "./app/controllers/weather/cityController.js";
+import WeatherController from "./app/controllers/weather/weatherController.js";
+import MenuController from "./app/controllers/menu/menuController.js";
+import MapController from "./app/controllers/map/mapController.js";
+import AddTaskController from "./app/controllers/add-task/addTaskController.js";
+import InputController from "./app/controllers/tasks/inputController.js";
+import FailedController from "./app/controllers/tasks/failedController.js";
+import CompletedTaskController from "./app/controllers/tasks/completedTaskController.js";
+import TodayTaskController from "./app/controllers/tasks/todayTaskController.js";
+import TomorrowTaskController from "./app/controllers/tasks/tomorrowTaskController.js";
+import ConfirmController from "./app/controllers/tasks/confirmController.js";
+import PaginationController from "./app/controllers/pagination/paginationController.js";
+import CharacterCounterController from "./app/controllers/add-task/characerCounterController.js";
 
 // create a new instance of the DateTimeController class to start the clock and date app
 new DateTimeController();
@@ -43,6 +43,6 @@ new TomorrowTaskController();
 
 new ConfirmController();
 
-new PaganationController();
+new PaginationController();
 
 new CharacterCounterController();

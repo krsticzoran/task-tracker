@@ -1,7 +1,7 @@
-import CompletedTaskModel from "../models/completedTaskModel.js";
-import CompletedTaskView from "../views/completedTaskView.js";
-import ViewHandler from "../views/viewHandler.js";
-import MenuView from "../views/menuView.js";
+import CompletedTaskModel from "../../models/tasks/completedTaskModel.js";
+import CompletedTaskView from "../../views/tasks/completedTaskView.js";
+import ViewHandler from "../../views/tasks/viewHandler.js";
+import MenuView from "../../views/menu/menuView.js";
 
 class CompletedTaskController {
   constructor() {

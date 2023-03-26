@@ -1,9 +1,9 @@
-import InputView from "../views/inputView.js";
-import InputDataModel from "../models/inputDataModel.js";
-import ViewHandler from "../views/viewHandler.js";
-import MenuView from "../views/menuView.js";
-import CompletedTaskModel from "../models/completedTaskModel.js";
-import PagantionModel from "../models/paganationModel.js";
+import InputView from "../../views/tasks/inputView.js";
+import InputDataModel from "../../models/tasks/inputDataModel.js";
+import ViewHandler from "../../views/tasks/viewHandler.js";
+import MenuView from "../../views/menu/menuView.js";
+import CompletedTaskModel from "../../models/tasks/completedTaskModel.js";
+import PagantionModel from "../../models/pagination/paginationModel.js";
 
 class InputController {
   constructor() {

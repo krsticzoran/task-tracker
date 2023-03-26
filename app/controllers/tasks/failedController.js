@@ -1,7 +1,7 @@
-import FailedView from "../views/failedView.js";
-import ViewHandler from "../views/viewHandler.js";
-import InputDataModel from "../models/inputDataModel.js";
-import MenuView from "../views/menuView.js";
+import FailedView from "../../views/tasks/failedView.js";
+import ViewHandler from "../../views/tasks/viewHandler.js";
+import InputDataModel from "../../models/tasks/inputDataModel.js";
+import MenuView from "../../views/menu/menuView.js";
 
 class FailedController {
   constructor() {

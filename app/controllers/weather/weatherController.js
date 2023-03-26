@@ -1,7 +1,7 @@
-import WeatherView from "../views/weatherView.js";
-import CityModel from "../models/cityModel.js";
-import WeatherModel from "../models/weatherModel.js";
-import DateModel from "../models/dateModel.js";
+import WeatherView from "../../views/weather/weatherView.js";
+import CityModel from "../../models/weather/cityModel.js";
+import WeatherModel from "../../models/weather/weatherModel.js";
+import DateModel from "../../models/weather/dateModel.js";
 
 class WeatherController {
   constructor() {

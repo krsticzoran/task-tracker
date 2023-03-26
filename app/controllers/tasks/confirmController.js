@@ -1,14 +1,14 @@
-import InputView from "../views/inputView.js";
-import ConfirmModel from "../models/confirmModel.js";
-import InputDataModel from "../models/inputDataModel.js";
-import CompletedTaskModel from "../models/completedTaskModel.js";
-import TodayTaskView from "../views/todayView.js";
-import TodayTaskModel from "../models/todayTaskModel.js";
-import TomorrowTaskModel from "../models/tomorrowTaskmodel.js";
-import TomorrowTaskView from "../views/tomorrowTaskView.js";
-import PagantionModel from "../models/paganationModel.js";
-import PagangtionView from "../views/paganationView.js";
-import MapModel from "../models/mapModel.js";
+import InputView from "../../views/tasks/inputView.js";
+import ConfirmModel from "../../models/tasks/confirmModel.js";
+import InputDataModel from "../../models/tasks/inputDataModel.js";
+import CompletedTaskModel from "../../models/tasks/completedTaskModel.js";
+import TodayTaskView from "../../views/tasks/todayView.js";
+import TodayTaskModel from "../../models/tasks/todayTaskModel.js";
+import TomorrowTaskModel from "../../models/tasks/tomorrowTaskmodel.js";
+import TomorrowTaskView from "../../views/tasks/tomorrowTaskView.js";
+import PagantionModel from "../../models/pagination/paginationModel.js";
+import PagangtionView from "../../views/pagination/paginationView.js";
+import MapModel from "../../models/map/mapModel.js";
 
 class ConfirmController {
   constructor() {
@@ -31,7 +31,7 @@ class ConfirmController {
       element,
       InputDataModel.getInput()
     );
-    MapModel.centerMap(lat, lng);
+    MapModel.centerMap(lat, lng, element[0]);
     const isConfirm = this.confirmModel.confirmTask(e);
     if (isConfirm) {
       // Remove markers based on lat and lng

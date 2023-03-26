@@ -1,4 +1,4 @@
-import MenuView from "../views/menuView.js";
+import MenuView from "../../views/menu/menuView.js";
 
 class MenuController {
   constructor() {
