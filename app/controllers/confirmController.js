@@ -8,6 +8,7 @@ import TomorrowTaskModel from "../models/tomorrowTaskmodel.js";
 import TomorrowTaskView from "../views/tomorrowTaskView.js";
 import PagantionModel from "../models/paganationModel.js";
 import PagangtionView from "../views/paganationView.js";
+import MapModel from "../models/mapModel.js";
 
 class ConfirmController {
   constructor() {
@@ -25,9 +26,18 @@ class ConfirmController {
 
   confirmTask(e) {
     this.confirmModel.clickCheckbox(e);
+    const element = this.confirmModel.getConfirmElement(e);
+    const { lat, lng } = this.confirmModel.getElementLatLng(
+      element,
+      InputDataModel.getInput()
+    );
+    MapModel.centerMap(lat, lng);
     const isConfirm = this.confirmModel.confirmTask(e);
     if (isConfirm) {
-      const element = this.confirmModel.getConfirmElement(e);
+      // Remove markers based on lat and lng
+      MapModel.removeMarker(lat, lng);
+
+      //delete element and push in completed arr
       InputDataModel.delInput(element);
       CompletedTaskModel.addCompletedTask(element);
 

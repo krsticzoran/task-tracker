@@ -36,6 +36,21 @@ class MapModel {
     const marker = L.marker([lat, lng]).addTo(this.map);
     marker.bindPopup(text).openPopup();
   }
+  // Remove markers based on lat and lng
+  static removeMarker(lat, lng) {
+    this.map.eachLayer((layer) => {
+      if (layer instanceof L.Marker) {
+        const { lat: markerLat, lng: markerLng } = layer.getLatLng();
+        if (markerLat === lat && markerLng === lng) {
+          this.map.removeLayer(layer);
+        }
+      }
+    });
+  }
+
+  static centerMap(lat, lng) {
+    this.map.setView([lat, lng], 12);
+  }
 }
 
 export default MapModel;

@@ -29,5 +29,12 @@ class ConfirmModel {
       e.target.parentElement.querySelector(".span--to-do-date").textContent,
     ];
   }
+  getElementLatLng(element, input) {
+    const { lat, lng } = input.find(
+      ({ input, date }) => input === element[0] && date === element[1]
+    );
+
+    return { lat, lng };
+  }
 }
 export default ConfirmModel;
