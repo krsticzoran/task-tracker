@@ -1,6 +1,4 @@
-# To-Do-List
+# Task Tracker
 
-# My First App
-
-[DEMO](https://todolist-z81.netlify.app)<br /><br />
-I started this project with the goal of creating a simple to-do list. But as I continued to learn and grow my skills in JavaScript, I saw the opportunity to add even more value to the project. So, I started incorporating new features like task time, task location, and weather forecasting to enhance the user experience.
+[DEMO](https://task-tracker-z.netlify.app/)<br /><br />
+In the beginning, this app was conceived as a simple to-do application.As my knowledge of JavaScript grew, I added new features, such as weather forecast, map, and displaying tasks by day.Although I already had the entire application written and working properly, I decided to restructure the code, that is, to write it completely from scratch, and thus practice classes and object-oriented programming.<br />
