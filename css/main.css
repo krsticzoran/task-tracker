@@ -457,19 +457,42 @@ span {
       font-size: 0.8rem; } }
 
 .delete-all {
+  width: 15rem;
+  height: 3rem;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+  background-color: #f4863c;
+  border-radius: 10rem;
   cursor: pointer;
-  position: absolute;
-  bottom: 4vw;
-  left: 30vw;
-  text-align: right;
+  margin-left: 70%;
+  margin-top: 4rem;
+  position: static;
+  bottom: 8vw;
+  left: 25vw;
+  text-align: center;
   color: #31446c;
   font-size: 2.1rem; }
+  @media (max-width: 1200px) {
+    .delete-all {
+      margin-left: 60%; } }
   @media (max-width: 800px) {
     .delete-all {
       width: 60vw;
       position: static;
       margin: auto;
-      padding-top: 3rem; } }
+      width: 20vw;
+      margin-left: 55vw;
+      margin-bottom: 3rem;
+      margin-top: 2rem; } }
+  @media (max-width: 600px) {
+    .delete-all {
+      margin-left: 50vw;
+      text-align: center;
+      width: 30vw;
+      font-size: 1.6rem;
+      position: static;
+      margin-bottom: 1rem; } }
 
 .right--layout {
   position: relative; }

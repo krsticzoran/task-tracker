@@ -189,17 +189,44 @@ span {
 }
 
 .delete-all {
+  width: 15rem;
+  height: 3rem;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+  @include shadow;
+
+  background-color: color(supportthree);
+  border-radius: 10rem;
+
   cursor: pointer;
-  position: absolute;
-  bottom: 4vw;
-  left: 30vw;
-  text-align: right;
+  margin-left: 70%;
+  margin-top: 4rem;
+  position: static;
+  bottom: 8vw;
+  left: 25vw;
+  text-align: center;
   color: color(supportone);
   font-size: size(l);
+
+  @include response(xl) {
+    margin-left: 60%;
+  }
+
   @include response(l) {
     width: 60vw;
     position: static;
     margin: auto;
-    padding-top: 3rem;
+    width: 20vw;
+    margin-left: 55vw;
+    margin-bottom: 3rem;
+    margin-top: 2rem;
+  }
+  @include response(m) {
+    margin-left: 50vw;
+    text-align: center;
+    width: 30vw;
+    font-size: size(s);
+    position: static;
+    margin-bottom: 1rem;
   }
 }
