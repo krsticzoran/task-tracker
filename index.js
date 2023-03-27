@@ -12,7 +12,7 @@ import TomorrowTaskController from "./app/controllers/tasks/tomorrowTaskControll
 import ConfirmController from "./app/controllers/tasks/confirmController.js";
 import PaginationController from "./app/controllers/pagination/paginationController.js";
 import CharacterCounterController from "./app/controllers/add-task/characerCounterController.js";
-
+import SearchController from "./app/controllers/tasks/searchController.js";
 // create a new instance of the DateTimeController class to start the clock and date app
 new DateTimeController();
 
@@ -46,3 +46,9 @@ new ConfirmController();
 new PaginationController();
 
 new CharacterCounterController();
+
+new SearchController();
+
+// uhvatiti error kod weather
+// napisati dokumentaciu u code
+//search

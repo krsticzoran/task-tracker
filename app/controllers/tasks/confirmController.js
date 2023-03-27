@@ -9,6 +9,8 @@ import TomorrowTaskView from "../../views/tasks/tomorrowTaskView.js";
 import PagantionModel from "../../models/pagination/paginationModel.js";
 import PagangtionView from "../../views/pagination/paginationView.js";
 import MapModel from "../../models/map/mapModel.js";
+import SearchView from "../../views/tasks/searchView.js";
+import SearchModel from "../../models/tasks/searchModel.js";
 
 class ConfirmController {
   constructor() {
@@ -19,9 +21,12 @@ class ConfirmController {
     this.tomorrowTaskModel = new TomorrowTaskModel();
     this.tomorrowTaskView = new TomorrowTaskView();
     this.pagangtionView = new PagangtionView();
+    this.searchView = new SearchView();
+    this.searchModel = new SearchModel();
     this.inputView.bindTask((e) => this.confirmTask(e));
     this.todayTaskView.bindTaskClick((e) => this.confirmTask(e));
     this.tomorrowTaskView.bindTomorrowClick((e) => this.confirmTask(e));
+    this.searchView.bindSearchInputClick((e) => this.confirmTask(e));
   }
 
   confirmTask(e) {
@@ -63,6 +68,18 @@ class ConfirmController {
         InputDataModel.getInput()
       );
       this.tomorrowTaskView.renderTomorrowTask(tomorrowTasks);
+
+      // Re-render search
+      const searchValue = this.searchView.inputSearch.value;
+
+      const searchedInputs = this.searchModel.searchTasks(
+        searchValue,
+        InputDataModel.getInput()
+      );
+      this.searchView.displaySearch(searchedInputs);
+      if (searchedInputs.length == 0) {
+        this.searchView.displayNoSearch();
+      }
     }
   }
 }
