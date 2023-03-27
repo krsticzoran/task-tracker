@@ -24,7 +24,9 @@ class AddTaskController {
 
   addTask() {
     // Get input data and date
-    const { input, date } = this.addTaskModel.getData();
+    const input = this.addTaskView.inputAdd.value;
+    const date = this.addTaskView.inputDate.value;
+
     // Get the latitude and longitude
     const { lat, lng } = MapModel.getLatLong();
 
@@ -42,7 +44,6 @@ class AddTaskController {
         InputDataModel.getInput(),
         PagantionModel.getPageNumber()
       );
-      //console.log(lat, long);
 
       MapModel.addMarker(lat, lng, input);
 
@@ -54,13 +55,12 @@ class AddTaskController {
         InputDataModel.getInput()
       );
       this.todayView.renderTodayTask(todayTasks);
-      //
+      //add task to tomorrow view
       const tomorrowTasks = this.tomorrowTaskModel.getTomorrowTasks(
         InputDataModel.getInput()
       );
       this.tomorrowTaskView.renderTomorrowTask(tomorrowTasks);
 
-      //add task to tomorrow view
       this.addTaskView.clearInput();
       this.closeModal();
 

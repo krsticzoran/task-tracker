@@ -1,7 +1,7 @@
 class SearchModel {
   searchTasks(value, inputs) {
     return inputs.filter((input) => {
-      return input.input.startsWith(value);
+      return input.input.includes(value);
     });
   }
 }
