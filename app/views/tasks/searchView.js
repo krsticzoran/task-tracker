@@ -5,9 +5,12 @@ class SearchView {
     this.listSearch = document.querySelector(".search--list");
   }
 
+  // listen clicks on search btn
   bindBtnSearch(handler) {
     this.btnSearch.addEventListener("click", handler);
   }
+
+  // trigerr search btn when user click enter in search input field
   bindInputSearchEnter() {
     this.inputSearch.addEventListener("keydown", (event) => {
       if (event.key === "Enter") {
@@ -16,14 +19,17 @@ class SearchView {
     });
   }
 
+  // listen clicks on tasks
   bindSearchInputClick(handler) {
     this.listSearch.addEventListener("click", handler);
   }
 
+  // render "no search results" message
   displayNoSearch() {
     this.listSearch.innerHTML = '<p class="no--search">No Search Results</p>';
   }
 
+  // render searched tasks
   displaySearch(inputs) {
     this.listSearch.innerHTML = "";
     inputs.map((item) => {

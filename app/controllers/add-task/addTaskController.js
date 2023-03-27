@@ -61,11 +61,13 @@ class AddTaskController {
       );
       this.tomorrowTaskView.renderTomorrowTask(tomorrowTasks);
 
+      //clear inputs
       this.addTaskView.clearInput();
       this.closeModal();
 
       MapModel.clearLatLong();
 
+      //recalculate
       PagantionModel.setLength(InputDataModel.getInput());
     }
   }

@@ -31,23 +31,29 @@ new MapController();
 // add task and handle inputs
 new AddTaskController();
 
+// diplay all tasks
 new InputController();
 
+//display failed tasks
 new FailedController();
 
+//display completed tasks
 new CompletedTaskController();
 
+// display today tasks
 new TodayTaskController();
 
+//display tomorrow tasks
 new TomorrowTaskController();
 
+// handle confirm task, delete from inputs and send to completed
 new ConfirmController();
 
+// display 10 inputs per page
 new PaginationController();
 
+// display the number of characters entered in the Add Task modal input field
 new CharacterCounterController();
 
+//display searched task
 new SearchController();
-
-// uhvatiti error kod weather
-// napisati dokumentaciu u code

@@ -4,14 +4,17 @@ class TodayTaskView {
     this.btnToday = document.querySelector(".btn--today");
   }
 
+  // listen clicks on tasks
   bindTaskClick(handler) {
     this.listToday.addEventListener("click", handler);
   }
 
+  // listen clicks on today btn in menu
   bindTodayList(handler) {
     this.btnToday.addEventListener("click", handler);
   }
 
+  // render today tasks
   renderTodayTask(task) {
     this.listToday.innerHTML = "";
     task.map((item) => {

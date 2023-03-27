@@ -5,9 +5,12 @@ class PagangtionView {
     this.btnRight = document.querySelector(".right");
   }
 
+  // display page number
   setPageNumber(number) {
     this.page.textContent = number;
   }
+
+  // listening for page change button clicks
   bindLeftButton(handler) {
     this.btnLeft.addEventListener("click", handler);
   }

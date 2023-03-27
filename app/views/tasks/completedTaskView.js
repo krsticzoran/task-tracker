@@ -5,17 +5,22 @@ class CompletedTaskView {
     this.btndeleteAll = document.querySelector(".delete-all-completed");
   }
 
+  // listen on delete all button
   bindDeleteAll(handler) {
     this.btndeleteAll.addEventListener("click", handler);
   }
 
+  // listen clicks on completed tasks
   bindCompletedClick(handler) {
     this.completedList.addEventListener("click", handler);
   }
+
+  //listen clicks on completed btn in menu
   bindCompletedList(handler) {
     this.btnCompleted.addEventListener("click", handler);
   }
 
+  // display completed tasks
   renderCompletedTask(task) {
     this.completedList.innerHTML = "";
     task.map((item) => {

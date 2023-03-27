@@ -25,12 +25,14 @@ class WeatherController {
     // Call the isDay() method to check if it is currently day or night
     const timeOfDay = this.dateModel.isDay();
     // Display the weather in the WeatherView
-    this.weatherView.displayWeather(
-      weather.temperature,
-      weather.wind,
-      weather.description,
-      timeOfDay
-    );
+    if (weather) {
+      this.weatherView.displayWeather(
+        weather.temperature,
+        weather.wind,
+        weather.description,
+        timeOfDay
+      );
+    }
   }
 }
 

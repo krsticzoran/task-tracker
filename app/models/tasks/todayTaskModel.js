@@ -1,4 +1,5 @@
 class TodayTaskModel {
+  // search for today tasks - compare date
   getTodayTasks(input) {
     const today = new Date();
 

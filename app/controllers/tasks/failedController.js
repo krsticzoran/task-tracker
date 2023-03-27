@@ -13,6 +13,7 @@ class FailedController {
     this.failedView.bindDeleteAll((e) => this.deleteAll(e));
   }
 
+  // delete failed task
   deleteTask(e) {
     if (e.target.classList.contains("delete")) {
       InputDataModel.deleteTask(e);
@@ -20,6 +21,7 @@ class FailedController {
     }
   }
 
+  //delete all failed tasks
   deleteAll() {
     InputDataModel.deleteAllFailed();
     this.failedView.renderFailedList(InputDataModel.getFailed());

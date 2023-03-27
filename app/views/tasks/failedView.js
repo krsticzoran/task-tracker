@@ -5,14 +5,17 @@ class FailedView {
     this.deleteAll = document.querySelector(".delete-all-failed");
   }
 
+  // listen clciks on failed btn in menu
   bindFailedList(handler) {
     this.btnFailed.addEventListener("click", handler);
   }
 
+  //listen clicks on faild tasks
   bindClickDelete(handler) {
     this.listFailed.addEventListener("click", handler);
   }
 
+  // listen clicks on delete all button
   bindDeleteAll(handler) {
     this.deleteAll.addEventListener("click", handler);
   }

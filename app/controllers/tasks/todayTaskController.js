@@ -13,12 +13,14 @@ class TodayTaskController {
 
     this.todayTaskView.bindTodayList(() => this.displayTodayTasks());
   }
+  // display today tasks
   displayTodayTasks() {
     const todayTasks = this.todayTaskModel.getTodayTasks(
       InputDataModel.getInput()
     );
     this.todayTaskView.renderTodayTask(todayTasks);
     this.viewHandler.showView(this.viewHandler.today, "none");
+    // close the menu
     this.menuView.toggleMenu();
   }
 }

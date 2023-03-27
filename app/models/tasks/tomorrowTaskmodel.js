@@ -1,4 +1,5 @@
 class TomorrowTaskModel {
+  // search for tmorrow tasks - compare date
   getTomorrowTasks(input) {
     let tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);

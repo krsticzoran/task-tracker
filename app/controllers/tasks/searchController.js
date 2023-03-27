@@ -13,8 +13,9 @@ class SearchController {
     this.searchView.bindBtnSearch(() => this.search());
     this.searchView.bindInputSearchEnter(() => this.search());
   }
-
+  // search for tasks
   search() {
+    //value for search
     const searchValue = this.searchView.inputSearch.value;
 
     if (searchValue) {
@@ -22,9 +23,11 @@ class SearchController {
         searchValue,
         InputDataModel.getInput()
       );
+      // display search
       this.viewHandler.showView(this.viewHandler.search, "none", "none");
       this.searchView.displaySearch(searchedInputs);
       this.searchView.inputSearch.value = "";
+      // display if no search results
       if (searchedInputs.length == 0) {
         this.searchView.displayNoSearch();
       }

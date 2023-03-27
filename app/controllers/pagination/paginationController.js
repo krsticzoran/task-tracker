@@ -12,6 +12,7 @@ class PaganationController {
     this.pagangtionView.bindRightButton(() => this.rightClick());
   }
 
+  // display page number of tasks
   displayNumber() {
     this.pagangtionView.setPageNumber(PagantionModel.getPageNumber());
     this.inputView.clearToDoList();
@@ -21,10 +22,12 @@ class PaganationController {
     );
   }
 
+  // creturn to the previous page
   leftClick() {
     PagantionModel.setPageNumber(-1);
     this.displayNumber();
   }
+  //go to the next page
   rightClick() {
     PagantionModel.setPageNumber(1);
     this.displayNumber();

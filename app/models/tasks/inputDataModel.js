@@ -3,9 +3,12 @@ class InputDataModel {
   static failed = [];
   static sortController = 0;
 
+  // Get all tasks
   static getInput() {
     return this.input;
   }
+
+  // Delete task
   static delInput(element) {
     this.input.forEach((input, index) => {
       if (input.input == element[0] && input.date == element[1]) {
@@ -15,6 +18,7 @@ class InputDataModel {
     });
   }
 
+  // Sort tasks in ascending/descending order
   static sortInput() {
     if (this.sortController == 0) {
       this.input.sort((a, b) => a.input.localeCompare(b.input));
@@ -25,6 +29,7 @@ class InputDataModel {
     }
   }
 
+  //Checking if task deadline has expired
   static setInput() {
     const today = new Date();
     today.setHours(0, 0, 0, 0); // set the time to 00:00:00:000 (midnight)
@@ -62,10 +67,12 @@ class InputDataModel {
     this.input.unshift(input); // add input to the beginning of the array
   }
 
+  // Get all failed tasks
   static getFailed() {
     return this.failed;
   }
 
+  // delete failed task
   static deleteTask(e) {
     const element = this.getElement(e);
     this.failed.forEach((task, index) => {
@@ -75,11 +82,14 @@ class InputDataModel {
       }
     });
   }
+
+  //delete all Failed Task
   static deleteAllFailed() {
     this.failed = [];
     localStorage.setItem("todo2", JSON.stringify(this.failed));
   }
 
+  // Get clicked element
   static getElement(e) {
     return [
       e.target.parentElement.querySelector(".span--completed").textContent,

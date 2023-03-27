@@ -10,6 +10,7 @@ class ViewHandler {
     this.sort = document.querySelector(".sort");
   }
 
+  // change view
   showView(view, sort, paganation) {
     this.toDo.style.display = "none";
     this.today.style.display = "none";

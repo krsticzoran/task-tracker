@@ -42,6 +42,7 @@ class InputController {
     CompletedTaskModel.setCompletedTask();
   }
 
+  // sort tasks in ascending/descending order by tasks
   sortTasks() {
     InputDataModel.sortInput();
     this.inputView.clearToDoList();

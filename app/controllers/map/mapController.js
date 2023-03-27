@@ -12,6 +12,7 @@ class MapController {
     this.loadMap();
     this.addTaskView = new AddTaskView();
   }
+
   removeCover() {
     this.view.removeMapCover();
   }

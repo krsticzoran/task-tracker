@@ -7,6 +7,7 @@ class CharacterCounterController {
     this.characterCounterView.bindInput((e) => this.displayNumber(e));
   }
 
+  //display the number of characters entered in the Add Task modal input field
   displayNumber(e) {
     if (e) {
       const numberCharacter = e.target.value.length;
@@ -16,7 +17,6 @@ class CharacterCounterController {
       if (numberCharacter == 0) {
         this.characterCounterView.display("20/20");
       } else {
-        //this.CharacterCounterView.display(this.numberCharacter);
         this.characterCounterView.display(`${20 - numberCharacter}/20`);
       }
     }

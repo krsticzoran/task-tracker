@@ -5,6 +5,7 @@ class CompletedTaskModel {
     return this.completedTask;
   }
 
+  // delete task
   static deleteTask(e) {
     const element = this.getElement(e);
     this.completedTask.forEach((task, index) => {
@@ -14,11 +15,14 @@ class CompletedTaskModel {
       }
     });
   }
+
+  //delete all tasks
   static deleteAllCompletedTask() {
     this.completedTask = [];
     localStorage.setItem("todo1", JSON.stringify(this.completedTask));
   }
 
+  // get clicked task
   static getElement(e) {
     return [
       e.target.parentElement.querySelector(".span--completed").textContent,
@@ -26,6 +30,7 @@ class CompletedTaskModel {
     ];
   }
 
+  // add completed task
   static addCompletedTask(element) {
     this.completedTask.unshift({ input: element[0], date: element[1] });
     localStorage.setItem("todo1", JSON.stringify(this.completedTask));

@@ -13,12 +13,14 @@ class TomorrowTaskController {
     this.tomorrowTaskView.bindTomorrowList(() => this.displayTomorrowTasks());
   }
 
+  // display tomorrow tasks
   displayTomorrowTasks() {
     const tomorrowTasks = this.tomorrowTaskModel.getTomorrowTasks(
       InputDataModel.getInput()
     );
     this.tomorrowTaskView.renderTomorrowTask(tomorrowTasks);
     this.viewHandler.showView(this.viewHandler.tomorrow, "none");
+    // close menu
     this.menuView.toggleMenu();
   }
 }

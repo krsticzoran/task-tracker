@@ -1,4 +1,5 @@
 class ConfirmModel {
+  //Enable the checkbox when the entire task is clicked.
   clickCheckbox(e) {
     if (
       e.target.classList.contains("span--to-do") ||
@@ -12,6 +13,7 @@ class ConfirmModel {
     }
   }
 
+  //check is tasks checked and confirmed
   confirmTask(e) {
     if (
       e.target.classList.contains("btn--confirm") &&
@@ -23,12 +25,15 @@ class ConfirmModel {
     }
   }
 
+  // get confirmed element
   getConfirmElement(e) {
     return [
       e.target.parentElement.querySelector(".span--to-do").textContent,
       e.target.parentElement.querySelector(".span--to-do-date").textContent,
     ];
   }
+
+  //get lat and lng from confirmed element
   getElementLatLng(element, input) {
     const { lat, lng } = input.find(
       ({ input, date }) => input === element[0] && date === element[1]

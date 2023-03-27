@@ -13,6 +13,7 @@ class CompletedTaskController {
     this.completedTaskView.bindDeleteAll(() => this.deleteAll());
   }
 
+  // delete all completed tasks
   deleteAll() {
     CompletedTaskModel.deleteAllCompletedTask();
     this.completedTaskView.renderCompletedTask(
@@ -20,6 +21,7 @@ class CompletedTaskController {
     );
   }
 
+  // delete one task
   deleteTask(e) {
     if (e.target.classList.contains("delete")) {
       CompletedTaskModel.deleteTask(e);
@@ -29,6 +31,7 @@ class CompletedTaskController {
     }
   }
 
+  // display completed task
   displayCompletedList() {
     this.viewHandler.showView(this.viewHandler.completed, "none");
 

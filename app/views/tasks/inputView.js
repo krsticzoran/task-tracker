@@ -6,18 +6,22 @@ class InputView {
     this.sort = document.querySelector(".sort");
   }
 
+  // listen clicks on sort btn
   bindSort(handler) {
     this.sort.addEventListener("click", handler);
   }
 
+  //listen clicks on tasks
   bindTask(handler) {
     this.list.addEventListener("click", handler);
   }
 
+  // listen clicks on home btn in menu
   bindList(handler) {
     this.btnHome.addEventListener("click", handler);
   }
 
+  // clear main task view
   clearToDoList() {
     this.list.innerHTML = "";
   }

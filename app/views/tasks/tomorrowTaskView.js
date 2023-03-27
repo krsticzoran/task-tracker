@@ -4,14 +4,17 @@ class TomorrowTaskView {
     this.listTomorrow = document.querySelector(".tomorrow--list");
   }
 
+  // listen clicks on tomorrow btn in menu
   bindTomorrowList(handler) {
     this.btnTomorrow.addEventListener("click", handler);
   }
 
+  // listen clicks on tasks
   bindTomorrowClick(handler) {
     this.listTomorrow.addEventListener("click", handler);
   }
 
+  // display tomorrow tasks
   renderTomorrowTask(task) {
     this.listTomorrow.innerHTML = "";
     task.map((item) => {
