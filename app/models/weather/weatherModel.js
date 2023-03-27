@@ -3,7 +3,7 @@ class WeatherModel {
   async getWeather(city) {
     try {
       const response = await fetch(
-        `https://goweather.herokuapp.com/weatheer/${city}`
+        `https://goweather.herokuapp.com/weather/${city}`
       );
       const data = await response.json();
 
