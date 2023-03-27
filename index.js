@@ -51,4 +51,3 @@ new SearchController();
 
 // uhvatiti error kod weather
 // napisati dokumentaciu u code
-// ispraviti add task model
