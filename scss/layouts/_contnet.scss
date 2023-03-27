@@ -162,7 +162,14 @@ span {
   font-size: size(s);
   font-weight: 900;
   @include shadow;
+  margin-bottom: 10rem;
+  @include response(xxl) {
+    margin-bottom: 5rem;
+  }
 
+  @include response(m) {
+    margin-bottom: 1rem;
+  }
   &:active {
     @include btn-active;
   }

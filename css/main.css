@@ -432,7 +432,16 @@ span {
   color: #fff;
   font-size: 1.6rem;
   font-weight: 900;
-  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2); }
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+  margin-bottom: 10rem; }
+  @media (max-width: 1500px) {
+    .left,
+    .right {
+      margin-bottom: 5rem; } }
+  @media (max-width: 600px) {
+    .left,
+    .right {
+      margin-bottom: 1rem; } }
   .left:active,
   .right:active {
     transform: translateY(-1px);
