@@ -11,19 +11,20 @@ class CityModel {
     try {
       // Use geolocation API to get user's current position
       const position = await this.getCurrentPosition();
+      console.log(position.coords.longitude);
 
       // Use reverse geocoding API to get city name from coordinates
       const city = await this.getCityName(
         position.coords.latitude,
         position.coords.longitude
       );
+      console.log(city);
       return {
         name: city,
         lat: position.coords.latitude,
         long: position.coords.longitude,
       };
     } catch (error) {
-      //console.error(error);
       // Return default city if unable to get user's location
       return this.defaultCity;
     }
